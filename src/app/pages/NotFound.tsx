@@ -1,5 +1,6 @@
+"use client";
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import Link from "next/link";
 import { Home, ArrowLeft } from "lucide-react";
 import { Button } from "../components/ui/button";
 
@@ -18,7 +19,7 @@ export default function NotFound() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/">
+          <Link href="/">
             <Button size="lg">
               <Home size={20} className="mr-2" />
               Go Home

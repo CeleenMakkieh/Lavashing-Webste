@@ -1,3 +1,4 @@
+"use client";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { Target, Users, Award, TrendingUp, ArrowUpRight, MapPin } from "lucide-react";
@@ -12,7 +13,7 @@ const BRAND = {
 };
 
 /* ─── Cursor-tracked magnetic button ─────────── */
-function MagneticBtn({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function MagneticBtn({ children, className = "", style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   const ref = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
@@ -31,6 +32,7 @@ function MagneticBtn({ children, className = "" }: { children: React.ReactNode; 
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: "spring", stiffness: 300, damping: 18 }}
       className={className}
+      style={style}
     >
       {children}
     </motion.button>
@@ -204,7 +206,21 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
 }
 
 /* ─── Main component ─────────────────────────── */
-export default function About() {
+import type { WPTeamMember } from "@/lib/wordpress";
+
+const DEFAULT_STORY = [
+  "Founded in Dallas, Texas, Lavashing was born from a simple belief: that great digital experiences can transform businesses and inspire people.",
+  "Over the past decade, we've grown from a small team of passionate creators into a full-service agency serving clients across the United States. But our core mission remains the same — to create work that's both beautiful and effective.",
+  "We're not just another agency. We're your strategic partner, invested in your success and committed to delivering results that actually move the needle.",
+];
+
+export default function About({
+  team = [],
+  aboutStory = DEFAULT_STORY,
+}: {
+  team?: WPTeamMember[];
+  aboutStory?: string[];
+}) {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 120]);
@@ -346,11 +362,7 @@ export default function About() {
             className="space-y-6"
           >
             <h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.header }}>Our Story</h2>
-            {[
-              "Founded in Dallas, Texas, Lavashing was born from a simple belief: that great digital experiences can transform businesses and inspire people.",
-              "Over the past decade, we've grown from a small team of passionate creators into a full-service agency serving clients across the United States. But our core mission remains the same — to create work that's both beautiful and effective.",
-              "We're not just another agency. We're your strategic partner, invested in your success and committed to delivering results that actually move the needle.",
-            ].map((p, i) => (
+            {aboutStory.map((p, i) => (
               <motion.p
                 key={i}
                 initial={{ opacity: 0, y: 15 }}

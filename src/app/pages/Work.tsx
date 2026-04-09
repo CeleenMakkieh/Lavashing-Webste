@@ -1,3 +1,4 @@
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "motion/react";
 import {
@@ -32,20 +33,28 @@ function MagneticCursor() {
   );
 }
 
-/* ─── 3D Tilt wrapper ────────────────────── */
+/* ─── 3D Tilt wrapper (desktop only) ─────── */
 function Tilt({ children, className = "", intensity = 14 }: { children: React.ReactNode; className?: string; intensity?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const rx = useMotionValue(0); const ry = useMotionValue(0);
   const sx = useSpring(rx, { stiffness: 140, damping: 22 });
   const sy = useSpring(ry, { stiffness: 140, damping: 22 });
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const onMove = (e: React.MouseEvent) => {
+    if (isMobile) return;
     const r = ref.current!.getBoundingClientRect();
     ry.set(((e.clientX - r.left) / r.width - 0.5) * intensity);
     rx.set(-((e.clientY - r.top) / r.height - 0.5) * intensity);
   };
   return (
     <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={() => { rx.set(0); ry.set(0); }}
-      style={{ rotateX: sx, rotateY: sy, transformStyle: "preserve-3d" }} className={className}>
+      style={{ rotateX: isMobile ? 0 : sx, rotateY: isMobile ? 0 : sy, transformStyle: isMobile ? "flat" : "preserve-3d" }} className={className}>
       {children}
     </motion.div>
   );
@@ -217,36 +226,35 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
 }
 
 /* ─── Main ──────────────────────────────── */
-export default function Work() {
+import type { WPService, WPIndustry, WPProcessStep } from "@/lib/wordpress";
+
+const ICONS = [<Code size={22} />, <Palette size={22} />, <Sparkles size={22} />, <TrendingUp size={22} />, <Lightbulb size={22} />];
+const INDUSTRY_ICONS = [<ShoppingBag size={20} />, <Heart size={20} />, <GraduationCap size={20} />, <Building2 size={20} />, <Utensils size={20} />, <Briefcase size={20} />];
+
+export default function Work({ services, industries, processSteps }: { services: WPService[]; industries: WPIndustry[]; processSteps: WPProcessStep[] }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 180]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
-  const services = [
-    { num: "01", icon: <Code size={22} />, title: "Web Development", description: "Custom websites and web applications built with modern technologies.", features: ["Responsive Design", "Performance Optimization", "CMS Integration", "E-commerce Solutions", "API Integration", "PWA"] },
-    { num: "02", icon: <Palette size={22} />, title: "Web Design", description: "Beautiful, user-centered designs that engage and drive conversions.", features: ["UI/UX Design", "Prototyping", "Design Systems", "Brand Guidelines", "User Research", "Accessibility"] },
-    { num: "03", icon: <Sparkles size={22} />, title: "Branding", description: "Comprehensive brand identity development that makes your business memorable.", features: ["Logo Design", "Brand Strategy", "Visual Identity", "Brand Messaging", "Packaging", "Positioning"] },
-    { num: "04", icon: <TrendingUp size={22} />, title: "Marketing", description: "Data-driven strategies that grow your audience and increase ROI.", features: ["SEO & SEM", "Social Media", "Content Marketing", "Email Campaigns", "Analytics", "Paid Ads"] },
-    { num: "05", icon: <Lightbulb size={22} />, title: "Strategy", description: "Strategic planning and consulting to achieve your business goals.", features: ["Digital Strategy", "Market Research", "Competitor Analysis", "Growth Planning", "Transformation", "Consulting"] },
-  ];
+  // Enrich services from WordPress with sequential numbering and icons
+  const enrichedServices = services.map((s, i) => ({
+    ...s,
+    num: String(i + 1).padStart(2, "0"),
+    icon: ICONS[i % ICONS.length],
+  }));
 
-  const industries = [
-    { icon: <ShoppingBag size={20} />, title: "E-commerce & Retail", description: "Helping online and brick-and-mortar retailers create seamless shopping experiences that convert and delight.", clients: 34 },
-    { icon: <Heart size={20} />, title: "Healthcare & Wellness", description: "Supporting healthcare providers with compliant, user-friendly digital solutions that build patient trust.", clients: 18 },
-    { icon: <GraduationCap size={20} />, title: "Education", description: "Empowering educational institutions and edtech companies to reach learners in engaging, accessible ways.", clients: 12 },
-    { icon: <Building2 size={20} />, title: "Real Estate", description: "Creating powerful digital tools for real estate agencies — from listing platforms to lead generation engines.", clients: 22 },
-    { icon: <Utensils size={20} />, title: "Food & Beverage", description: "Crafting appetizing digital experiences for restaurants, food brands, and hospitality businesses.", clients: 15 },
-    { icon: <Briefcase size={20} />, title: "Professional Services", description: "Building credibility and trust for consultants, agencies, and service providers through polished digital presence.", clients: 28 },
-  ];
+  const enrichedIndustries = industries.map((ind, i) => ({
+    ...ind,
+    icon: INDUSTRY_ICONS[i % INDUSTRY_ICONS.length],
+    clients: ind.clientCount,
+  }));
 
-  const process = [
-    { step: "01", title: "Discovery", desc: "We dig deep into your business, goals, audience, and competitive landscape." },
-    { step: "02", title: "Strategy", desc: "We develop a comprehensive plan with clear milestones and measurable outcomes." },
-    { step: "03", title: "Design", desc: "Our creatives craft experiences that feel uniquely yours — functional and beautiful." },
-    { step: "04", title: "Build", desc: "We build with precision — performant, accessible, and built to scale." },
-    { step: "05", title: "Launch", desc: "Smooth deployment, then ongoing support so you never feel abandoned." },
-  ];
+  const process = processSteps.map((s, i) => ({
+    step: String(i + 1).padStart(2, "0"),
+    title: s.title,
+    desc: s.description,
+  }));
 
   return (
     <div className="pt-20 overflow-x-hidden" style={{ background: BRAND.bg, color: BRAND.text }}>
@@ -320,12 +328,12 @@ export default function Work() {
             </motion.div>
             <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
               style={{ fontSize: 12, opacity: 0.35, textTransform: "uppercase", letterSpacing: "0.12em" }}>
-              {services.length} capabilities
+              {enrichedServices.length} capabilities
             </motion.span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
-            {services.map((s, i) => <ServiceCard key={i} s={s} i={i} />)}
+            {enrichedServices.map((s, i) => <ServiceCard key={i} s={s} i={i} />)}
           </div>
         </div>
       </section>
@@ -358,7 +366,7 @@ export default function Work() {
           </motion.div>
 
           <div style={{ borderTop: `2px solid ${BRAND.header}22` }}>
-            {industries.map((ind, i) => <IndustryRow key={i} ind={ind} i={i} />)}
+            {enrichedIndustries.map((ind, i) => <IndustryRow key={i} ind={ind} i={i} />)}
           </div>
 
           {/* Don't see yours */}

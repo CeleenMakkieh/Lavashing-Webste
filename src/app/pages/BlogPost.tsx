@@ -1,33 +1,17 @@
+"use client";
 import { motion } from "motion/react";
-import { Link, useParams } from "react-router";
+import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-react";
 import { Button } from "../components/ui/button";
+import type { WPPost } from "@/lib/wordpress";
 
-export default function BlogPost() {
-  const { slug } = useParams();
-
-  const post = {
-    title: "The Future of Web Design: Trends to Watch in 2026",
-    date: "March 20, 2026",
-    readTime: "5 min read",
-    category: "Design",
-    author: "Michael Chen",
-    authorRole: "Creative Director",
-    content: [
-      "The digital landscape is constantly evolving, and staying ahead of design trends is crucial for creating websites that resonate with modern audiences. As we navigate through 2026, several key trends are shaping the future of web design.",
-      "Minimalism continues to dominate, but with a twist. We're seeing designers embrace 'warm minimalism' - clean layouts enhanced with subtle textures, organic shapes, and warmer color palettes that create more inviting digital experiences.",
-      "Interactive 3D elements are becoming more accessible and performant. With improved browser capabilities and tools, designers can now incorporate immersive 3D graphics without sacrificing load times or user experience.",
-      "Accessibility is no longer optional. Modern web design prioritizes inclusive experiences, ensuring websites work seamlessly for users of all abilities. This includes better color contrast, keyboard navigation, and screen reader compatibility.",
-      "The rise of AI-powered personalization is transforming how users interact with websites. Dynamic content that adapts to user preferences and behavior creates more engaging, relevant experiences.",
-    ],
-  };
-
+export default function BlogPost({ post }: { post: WPPost }) {
   return (
     <div className="pt-20">
       <article className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
-            to="/blog"
+            href="/blog"
             className="inline-flex items-center gap-2 text-foreground/70 hover:text-foreground mb-8 transition-colors"
           >
             <ArrowLeft size={18} />
@@ -75,7 +59,7 @@ export default function BlogPost() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="aspect-[16/9] bg-gradient-to-br from-blue-500 to-purple-500 rounded-3xl mb-12"
+            className={`aspect-[16/9] bg-gradient-to-br ${post.imageGradient} rounded-3xl mb-12`}
           />
 
           <motion.div
@@ -108,27 +92,6 @@ export default function BlogPost() {
           </div>
         </div>
       </article>
-
-      <section className="py-16 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl mb-8">Related Articles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <Link
-                key={i}
-                to="/blog/related-post"
-                className="group block p-6 bg-card border border-border rounded-2xl hover:shadow-lg transition-shadow"
-              >
-                <div className="aspect-[16/10] bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl mb-4" />
-                <h3 className="text-xl mb-2 group-hover:text-primary transition-colors">
-                  Related Post Title {i}
-                </h3>
-                <p className="text-foreground/70 text-sm">5 min read</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

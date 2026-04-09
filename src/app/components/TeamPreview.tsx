@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { Link } from "react-router";
+"use client";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -67,7 +68,7 @@ export default function TeamPreview() {
         </div>
 
         <div className="text-center">
-          <Link to="/about">
+          <Link href="/about">
             <Button size="lg" variant="outline">
               Meet Everyone
               <ArrowRight className="ml-2" size={18} />

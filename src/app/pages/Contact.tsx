@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "motion/react";
 import { Mail, Phone, MapPin, Send, Calendar, Video } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -7,7 +8,15 @@ import { Label } from "../components/ui/label";
 import { toast } from "sonner";
 import { useState } from "react";
 
-export default function Contact() {
+export default function Contact({
+  email = "hello@lavashing.com",
+  phone = "(469) 555-1234",
+  address = "Dallas, TX",
+}: {
+  email?: string;
+  phone?: string;
+  address?: string;
+}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -121,10 +130,10 @@ export default function Contact() {
                       <div>
                         <h3 className="text-lg mb-1">Email</h3>
                         <a
-                          href="mailto:hello@lavashing.com"
+                          href={`mailto:${email}`}
                           className="text-foreground/70 hover:text-foreground transition-colors"
                         >
-                          hello@lavashing.com
+                          {email}
                         </a>
                       </div>
                     </div>
@@ -138,10 +147,10 @@ export default function Contact() {
                       <div>
                         <h3 className="text-lg mb-1">Phone</h3>
                         <a
-                          href="tel:+14695551234"
+                          href={`tel:${phone.replace(/\D/g, "")}`}
                           className="text-foreground/70 hover:text-foreground transition-colors"
                         >
-                          (469) 555-1234
+                          {phone}
                         </a>
                       </div>
                     </div>
@@ -154,7 +163,7 @@ export default function Contact() {
                       </div>
                       <div>
                         <h3 className="text-lg mb-1">Location</h3>
-                        <p className="text-foreground/70">Dallas, Texas</p>
+                        <p className="text-foreground/70">{address}</p>
                       </div>
                     </div>
                   </div>

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "motion/react";
 import { X, Send, Minimize2 } from "lucide-react";
@@ -34,10 +35,10 @@ function RobotFace({ thinking = false, talking = false, size = 56 }: { thinking?
       <circle cx="42.5" cy="27" r="1" fill="white" opacity="0.7" />
       {/* Mouth */}
       {talking ? (
-        <motion.rect x="20" y="38" rx="3"
+        <motion.rect x="20" y="38" rx="3" width="20" height="6"
           animate={{ height: [5, 9, 4, 8, 5], width: [20, 17, 20, 15, 20] }}
           transition={{ duration: 0.35, repeat: Infinity }}
-          fill={BRAND.header} y={38} x={20} width={20} height={6} />
+          fill={BRAND.header} />
       ) : (
         <rect x="20" y="38" width="20" height="6" rx="3" fill={BRAND.header} />
       )}
@@ -177,8 +178,13 @@ export default function AIChat() {
           >
               {/* Header */}
               <div style={{ background: BRAND.header, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 40, height: 40, flexShrink: 0 }}>
-                  <RobotFace talking={talking} thinking={thinking} size={40} />
+                <div style={{
+                  width: 44, height: 44, flexShrink: 0, borderRadius: "50%",
+                  background: "rgba(255,255,255,0.18)",
+                  border: "2px solid rgba(255,255,255,0.35)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <RobotFace talking={talking} thinking={thinking} size={34} />
                 </div>
                 <div style={{ flex: 1 }}>
                   <p style={{ color: "#fff", fontWeight: 700, fontSize: 14, margin: 0 }}>Leo · AI Assistant</p>
@@ -253,6 +259,20 @@ export default function AIChat() {
             {bubble && !open && <SpeechBubble text={bubbleText} onDismiss={() => setBubble(false)} />}
           </AnimatePresence>
 
+          {/* Circular glow ring behind the button */}
+          <motion.div
+            animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            style={{
+              position: "absolute",
+              inset: -10,
+              borderRadius: "50%",
+              background: `radial-gradient(circle, ${BRAND.pink}90 0%, ${BRAND.header}40 60%, transparent 75%)`,
+              pointerEvents: "none",
+              zIndex: -1,
+            }}
+          />
+
           <motion.button
             onClick={(e) => {
               if (!isDragging) {
@@ -263,10 +283,10 @@ export default function AIChat() {
             whileHover={{ scale: 1.1, rotate: open ? 0 : 5 }}
             whileTap={{ scale: 0.92 }}
             style={{
-              width: 64, height: 64, borderRadius: 18,
-              background: BRAND.bg, border: `2px solid ${BRAND.header}`,
+              width: 64, height: 64, borderRadius: "50%",
+              background: BRAND.bg, border: `2.5px solid ${BRAND.header}`,
               cursor: isDragging ? "grabbing" : "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: `0 8px 28px ${BRAND.header}30`,
+              boxShadow: `0 8px 32px ${BRAND.header}50, 0 0 0 6px ${BRAND.bg}`,
               overflow: "hidden", padding: 0,
             }}
           >

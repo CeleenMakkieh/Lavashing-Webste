@@ -1,9 +1,11 @@
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "motion/react";
-import { Link } from "react-router";
+import Link from "next/link";
 import { Sparkles, Code, Palette, TrendingUp, Target, ArrowUpRight } from "lucide-react";
 import ClientLogos from "../components/ClientLogos";
 import InteractiveMap from "../components/InteractiveMap";
+import type { WPSiteSettings } from "@/lib/wordpress";
 
 const BRAND = {
   bg: "#ffffe9",
@@ -37,18 +39,17 @@ function MagneticCursor() {
 }
 
 /* ─── Typewriter ────────────────────────── */
-const WORDS = ["inspire", "convert", "captivate", "grow you"];
-function TypewriterWord() {
+function TypewriterWord({ words }: { words: string[] }) {
   const [idx, setIdx] = useState(0);
   const [shown, setShown] = useState("");
   const [del, setDel] = useState(false);
   useEffect(() => {
-    const word = WORDS[idx];
+    const word = words[idx];
     let t: ReturnType<typeof setTimeout>;
     if (!del && shown.length < word.length) t = setTimeout(() => setShown(word.slice(0, shown.length + 1)), 80);
     else if (!del) t = setTimeout(() => setDel(true), 1600);
     else if (del && shown.length > 0) t = setTimeout(() => setShown(shown.slice(0, -1)), 45);
-    else { setDel(false); setIdx(i => (i + 1) % WORDS.length); }
+    else { setDel(false); setIdx(i => (i + 1) % words.length); }
     return () => clearTimeout(t);
   }, [shown, del, idx]);
   return (
@@ -104,20 +105,28 @@ function Shape({ s }: { s: { top?: string; bottom?: string; left?: string; right
   );
 }
 
-/* ─── 3-D tilt card ─────────────────────── */
+/* ─── 3-D tilt card (desktop only) ──────── */
 function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const rx = useMotionValue(0); const ry = useMotionValue(0);
   const sx = useSpring(rx, { stiffness: 140, damping: 22 });
   const sy = useSpring(ry, { stiffness: 140, damping: 22 });
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const onMove = (e: React.MouseEvent) => {
+    if (isMobile) return;
     const r = ref.current!.getBoundingClientRect();
     ry.set(((e.clientX - r.left) / r.width - 0.5) * 16);
     rx.set(-((e.clientY - r.top) / r.height - 0.5) * 16);
   };
   return (
     <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={() => { rx.set(0); ry.set(0); }}
-      style={{ rotateX: sx, rotateY: sy, transformStyle: "preserve-3d" }} className={className}>
+      style={{ rotateX: isMobile ? 0 : sx, rotateY: isMobile ? 0 : sy, transformStyle: isMobile ? "flat" : "preserve-3d" }} className={className}>
       {children}
     </motion.div>
   );
@@ -152,7 +161,7 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
 // Removed - stats section not needed
 
 /* ─── Main ──────────────────────────────── */
-export default function Home() {
+export default function Home({ settings }: { settings: WPSiteSettings }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
@@ -204,26 +213,26 @@ export default function Home() {
           >
             We create
             <br />experiences that
-            <br /><TypewriterWord />
+            <br /><TypewriterWord words={settings.heroTypewriterWords} />
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
             className="text-xl max-w-2xl mx-auto mb-14 leading-relaxed"
             style={{ color: BRAND.text + "80" }}
           >
-            A modern marketing and web agency crafting premium digital solutions for ambitious brands.
+            {settings.heroSubtitle}
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
           >
-            <Link to="/contact">
+            <Link href="/contact">
               <motion.button data-hover whileHover={{ scale: 1.04, background: BRAND.pink, color: BRAND.header }} whileTap={{ scale: 0.97 }}
                 className="px-8 py-4 rounded-full text-base font-bold text-white inline-flex items-center gap-2 transition-all duration-200"
                 style={{ background: BRAND.header }}
               >Book a Call <ArrowUpRight size={15} /></motion.button>
             </Link>
-            <Link to="/work">
+            <Link href="/work">
               <motion.button data-hover whileHover={{ background: BRAND.header, color: "#fff", scale: 1.04 }} whileTap={{ scale: 0.97 }}
                 className="px-8 py-4 rounded-full text-base font-bold border-2 transition-all duration-200"
                 style={{ borderColor: BRAND.header, color: BRAND.header, background: "transparent" }}
@@ -239,13 +248,13 @@ export default function Home() {
           >
             <div className="relative aspect-video rounded-3xl overflow-hidden border-2" style={{ borderColor: BRAND.header + "30" }}>
               <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                <source src="https://cdn.coverr.co/videos/coverr-gradient-wave-3d-animation-9948/1080p.mp4" type="video/mp4" />
+                <source src={settings.heroVideoUrl} type="video/mp4" />
               </video>
               <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(to top, ${BRAND.header}33, transparent)` }} />
               <div className="absolute bottom-5 left-5 rounded-2xl px-4 py-3 flex items-center gap-3 backdrop-blur-md"
                 style={{ background: "rgba(255,255,233,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}>
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                <span className="text-white text-sm font-medium">Available for new projects</span>
+                <span className="text-white text-sm font-medium">{settings.availableBadgeText}</span>
               </div>
             </div>
             <Shape s={{ top: "-20px", right: "-20px", w: 54, h: 54, bg: BRAND.header, br: "14px", delay: 0.5, dur: 5, dy: 13, dr: 18 }} />
@@ -267,7 +276,7 @@ export default function Home() {
       <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: BRAND.header + "0b" }}>
         <div className="max-w-5xl mx-auto">
           <RevealText
-            text="From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform."
+            text={settings.manifestoText}
             className="text-3xl md:text-4xl font-bold leading-[1.3]"
             highlightWords={["tailored", "precisely"]}
           />
@@ -283,7 +292,7 @@ export default function Home() {
                 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.header }}>What we do</motion.h2>
               <p className="mt-2 text-base opacity-50">Hover for a 3D effect</p>
             </div>
-            <Link to="/work">
+            <Link href="/work">
               <motion.button data-hover whileHover={{ background: BRAND.pink, color: BRAND.header }}
                 className="px-5 py-2.5 rounded-full text-sm font-semibold border-2 transition-all duration-200"
                 style={{ borderColor: BRAND.header, color: BRAND.header }}>All services →</motion.button>
@@ -318,7 +327,7 @@ export default function Home() {
           className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Ready to get started?</h2>
           <p className="text-xl mb-12" style={{ color: "#ffffffbb" }}>Let's create something extraordinary together.</p>
-          <Link to="/contact">
+          <Link href="/contact">
             <motion.button data-hover whileHover={{ background: BRAND.pink, color: BRAND.header, scale: 1.05 }} whileTap={{ scale: 0.97 }}
               className="px-8 py-4 rounded-full text-base font-bold text-white border-2 border-white/30 inline-flex items-center gap-2 transition-all duration-200">
               Book a Call <ArrowUpRight size={15} />

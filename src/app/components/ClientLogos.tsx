@@ -1,16 +1,19 @@
+"use client";
 import { motion } from "motion/react";
+import type { WPClient } from "@/lib/wordpress";
 
-export default function ClientLogos() {
-  const clients = [
-    { name: "TechCorp", color: "#3B82F6" },
-    { name: "DesignHub", color: "#8B5CF6" },
-    { name: "StartupX", color: "#EC4899" },
-    { name: "GlobalCo", color: "#F59E0B" },
-    { name: "Innovate", color: "#10B981" },
-    { name: "FutureLabs", color: "#6366F1" },
-    { name: "CreativeWorks", color: "#EF4444" },
-    { name: "BuildRight", color: "#14B8A6" },
-  ];
+const DEFAULT_CLIENTS: WPClient[] = [
+  { name: "TechCorp", color: "#3B82F6" },
+  { name: "DesignHub", color: "#8B5CF6" },
+  { name: "StartupX", color: "#EC4899" },
+  { name: "GlobalCo", color: "#F59E0B" },
+  { name: "Innovate", color: "#10B981" },
+  { name: "FutureLabs", color: "#6366F1" },
+  { name: "CreativeWorks", color: "#EF4444" },
+  { name: "BuildRight", color: "#14B8A6" },
+];
+
+export default function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: WPClient[] }) {
 
   return (
     <section className="py-24 bg-muted/30 overflow-hidden">

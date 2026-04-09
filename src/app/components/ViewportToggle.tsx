@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Monitor, Smartphone, Columns2 } from "lucide-react";
