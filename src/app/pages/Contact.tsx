@@ -23,11 +23,35 @@ export default function Contact({
     company: "",
     message: "",
   });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you! We'll be in touch soon.");
-    setFormData({ name: "", email: "", company: "", message: "" });
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "f5eff44c-9895-4368-a0e4-4a5c1896ed46",
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          message: formData.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Thank you! We'll be in touch soon.");
+        setFormData({ name: "", email: "", company: "", message: "" });
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleSchedule = () => {
@@ -103,8 +127,8 @@ export default function Contact({
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full">
-                  Send Message
+                <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+                  {submitting ? "Sending..." : "Send Message"}
                   <Send size={18} className="ml-2" />
                 </Button>
               </form>
