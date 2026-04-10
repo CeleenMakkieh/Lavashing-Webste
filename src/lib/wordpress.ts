@@ -101,7 +101,7 @@ export type WPSiteSettings = {
 
   // Social links
   socialLinkedin: string;
-  socialTwitter: string;
+  socialTiktok: string;
   socialInstagram: string;
 };
 
@@ -127,7 +127,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
           contactPhone: string;
           contactAddress: string;
           socialLinkedin: string;
-          socialTwitter: string;
+          socialTiktok: string;
           socialInstagram: string;
         };
       }>;
@@ -149,7 +149,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
             contactPhone
             contactAddress
             socialLinkedin
-            socialTwitter
+            socialTiktok
             socialInstagram
           }
         }
@@ -172,7 +172,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
     contactPhone: s.contactPhone,
     contactAddress: s.contactAddress,
     socialLinkedin: s.socialLinkedin,
-    socialTwitter: s.socialTwitter,
+    socialTiktok: s.socialTiktok,
     socialInstagram: s.socialInstagram,
   };
 }

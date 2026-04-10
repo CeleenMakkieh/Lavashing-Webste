@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Linkedin, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Linkedin, Music2, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import type { WPSiteSettings } from "@/lib/wordpress";
 
 export default function Footer({ settings }: { settings: WPSiteSettings }) {
@@ -15,8 +15,8 @@ export default function Footer({ settings }: { settings: WPSiteSettings }) {
               <a href={settings.socialLinkedin} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
                 <Linkedin size={20} />
               </a>
-              <a href={settings.socialTwitter} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
-                <Twitter size={20} />
+              <a href={settings.socialTiktok} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                <Music2 size={20} />
               </a>
               <a href={settings.socialInstagram} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
                 <Instagram size={20} />

@@ -26,7 +26,7 @@ export const FALLBACK_SETTINGS: WPSiteSettings = {
   contactPhone: "(469) 555-1234",
   contactAddress: "Dallas, TX",
   socialLinkedin: "https://linkedin.com",
-  socialTwitter: "https://twitter.com",
+  socialTiktok: "https://tiktok.com",
   socialInstagram: "https://instagram.com",
 };
 
