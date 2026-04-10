@@ -113,43 +113,51 @@ export type WPSiteSettings = {
 
 export async function getSiteSettings(): Promise<WPSiteSettings | null> {
   type R = {
-    siteSettings: {
-      heroTypewriterWords: string;
-      heroSubtitle: string;
-      heroVideoUrl: string;
-      manifestoText: string;
-      availableBadgeText: string;
-      aboutStory: string;
-      footerTagline: string;
-      contactEmail: string;
-      contactPhone: string;
-      contactAddress: string;
-      socialLinkedin: string;
-      socialTwitter: string;
-      socialInstagram: string;
+    pages: {
+      nodes: Array<{
+        siteSettings: {
+          heroTypewriterWords: string;
+          heroSubtitle: string;
+          heroVideoUrl: string;
+          manifestoText: string;
+          availableBadgeText: string;
+          aboutStory: string;
+          footerTagline: string;
+          contactEmail: string;
+          contactPhone: string;
+          contactAddress: string;
+          socialLinkedin: string;
+          socialTwitter: string;
+          socialInstagram: string;
+        };
+      }>;
     };
   };
   const data = await fetchWP<R>(`
     query GetSiteSettings {
-      siteSettings {
-        heroTypewriterWords
-        heroSubtitle
-        heroVideoUrl
-        manifestoText
-        availableBadgeText
-        aboutStory
-        footerTagline
-        contactEmail
-        contactPhone
-        contactAddress
-        socialLinkedin
-        socialTwitter
-        socialInstagram
+      pages(where: { name: "site-settings" }) {
+        nodes {
+          siteSettings {
+            heroTypewriterWords
+            heroSubtitle
+            heroVideoUrl
+            manifestoText
+            availableBadgeText
+            aboutStory
+            footerTagline
+            contactEmail
+            contactPhone
+            contactAddress
+            socialLinkedin
+            socialTwitter
+            socialInstagram
+          }
+        }
       }
     }
   `);
-  if (!data?.siteSettings) return null;
-  const s = data.siteSettings;
+  const s = data?.pages?.nodes?.[0]?.siteSettings;
+  if (!s) return null;
   return {
     heroTypewriterWords: s.heroTypewriterWords
       ? s.heroTypewriterWords.split(",").map((w) => w.trim()).filter(Boolean)
@@ -158,7 +166,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
     heroVideoUrl: s.heroVideoUrl,
     manifestoText: s.manifestoText,
     availableBadgeText: s.availableBadgeText,
-    aboutStory: s.aboutStory.split("\n\n").filter(Boolean),
+    aboutStory: s.aboutStory ? s.aboutStory.split("\n\n").filter(Boolean) : [],
     footerTagline: s.footerTagline,
     contactEmail: s.contactEmail,
     contactPhone: s.contactPhone,
