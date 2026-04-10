@@ -162,18 +162,18 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
     heroTypewriterWords: s.heroTypewriterWords
       ? s.heroTypewriterWords.split(",").map((w) => w.trim()).filter(Boolean)
       : ["inspire", "convert", "captivate", "grow you"],
-    heroSubtitle: s.heroSubtitle,
-    heroVideoUrl: s.heroVideoUrl,
-    manifestoText: s.manifestoText,
-    availableBadgeText: s.availableBadgeText,
+    heroSubtitle: s.heroSubtitle ?? "",
+    heroVideoUrl: s.heroVideoUrl ?? "",
+    manifestoText: s.manifestoText ?? "",
+    availableBadgeText: s.availableBadgeText ?? "",
     aboutStory: s.aboutStory ? s.aboutStory.split("\n\n").filter(Boolean) : [],
-    footerTagline: s.footerTagline,
-    contactEmail: s.contactEmail,
-    contactPhone: s.contactPhone,
-    contactAddress: s.contactAddress,
-    socialLinkedin: s.socialLinkedin,
-    socialTiktok: s.socialTiktok,
-    socialInstagram: s.socialInstagram,
+    footerTagline: s.footerTagline ?? "",
+    contactEmail: s.contactEmail ?? "",
+    contactPhone: s.contactPhone ?? "",
+    contactAddress: s.contactAddress ?? "",
+    socialLinkedin: s.socialLinkedin ?? "",
+    socialTiktok: s.socialTiktok ?? "",
+    socialInstagram: s.socialInstagram ?? "",
   };
 }
 
@@ -212,7 +212,7 @@ export async function getBlogPosts(): Promise<WPPost[] | null> {
   return data.posts.nodes.map((p) => ({
     slug: p.slug,
     title: p.title,
-    excerpt: p.excerpt.replace(/<[^>]+>/g, ""),
+    excerpt: (p.excerpt ?? "").replace(/<[^>]+>/g, ""),
     date: new Date(p.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
     readTime: p.postFields?.readTime ?? "5 min read",
     category: p.categories.nodes[0]?.name ?? "General",
@@ -247,7 +247,7 @@ export async function getBlogPost(slug: string): Promise<WPPost | null> {
   return {
     slug: p.slug,
     title: p.title,
-    excerpt: p.excerpt.replace(/<[^>]+>/g, ""),
+    excerpt: (p.excerpt ?? "").replace(/<[^>]+>/g, ""),
     date: new Date(p.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
     readTime: p.postFields?.readTime ?? "5 min read",
     category: p.categories.nodes[0]?.name ?? "General",
