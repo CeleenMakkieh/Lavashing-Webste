@@ -8,139 +8,211 @@ const BRAND = {
   header: "#6b8d6d",
   headline: "#670626",
   accent: "#bad797",
-  pink: "#f6c0d7",
   text: "#1a0509",
 };
 
-/* ─── City positions as % of image dimensions ─── */
-const HQ = {
-  id: "dallas", name: "Dallas, TX", role: "Headquarters", emoji: "🏢",
-  left: "46.5%", top: "66%",
-};
-const CLIENTS = [
-  { id: "seattle",  name: "Seattle, WA",  role: "Client", emoji: "🌲", left: "10%",   top: "19%" },
-  { id: "chicago",  name: "Chicago, IL",  role: "Client", emoji: "🌆", left: "61.5%", top: "34%" },
-  { id: "houston",  name: "Houston, TX",  role: "Client", emoji: "🛢️", left: "48%",   top: "74%" },
+/* ── Pin data — positions calibrated to lavashing map.png ── */
+const HQ = { id: "dallas", name: "Dallas, TX", label: "HQ", left: "43.5%", top: "66%" };
+
+const DFW_CITIES = [
+  { id: "fortworth", name: "Fort Worth", left: "41.5%", top: "66.5%" },
+  { id: "irving",    name: "Irving",     left: "42.5%", top: "68%" },
+  { id: "plano",     name: "Plano",      left: "44.5%", top: "63.5%" },
 ];
 
-function ClientPin({ city, hovered, onEnter, onLeave }: {
-  city: typeof CLIENTS[0];
-  hovered: string | null;
-  onEnter: () => void;
-  onLeave: () => void;
-}) {
-  const isHovered = hovered === city.id;
+const STATE_PINS = [
+  { id: "seattle",  name: "Seattle, WA",     left: "9%",   top: "20%" },
+  { id: "la",       name: "Los Angeles, CA", left: "8%",   top: "55%" },
+  { id: "denver",   name: "Denver, CO",      left: "29%",  top: "47%" },
+  { id: "chicago",  name: "Chicago, IL",     left: "60%",  top: "37%" },
+  { id: "newyork",  name: "New York, NY",    left: "78%",  top: "30%" },
+  { id: "houston",  name: "Houston, TX",     left: "43%",  top: "76%" },
+  { id: "atlanta",  name: "Atlanta, GA",     left: "64%",  top: "65%" },
+  { id: "miami",    name: "Miami, FL",       left: "67%",  top: "80%" },
+];
+
+/* ── Tooltip ── */
+function Tooltip({ label }: { label: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 4 }}
+      transition={{ duration: 0.15 }}
+      style={{
+        position: "absolute",
+        bottom: "calc(100% + 8px)",
+        left: "50%",
+        transform: "translateX(-50%)",
+        background: "rgba(10,6,20,0.92)",
+        color: "#f5e6cf",
+        padding: "4px 10px",
+        borderRadius: "6px",
+        fontSize: "11px",
+        fontWeight: 600,
+        whiteSpace: "nowrap",
+        zIndex: 30,
+        border: "1px solid rgba(201,169,110,0.4)",
+        pointerEvents: "none",
+      }}
+    >
+      {label}
+    </motion.div>
+  );
+}
+
+/* ── HQ Pin — large glowing gold ── */
+function HQPin({ hovered, onEnter, onLeave }: { hovered: string | null; onEnter: () => void; onLeave: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ type: "spring", stiffness: 200, delay: 0.4 }}
+      transition={{ type: "spring", stiffness: 220, delay: 0.2 }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-      style={{ left: city.left, top: city.top }}
+      style={{
+        position: "absolute",
+        left: HQ.left,
+        top: HQ.top,
+        transform: "translate(-50%, -50%)",
+        cursor: "pointer",
+        zIndex: 15,
+      }}
     >
-      {/* Tooltip */}
       <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 6, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 6, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shadow-lg"
-            style={{ background: BRAND.header, color: "#fff" }}
-          >
-            {city.name}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
-              style={{ borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderTop: `5px solid ${BRAND.header}` }} />
-          </motion.div>
-        )}
+        {hovered === HQ.id && <Tooltip label="Dallas, TX — Headquarters" />}
       </AnimatePresence>
 
-      {/* Pin */}
+      {/* Outer glow ring */}
       <motion.div
-        whileHover={{ scale: 1.3 }}
-        className="w-5 h-5 rounded-full border-2 shadow-md"
-        style={{ background: BRAND.pink, borderColor: BRAND.header }}
-      >
-        <div className="w-2 h-2 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          style={{ background: BRAND.header }} />
-      </motion.div>
+        animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          position: "absolute",
+          inset: -10,
+          borderRadius: "50%",
+          background: "rgba(201,169,110,0.35)",
+          pointerEvents: "none",
+        }}
+      />
+      {/* Second ring */}
+      <motion.div
+        animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+        style={{
+          position: "absolute",
+          inset: -5,
+          borderRadius: "50%",
+          background: "rgba(201,169,110,0.25)",
+          pointerEvents: "none",
+        }}
+      />
+      {/* Main dot */}
+      <motion.div
+        whileHover={{ scale: 1.25 }}
+        style={{
+          width: 16,
+          height: 16,
+          borderRadius: "50%",
+          background: "#c9a96e",
+          border: "2.5px solid #fff",
+          boxShadow: "0 0 12px rgba(201,169,110,0.9), 0 0 4px rgba(201,169,110,0.5)",
+          position: "relative",
+          zIndex: 1,
+        }}
+      />
     </motion.div>
   );
 }
 
-function HQPin({ hovered, onEnter, onLeave }: {
+/* ── DFW mini pin — small matcha dot ── */
+function DFWPin({ city, hovered, onEnter, onLeave }: {
+  city: typeof DFW_CITIES[0];
   hovered: string | null;
   onEnter: () => void;
   onLeave: () => void;
 }) {
-  const isHovered = hovered === "dallas";
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+      transition={{ type: "spring", stiffness: 220, delay: 0.4 }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-      style={{ left: HQ.left, top: HQ.top }}
+      style={{
+        position: "absolute",
+        left: city.left,
+        top: city.top,
+        transform: "translate(-50%, -50%)",
+        cursor: "pointer",
+        zIndex: 12,
+      }}
     >
-      {/* Tooltip */}
       <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 6, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 6, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shadow-lg"
-            style={{ background: BRAND.header, color: "#fff" }}
-          >
-            Dallas, TX — HQ
-            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
-              style={{ borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderTop: `5px solid ${BRAND.header}` }} />
-          </motion.div>
-        )}
+        {hovered === city.id && <Tooltip label={city.name} />}
       </AnimatePresence>
 
-      {/* Pulse rings */}
       <motion.div
-        className="absolute rounded-full -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-        style={{ width: 40, height: 40, border: `1.5px solid ${BRAND.header}`, background: "transparent" }}
-        animate={{ scale: [1, 1.7, 1], opacity: [0.5, 0, 0.5] }}
-        transition={{ duration: 2.2, repeat: Infinity }}
+        whileHover={{ scale: 1.5 }}
+        style={{
+          width: 8,
+          height: 8,
+          borderRadius: "50%",
+          background: "#bad797",
+          border: "1.5px solid rgba(255,255,255,0.7)",
+          boxShadow: "0 0 6px rgba(186,215,151,0.7)",
+        }}
       />
-      <motion.div
-        className="absolute rounded-full -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-        style={{ width: 28, height: 28, border: `1.5px solid ${BRAND.header}`, background: "transparent" }}
-        animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
-        transition={{ duration: 2.2, repeat: Infinity, delay: 0.5 }}
-      />
-
-      {/* Main pin */}
-      <motion.div
-        whileHover={{ scale: 1.2 }}
-        className="relative w-6 h-6 rounded-full shadow-lg flex items-center justify-center"
-        style={{ background: BRAND.header, border: `3px solid ${BRAND.bg}` }}
-      >
-        <div className="w-2.5 h-2.5 rounded-full" style={{ background: BRAND.bg }} />
-      </motion.div>
-
-      {/* Always-visible label */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 top-8 px-2 py-0.5 rounded-lg text-xs font-bold whitespace-nowrap shadow-sm"
-        style={{ background: BRAND.header + "ee", color: "#fff" }}
-      >
-        Dallas HQ
-      </div>
     </motion.div>
   );
 }
 
+/* ── State client pin — small white dot ── */
+function StatePin({ city, hovered, onEnter, onLeave }: {
+  city: typeof STATE_PINS[0];
+  hovered: string | null;
+  onEnter: () => void;
+  onLeave: () => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ type: "spring", stiffness: 220, delay: 0.5 }}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      style={{
+        position: "absolute",
+        left: city.left,
+        top: city.top,
+        transform: "translate(-50%, -50%)",
+        cursor: "pointer",
+        zIndex: 10,
+      }}
+    >
+      <AnimatePresence>
+        {hovered === city.id && <Tooltip label={city.name} />}
+      </AnimatePresence>
+
+      <motion.div
+        whileHover={{ scale: 1.6 }}
+        style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.85)",
+          border: "1.5px solid rgba(255,255,255,0.5)",
+          boxShadow: "0 0 5px rgba(255,255,255,0.5)",
+        }}
+      />
+    </motion.div>
+  );
+}
+
+/* ── Main ── */
 export default function InteractiveMap() {
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -148,22 +220,20 @@ export default function InteractiveMap() {
     <section className="py-28" style={{ background: BRAND.header + "0a" }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-16">
 
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: BRAND.header }}>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: BRAND.headline }}>
             Based in Dallas. Serving clients nationwide.
           </h2>
           <p className="text-lg" style={{ color: BRAND.text + "80" }}>
-            Our HQ is in Dallas, TX — with clients across the country
+            Headquartered in Dallas–Fort Worth, with clients across the country
           </p>
         </motion.div>
 
-        {/* Map container */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -171,33 +241,26 @@ export default function InteractiveMap() {
           transition={{ type: "spring", stiffness: 70 }}
           className="relative rounded-3xl overflow-hidden shadow-xl"
         >
-          {/* Map image */}
           <div className="relative w-full">
             <Image
-              src="/us-map.jpg"
-              alt="United States Map"
+              src="/lavashing map.png"
+              alt="Lavashing Service Map"
               width={1200}
-              height={800}
-              className="w-full h-auto"
+              height={675}
+              className="w-full h-auto block"
               priority
             />
-
-            {/* Pins overlay — absolutely positioned over image */}
             <div className="absolute inset-0">
-              {CLIENTS.map((c) => (
-                <ClientPin
-                  key={c.id}
-                  city={c}
-                  hovered={hovered}
-                  onEnter={() => setHovered(c.id)}
-                  onLeave={() => setHovered(null)}
-                />
+              {STATE_PINS.map((c) => (
+                <StatePin key={c.id} city={c} hovered={hovered}
+                  onEnter={() => setHovered(c.id)} onLeave={() => setHovered(null)} />
               ))}
-              <HQPin
-                hovered={hovered}
-                onEnter={() => setHovered("dallas")}
-                onLeave={() => setHovered(null)}
-              />
+              {DFW_CITIES.map((c) => (
+                <DFWPin key={c.id} city={c} hovered={hovered}
+                  onEnter={() => setHovered(c.id)} onLeave={() => setHovered(null)} />
+              ))}
+              <HQPin hovered={hovered}
+                onEnter={() => setHovered("dallas")} onLeave={() => setHovered(null)} />
             </div>
           </div>
         </motion.div>
