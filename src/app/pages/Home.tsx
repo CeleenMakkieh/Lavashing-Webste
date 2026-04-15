@@ -8,10 +8,12 @@ import InteractiveMap from "../components/InteractiveMap";
 import type { WPSiteSettings, WPClient } from "@/lib/wordpress";
 
 const BRAND = {
-  bg: "#ffffe9",
+  bg: "#f8eeea",
   header: "#6b8d6d",
+  headline: "#670626",
+  accent: "#bad797",
   pink: "#f6c0d7",
-  text: "#111111",
+  text: "#1a0509",
 };
 
 /* ─── Custom cursor ──────────────────────── */
@@ -53,9 +55,9 @@ function TypewriterWord({ words }: { words: string[] }) {
     return () => clearTimeout(t);
   }, [shown, del, idx]);
   return (
-    <span style={{ color: BRAND.header }}>
+    <span style={{ color: "#6b8d6d" }}>
       {shown}
-      <motion.span animate={{ opacity: [1, 0] }} transition={{ duration: 0.6, repeat: Infinity }} style={{ display: "inline-block", width: 3, height: "0.8em", marginLeft: 4, background: BRAND.header, verticalAlign: "middle" }} />
+      <motion.span animate={{ opacity: [1, 0] }} transition={{ duration: 0.6, repeat: Infinity }} style={{ display: "inline-block", width: 3, height: "0.8em", marginLeft: 4, background: "#6b8d6d", verticalAlign: "middle" }} />
     </span>
   );
 }
@@ -75,7 +77,9 @@ function RevealText({ text, className = "", highlightWords = [] }: { text: strin
             key={i}
             style={{
               opacity: useTransform(scrollYProgress, [pct, Math.min(pct + 0.15, 1)], [0.1, 1]),
-              color: isHighlight ? BRAND.pink : BRAND.text
+              color: isHighlight ? "#f6c0d7" : "#670626",
+              fontSize: isHighlight ? "1.15em" : undefined,
+              fontStyle: isHighlight ? "italic" : undefined
             }}
           >
             {word}
@@ -170,10 +174,8 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
 
   const shapes = [
     { top: "6%", left: "-4%", w: 360, h: 360, bg: BRAND.header + "18", br: "50%", delay: 0, dur: 9, dy: 40, dr: 20, blur: true },
-    { top: "4%", right: "3%", w: 155, h: 155, bg: BRAND.pink, br: "2.2rem", border: `2px solid ${BRAND.header}22`, delay: 1.5, dur: 7, dy: 22, dr: 28 },
     { top: "43%", right: "9%", w: 75, h: 75, bg: BRAND.header + "55", br: "50%", border: `2px solid ${BRAND.header}40`, delay: 0.8, dur: 6, dy: 18, dr: 0 },
     { bottom: "13%", left: "5%", w: 110, h: 110, border: `13px solid ${BRAND.header}38`, br: "50%", delay: 2, dur: 10, dy: 30, dr: 42 },
-    { top: "60%", left: "15%", w: 46, h: 46, bg: BRAND.pink, br: "11px", delay: 1, dur: 8, dy: 15, dr: 22 },
     { bottom: "7%", right: "11%", w: 170, h: 55, bg: BRAND.header + "22", br: "999px", blur: true, delay: 3, dur: 11, dy: 25, dr: 8 },
   ];
 
@@ -209,10 +211,10 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="font-bold mb-8"
-            style={{ fontSize: "clamp(3rem,9vw,7.5rem)", lineHeight: 0.97, letterSpacing: "-0.02em", color: BRAND.text }}
+            style={{ fontSize: "clamp(3rem,9vw,7.5rem)", lineHeight: 0.97, letterSpacing: "-0.02em" }}
           >
-            We create
-            <br />experiences that
+            <span style={{ color: "#670626" }}>We create</span>
+            <br /><span style={{ color: "#670626" }}>experiences that</span>
             <br /><TypewriterWord words={settings.heroTypewriterWords} />
           </motion.h1>
 
@@ -227,15 +229,15 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
           >
             <Link href="/contact">
-              <motion.button data-hover whileHover={{ scale: 1.04, background: BRAND.pink, color: BRAND.header }} whileTap={{ scale: 0.97 }}
+              <motion.button data-hover whileHover={{ scale: 1.04, background: "#bad797", color: "#670626" }} whileTap={{ scale: 0.97 }}
                 className="px-8 py-4 rounded-full text-base font-bold text-white inline-flex items-center gap-2 transition-all duration-200"
-                style={{ background: BRAND.header }}
+                style={{ background: "#670626" }}
               >Book a Call <ArrowUpRight size={15} /></motion.button>
             </Link>
             <Link href="/work">
-              <motion.button data-hover whileHover={{ background: BRAND.header, color: "#fff", scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              <motion.button data-hover whileHover={{ background: "#670626", color: "#fff", scale: 1.04 }} whileTap={{ scale: 0.97 }}
                 className="px-8 py-4 rounded-full text-base font-bold border-2 transition-all duration-200"
-                style={{ borderColor: BRAND.header, color: BRAND.header, background: "transparent" }}
+                style={{ borderColor: "#670626", color: "#670626", background: "transparent" }}
               >Explore Our Work</motion.button>
             </Link>
           </motion.div>
@@ -252,13 +254,13 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
               </video>
               <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(to top, ${BRAND.header}33, transparent)` }} />
               <div className="absolute bottom-5 left-5 rounded-2xl px-4 py-3 flex items-center gap-3 backdrop-blur-md"
-                style={{ background: "rgba(255,255,233,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                style={{ background: "rgba(248,238,234,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}>
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                 <span className="text-white text-sm font-medium">{settings.availableBadgeText}</span>
               </div>
             </div>
             <Shape s={{ top: "-20px", right: "-20px", w: 54, h: 54, bg: BRAND.header, br: "14px", delay: 0.5, dur: 5, dy: 13, dr: 18 }} />
-            <Shape s={{ bottom: "-18px", left: "-18px", w: 68, h: 68, bg: BRAND.pink, br: "50%", blur: true, delay: 1, dur: 7, dy: 17, dr: 12 }} />
+            <Shape s={{ bottom: "-18px", left: "-18px", w: 68, h: 68, bg: BRAND.accent, br: "50%", blur: true, delay: 1, dur: 7, dy: 17, dr: 12 }} />
           </motion.div>
         </motion.div>
 
@@ -273,7 +275,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
       </section>
 
       {/* ── MANIFESTO REVEAL ─────────────────────── */}
-      <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: BRAND.header + "0b" }}>
+      <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: "#670626" + "0e" }}>
         <div className="max-w-5xl mx-auto">
           <RevealText
             text={settings.manifestoText}
@@ -289,13 +291,13 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
           <div className="flex items-end justify-between mb-14 flex-wrap gap-6">
             <div>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.header }}>What we do</motion.h2>
-              <p className="mt-2 text-base opacity-50">Hover for a 3D effect</p>
+                className="text-4xl md:text-5xl font-bold" style={{ color: "#670626" }}>What we do</motion.h2>
+              <p className="mt-2 text-base" style={{ color: "#f6c0d7" }}>Hover for a 3D effect</p>
             </div>
             <Link href="/work">
-              <motion.button data-hover whileHover={{ background: BRAND.pink, color: BRAND.header }}
+              <motion.button data-hover whileHover={{ background: "#bad797", color: "#670626" }}
                 className="px-5 py-2.5 rounded-full text-sm font-semibold border-2 transition-all duration-200"
-                style={{ borderColor: BRAND.header, color: BRAND.header }}>All services →</motion.button>
+                style={{ borderColor: "#670626", color: "#670626" }}>All services →</motion.button>
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
@@ -305,10 +307,10 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
       </section>
 
       {/* ── MARQUEE ──────────────────────────────── */}
-      <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.header + "22" }}>
+      <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: "#670626" + "33" }}>
         <motion.div className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>
           {[...Array(4)].flatMap(() => ["Strategy", "Branding", "Design", "Development", "Marketing", "Growth"]).map((w, i) => (
-            <span key={i} style={{ fontSize: 22, fontWeight: 300, letterSpacing: "0.15em", textTransform: "uppercase", color: BRAND.header }}>
+            <span key={i} style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#670626" }}>
               {w} <span style={{ opacity: 0.3, margin: "0 8px" }}>·</span>
             </span>
           ))}
@@ -319,14 +321,14 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
       <InteractiveMap />
 
       {/* ── CTA ──────────────────────────────────── */}
-      <section className="py-32 px-4 sm:px-8 lg:px-16 relative overflow-hidden" style={{ background: BRAND.header }}>
-        <div className="absolute inset-0 flex items-center justify-center font-black select-none pointer-events-none" style={{ fontSize: "18vw", color: "#ffffff07" }}>LAVASHING</div>
+      <section className="py-32 px-4 sm:px-8 lg:px-16 relative overflow-hidden" style={{ background: "#670626" }}>
+        <div className="absolute inset-0 flex items-center justify-center font-black select-none pointer-events-none" style={{ fontSize: "18vw", color: "#f6c0d714" }}>LAVASHING</div>
         <Shape s={{ top: "-5%", left: "-3%", w: 280, h: 280, bg: "#ffffff07", br: "50%", delay: 0, dur: 8, dy: 35, dr: 25 }} />
         <Shape s={{ bottom: "-5%", right: "-3%", w: 230, h: 230, bg: "#ffffff07", br: "3rem", delay: 1.5, dur: 10, dy: 28, dr: 18 }} />
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Ready to get started?</h2>
-          <p className="text-xl mb-12" style={{ color: "#ffffffbb" }}>Let's create something extraordinary together.</p>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: "#f6c0d7" }}>Ready to get started?</h2>
+          <p className="text-xl mb-12" style={{ color: "#f6c0d7bb" }}>Let's create something extraordinary together.</p>
           <Link href="/contact">
             <motion.button data-hover whileHover={{ background: BRAND.pink, color: BRAND.header, scale: 1.05 }} whileTap={{ scale: 0.97 }}
               className="px-8 py-4 rounded-full text-base font-bold text-white border-2 border-white/30 inline-flex items-center gap-2 transition-all duration-200">

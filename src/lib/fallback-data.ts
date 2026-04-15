@@ -40,7 +40,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     date: "March 20, 2026",
     readTime: "5 min read",
     category: "Design",
-    imageGradient: "from-blue-500 to-purple-500",
+    imageGradient: "from-[#670626] to-[#6b8d6d]",
     author: "Michael Chen",
     authorRole: "Creative Director",
     content: [
@@ -56,7 +56,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     title: "Branding Success Stories: How We Transformed 5 Brands",
     excerpt: "A deep dive into our most successful branding projects and the strategies that made them work.",
     date: "March 15, 2026", readTime: "8 min read", category: "Branding",
-    imageGradient: "from-purple-500 to-pink-500", author: "Sarah Johnson", authorRole: "Founder & CEO",
+    imageGradient: "from-[#6b8d6d] to-[#bad797]", author: "Sarah Johnson", authorRole: "Founder & CEO",
     content: ["Branding is more than a logo. It's the entire perception your audience holds of your business — and we've seen first-hand how a strategic rebrand can completely transform a company's trajectory."],
   },
   {
@@ -64,7 +64,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     title: "Web Performance Optimization: A Complete Guide",
     excerpt: "Learn how to make your website faster and more efficient with our comprehensive optimization guide.",
     date: "March 10, 2026", readTime: "10 min read", category: "Development",
-    imageGradient: "from-pink-500 to-orange-500", author: "David Park", authorRole: "Lead Developer",
+    imageGradient: "from-[#670626] to-[#bad797]", author: "David Park", authorRole: "Lead Developer",
     content: ["Page speed is not just a nice-to-have — it directly impacts your search ranking, bounce rate, and conversion rate."],
   },
   {
@@ -72,7 +72,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     title: "Digital Marketing Strategies That Work in 2026",
     excerpt: "Discover the marketing tactics driving results for our clients and how to implement them in your business.",
     date: "March 5, 2026", readTime: "6 min read", category: "Marketing",
-    imageGradient: "from-orange-500 to-yellow-500", author: "Emily Rodriguez", authorRole: "Head of Strategy",
+    imageGradient: "from-[#bad797] to-[#6b8d6d]", author: "Emily Rodriguez", authorRole: "Head of Strategy",
     content: ["The digital marketing landscape has shifted dramatically. What worked three years ago may now be actively hurting your brand."],
   },
   {
@@ -80,7 +80,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     title: "User Experience Best Practices for Modern Websites",
     excerpt: "Essential UX principles every website should follow to create exceptional user experiences.",
     date: "February 28, 2026", readTime: "7 min read", category: "Design",
-    imageGradient: "from-yellow-500 to-green-500", author: "Michael Chen", authorRole: "Creative Director",
+    imageGradient: "from-[#bad797] to-[#670626]", author: "Michael Chen", authorRole: "Creative Director",
     content: ["Great UX is invisible. When done right, users never notice the design — they just effortlessly accomplish what they came to do."],
   },
   {
@@ -88,7 +88,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     title: "Choosing the Right Tech Stack for Your Web Project",
     excerpt: "A guide to selecting the best technologies for your website or web application.",
     date: "February 20, 2026", readTime: "9 min read", category: "Development",
-    imageGradient: "from-green-500 to-teal-500", author: "David Park", authorRole: "Lead Developer",
+    imageGradient: "from-[#6b8d6d] to-[#670626]", author: "David Park", authorRole: "Lead Developer",
     content: ["Picking a tech stack is one of the most consequential decisions in any web project. Get it wrong and you'll be paying the cost for years."],
   },
 ];
@@ -123,10 +123,10 @@ export const FALLBACK_PROCESS: WPProcessStep[] = [
 
 /* ─── Team members ───────────────────────── */
 export const FALLBACK_TEAM: WPTeamMember[] = [
-  { name: "Sarah Johnson", role: "Founder & CEO", funFact: "Pitched our first client from a coffee shop with no WiFi ☕", color: "from-blue-500 to-purple-500" },
-  { name: "Michael Chen", role: "Creative Director", funFact: "Has redesigned his home office 4 times this year 🎨", color: "from-purple-500 to-pink-500" },
-  { name: "Emily Rodriguez", role: "Head of Strategy", funFact: "Reads one marketing book every two weeks 📚", color: "from-pink-500 to-orange-500" },
-  { name: "David Park", role: "Lead Developer", funFact: "Built his first website at age 11 for his hamster 🐹", color: "from-orange-500 to-yellow-500" },
+  { name: "Sarah Johnson", role: "Founder & CEO", funFact: "Pitched our first client from a coffee shop with no WiFi ☕", color: "from-[#670626] to-[#6b8d6d]" },
+  { name: "Michael Chen", role: "Creative Director", funFact: "Has redesigned his home office 4 times this year 🎨", color: "from-[#6b8d6d] to-[#bad797]" },
+  { name: "Emily Rodriguez", role: "Head of Strategy", funFact: "Reads one marketing book every two weeks 📚", color: "from-[#670626] to-[#bad797]" },
+  { name: "David Park", role: "Lead Developer", funFact: "Built his first website at age 11 for his hamster 🐹", color: "from-[#bad797] to-[#6b8d6d]" },
 ];
 
 /* ─── Values ─────────────────────────────── */

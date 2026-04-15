@@ -9,22 +9,22 @@ export default function TeamPreview() {
     {
       name: "Sarah Johnson",
       role: "Founder & CEO",
-      color: "from-blue-500 to-purple-500",
+      color: "from-[#670626] to-[#6b8d6d]",
     },
     {
       name: "Michael Chen",
       role: "Creative Director",
-      color: "from-purple-500 to-pink-500",
+      color: "from-[#6b8d6d] to-[#bad797]",
     },
     {
       name: "Emily Rodriguez",
       role: "Head of Strategy",
-      color: "from-pink-500 to-orange-500",
+      color: "from-[#670626] to-[#bad797]",
     },
     {
       name: "David Park",
       role: "Lead Developer",
-      color: "from-orange-500 to-yellow-500",
+      color: "from-[#bad797] to-[#6b8d6d]",
     },
   ];
 

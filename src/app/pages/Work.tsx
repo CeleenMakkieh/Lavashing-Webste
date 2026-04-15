@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import ClientLogos from "../components/ClientLogos";
 
-const BRAND = { bg: "#ffffe9", header: "#6b8d6d", pink: "#f6c0d7", text: "#111111" };
+const BRAND = { bg: "#f8eeea", header: "#6b8d6d", headline: "#670626", accent: "#bad797", pink: "#f6c0d7", text: "#1a0509" };
 
 /* ─── Magnetic cursor ────────────────────── */
 function MagneticCursor() {
@@ -122,7 +122,7 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
           style={{ width: 56, height: 56, borderRadius: 14, background: hov ? "#ffffff22" : BRAND.header + "18", color: hov ? "#fff" : BRAND.header, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, transition: "background 0.32s, color 0.32s" }}
         >{s.icon}</motion.div>
 
-        <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 10, color: hov ? "#fff" : BRAND.header, transition: "color 0.32s" }}>{s.title}</h3>
+        <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 10, color: hov ? "#fff" : BRAND.headline, transition: "color 0.32s" }}>{s.title}</h3>
         <p style={{ fontSize: 13.5, lineHeight: 1.65, color: hov ? "#ffffffbb" : BRAND.text + "80", flex: 1, transition: "color 0.32s", marginBottom: 16 }}>{s.description}</p>
 
         {/* Features slide up */}
@@ -133,14 +133,14 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
               {s.features.slice(0, 3).map((f, fi) => (
                 <motion.li key={fi} initial={{ x: -12, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: fi * 0.06 }}
                   style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "#ffffffcc" }}>
-                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: BRAND.pink, flexShrink: 0 }} />{f}
+                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: BRAND.accent, flexShrink: 0 }} />{f}
                 </motion.li>
               ))}
             </motion.ul>
           )}
         </AnimatePresence>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 700, color: hov ? BRAND.pink : BRAND.header, transition: "color 0.32s" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 700, color: hov ? BRAND.accent : BRAND.header, transition: "color 0.32s" }}>
           See details <ArrowUpRight size={13} />
         </div>
       </motion.div>
@@ -161,12 +161,12 @@ function IndustryRow({ ind, i }: { ind: { icon: React.ReactNode; title: string; 
       <div className="flex items-center justify-between py-5 px-2 gap-4">
         <div className="flex items-center gap-5">
           <motion.div
-            animate={{ background: open ? BRAND.pink : BRAND.header + "18", rotate: open ? 8 : 0 }}
+            animate={{ background: open ? BRAND.accent : BRAND.header + "18", rotate: open ? 8 : 0 }}
             className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
             style={{ color: BRAND.header, transition: "background 0.25s" }}
           >{ind.icon}</motion.div>
           <div>
-            <span style={{ fontSize: 19, fontWeight: 700, color: BRAND.header }}>{ind.title}</span>
+            <span style={{ fontSize: 19, fontWeight: 700, color: BRAND.headline }}>{ind.title}</span>
             <span style={{ marginLeft: 12, fontSize: 11, opacity: 0.4, textTransform: "uppercase", letterSpacing: "0.1em" }}>{ind.clients} clients</span>
           </div>
         </div>
@@ -207,7 +207,7 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
           <div style={{ display: "none" }} className="lg:block" />
         )}
         <motion.div
-          animate={{ background: hov ? BRAND.pink : BRAND.header + "18" }}
+          animate={{ background: hov ? BRAND.accent : BRAND.header + "18" }}
           style={{ width: 48, height: 48, borderRadius: 13, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 18, transition: "background 0.3s" }}
         >
           <span style={{ fontSize: 16, fontWeight: 900, color: hov ? BRAND.header : BRAND.header }}>{step}</span>
@@ -218,7 +218,7 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
           {step}
         </motion.div>
 
-        <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: hov ? "#fff" : BRAND.header, transition: "color 0.3s" }}>{title}</h3>
+        <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: hov ? "#fff" : BRAND.headline, transition: "color 0.3s" }}>{title}</h3>
         <p style={{ fontSize: 13.5, lineHeight: 1.65, color: hov ? "#ffffffbb" : BRAND.text + "70", transition: "color 0.3s" }}>{desc}</p>
       </motion.div>
     </Tilt>
@@ -263,21 +263,19 @@ export default function Work({ services, industries, processSteps }: { services:
       {/* ── HERO ─────────────────────────────────── */}
       <section ref={heroRef} className="relative min-h-[88vh] flex items-center overflow-hidden">
         {/* Floating shapes */}
-        <Shape top="5%" right="3%" w={160} h={160} bg={BRAND.pink} br="2.2rem" delay={1.5} dur={7} dy={22} dr={28} />
         <Shape top="8%" left="-3%" w={320} h={320} bg={BRAND.header + "15"} br="50%" blur delay={0} dur={9} dy={38} dr={16} />
         <Shape bottom="10%" right="6%" w={110} h={110} border={`13px solid ${BRAND.header}38`} br="50%" delay={2} dur={10} dy={28} dr={40} />
         <Shape top="50%" right="14%" w={60} h={60} bg={BRAND.header + "55"} br="50%" delay={0.8} dur={6} dy={18} dr={0} />
         <Shape bottom="8%" left="8%" w={180} h={55} bg={BRAND.header + "20"} br="999px" blur delay={3} dur={11} dy={22} dr={8} />
-        <Shape top="62%" left="4%" w={44} h={44} bg={BRAND.pink} br="11px" delay={1} dur={8} dy={14} dr={22} />
 
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-24">
           <motion.h1
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
             className="font-bold mb-8"
-            style={{ fontSize: "clamp(3rem,10vw,8rem)", lineHeight: 0.95, letterSpacing: "-0.02em", color: BRAND.header }}
+            style={{ fontSize: "clamp(3rem,10vw,8rem)", lineHeight: 0.95, letterSpacing: "-0.02em", color: BRAND.headline }}
           >
-            Services &<br /><span style={{ color: BRAND.text }}>Industries.</span>
+            Services &<br /><span style={{ color: BRAND.headline }}>Industries.</span>
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
@@ -304,10 +302,10 @@ export default function Work({ services, industries, processSteps }: { services:
       </section>
 
       {/* ── MARQUEE ──────────────────────────────── */}
-      <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.header + "22" }}>
+      <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.headline + "33" }}>
         <motion.div className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
           {[...Array(4)].flatMap(() => ["Web Dev", "UI Design", "Branding", "SEO", "Strategy", "Marketing", "Growth", "E-commerce"]).map((w, i) => (
-            <span key={i} style={{ fontSize: 22, fontWeight: 300, letterSpacing: "0.15em", textTransform: "uppercase", color: BRAND.header }}>
+            <span key={i} style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: BRAND.headline }}>
               {w} <span style={{ opacity: 0.3, margin: "0 8px" }}>·</span>
             </span>
           ))}
@@ -317,19 +315,13 @@ export default function Work({ services, industries, processSteps }: { services:
       {/* ── SERVICES 3D GRID ─────────────────────── */}
       <section className="py-28 px-4 sm:px-8 lg:px-16 relative overflow-hidden">
         {/* Section shapes */}
-        <Shape top="5%" right="-2%" w={220} h={220} bg={BRAND.pink + "40"} br="3rem" blur delay={0} dur={8} dy={30} dr={20} />
         <Shape bottom="5%" left="-2%" w={160} h={160} bg={BRAND.header + "15"} br="50%" blur delay={1.5} dur={10} dy={25} dr={15} />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex items-end justify-between mb-14 flex-wrap gap-6">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.header }}>Our Services</h2>
-              <p style={{ marginTop: 8, fontSize: 15, opacity: 0.5 }}>Hover for 3D · see what's inside</p>
+              <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>Our Services</h2>
             </motion.div>
-            <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              style={{ fontSize: 12, opacity: 0.35, textTransform: "uppercase", letterSpacing: "0.12em" }}>
-              {enrichedServices.length} capabilities
-            </motion.span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
@@ -340,13 +332,11 @@ export default function Work({ services, industries, processSteps }: { services:
 
       {/* ── PROCESS 3D CARDS ─────────────────────── */}
       <section className="py-28 px-4 sm:px-8 lg:px-16 relative overflow-hidden" style={{ background: BRAND.header + "0c" }}>
-        <Shape top="-8%" right="5%" w={200} h={200} bg={BRAND.pink + "50"} br="2rem" delay={0.5} dur={7} dy={28} dr={22} />
         <Shape bottom="-5%" left="3%" w={140} h={140} border={`12px solid ${BRAND.header}28`} br="50%" delay={2} dur={9} dy={22} dr={35} />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
-            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.header }}>Our Process</h2>
-            <p style={{ marginTop: 8, fontSize: 15, opacity: 0.5 }}>Hover each step to feel the depth</p>
+            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>Our Process</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5" style={{ perspective: "1000px" }}>
@@ -361,8 +351,8 @@ export default function Work({ services, industries, processSteps }: { services:
 
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.header }}>Industries We Serve</h2>
-            <p style={{ marginTop: 8, fontSize: 15, opacity: 0.5 }}>Click any industry to learn more</p>
+            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>Industries We Serve</h2>
+            <p style={{ marginTop: 8, fontSize: 15, color: BRAND.accent }}>Click any industry to learn more</p>
           </motion.div>
 
           <div style={{ borderTop: `2px solid ${BRAND.header}22` }}>
@@ -372,14 +362,14 @@ export default function Work({ services, industries, processSteps }: { services:
           {/* Don't see yours */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="mt-14 p-10 rounded-3xl text-center"
-            style={{ border: `2px solid ${BRAND.pink}`, background: BRAND.pink + "28" }}>
-            <h3 style={{ fontSize: 22, fontWeight: 700, color: BRAND.header, marginBottom: 10 }}>Don't see your industry?</h3>
+            style={{ border: `2px solid ${BRAND.accent}`, background: BRAND.accent + "28" }}>
+            <h3 style={{ fontSize: 22, fontWeight: 700, color: BRAND.headline, marginBottom: 10 }}>Don't see your industry?</h3>
             <p style={{ fontSize: 15, lineHeight: 1.7, color: BRAND.text + "80", marginBottom: 20 }}>
               We work with businesses of all types. Our adaptable approach creates solutions for any sector.
             </p>
-            <motion.button whileHover={{ scale: 1.04, background: BRAND.pink, color: BRAND.header }} whileTap={{ scale: 0.97 }} data-hover
+            <motion.button whileHover={{ scale: 1.04, background: BRAND.accent, color: BRAND.headline }} whileTap={{ scale: 0.97 }} data-hover
               className="px-6 py-3 rounded-full text-sm font-bold text-white transition-all duration-200"
-              style={{ background: BRAND.header }}>Let's talk anyway →</motion.button>
+              style={{ background: BRAND.headline }}>Let's talk anyway →</motion.button>
           </motion.div>
         </div>
       </section>

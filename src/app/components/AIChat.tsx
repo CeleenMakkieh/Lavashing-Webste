@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "motion/react";
 import { X, Send, Minimize2 } from "lucide-react";
 
-const BRAND = { header: "#6b8d6d", pink: "#f6c0d7", bg: "#ffffe9", text: "#111111" };
+const BRAND = { header: "#6b8d6d", pink: "#f6c0d7", bg: "#f8eeea", text: "#1a0509" };
 
 /* ─── Robot SVG face ────────────────────── */
 function RobotFace({ thinking = false, talking = false, size = 56 }: { thinking?: boolean; talking?: boolean; size?: number }) {
@@ -251,7 +251,7 @@ export default function AIChat() {
 
               {/* Messages */}
               <div
-                style={{ height: 280, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10, background: BRAND.bg + "cc" }}
+                style={{ height: 280, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10, background: "#fdeef5" }}
                 onMouseDown={(e) => e.stopPropagation()}
                 onTouchStart={(e) => e.stopPropagation()}
               >
@@ -335,16 +335,16 @@ export default function AIChat() {
             whileTap={{ scale: 0.92 }}
             style={{
               width: 64, height: 64, borderRadius: "50%",
-              background: BRAND.bg, border: `2.5px solid ${BRAND.header}`,
+              background: BRAND.bg, border: `2.5px solid ${BRAND.pink}`,
               cursor: isDragging ? "grabbing" : "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: `0 8px 32px ${BRAND.header}50, 0 0 0 6px ${BRAND.bg}`,
+              boxShadow: `0 8px 32px ${BRAND.pink}90, 0 0 0 6px ${BRAND.bg}`,
               overflow: "hidden", padding: 0,
             }}
           >
             <AnimatePresence mode="wait">
               {open ? (
                 <motion.div key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-                  <X size={24} color={BRAND.header} />
+                  <X size={24} color={BRAND.pink} />
                 </motion.div>
               ) : (
                 <motion.div key="robot" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>

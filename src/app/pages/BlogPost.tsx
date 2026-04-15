@@ -39,7 +39,7 @@ export default function BlogPost({ post }: { post: WPPost }) {
                 <span>{post.readTime}</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full" />
+                <div className="w-10 h-10 bg-gradient-to-br from-[#670626] to-[#6b8d6d] rounded-full" />
                 <div>
                   <div className="text-foreground">{post.author}</div>
                   <div className="text-sm">{post.authorRole}</div>
@@ -78,7 +78,7 @@ export default function BlogPost({ post }: { post: WPPost }) {
           <div className="mt-16 pt-8 border-t border-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full" />
+                <div className="w-16 h-16 bg-gradient-to-br from-[#670626] to-[#6b8d6d] rounded-full" />
                 <div>
                   <div className="text-lg">{post.author}</div>
                   <div className="text-foreground/70">{post.authorRole}</div>

@@ -5,11 +5,13 @@ import { Target, Users, Award, TrendingUp, ArrowUpRight, MapPin } from "lucide-r
 
 /* ─── Brand tokens ───────────────────────────── */
 const BRAND = {
-  bg: "#ffffe9",
+  bg: "#f8eeea",
   header: "#6b8d6d",
+  headline: "#670626",
+  accent: "#bad797",
   btnIdle: "#6b8d6d",
-  btnHover: "#f6c0d7",
-  text: "#111111",
+  btnHover: "#bad797",
+  text: "#1a0509",
 };
 
 /* ─── Cursor-tracked magnetic button ─────────── */
@@ -44,14 +46,14 @@ function MarqueeStrip() {
   const words = ["Strategy", "Branding", "Design", "Development", "Marketing", "Growth"];
   const repeated = [...words, ...words, ...words];
   return (
-    <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.header + "33" }}>
+    <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.headline + "33" }}>
       <motion.div
         className="flex gap-12 whitespace-nowrap"
         animate={{ x: ["0%", "-33.33%"] }}
         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
       >
         {repeated.map((w, i) => (
-          <span key={i} className="text-2xl font-light tracking-widest uppercase" style={{ color: BRAND.header }}>
+          <span key={i} className="text-2xl font-bold tracking-widest uppercase" style={{ color: BRAND.headline }}>
             {w} <span className="opacity-30 mx-2">·</span>
           </span>
         ))}
@@ -139,7 +141,7 @@ function StatBlock({ value, label, index }: { value: string; label: string; inde
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, type: "spring" }}
       className="border-l-2 pl-6 py-2"
-      style={{ borderColor: BRAND.header }}
+      style={{ borderColor: BRAND.headline }}
     >
       <motion.div
         initial={{ scale: 0.5 }}
@@ -147,7 +149,7 @@ function StatBlock({ value, label, index }: { value: string; label: string; inde
         viewport={{ once: true }}
         transition={{ delay: index * 0.1 + 0.2, type: "spring", stiffness: 200 }}
         className="text-5xl md:text-6xl font-bold mb-1"
-        style={{ color: BRAND.header }}
+        style={{ color: BRAND.headline }}
       >
         {value}
       </motion.div>
@@ -183,7 +185,7 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
           animate={{ rotate: open ? 45 : 0 }}
           transition={{ type: "spring", stiffness: 300 }}
           className="text-2xl font-light"
-          style={{ color: BRAND.header }}
+          style={{ color: BRAND.headline }}
         >
           +
         </motion.span>
@@ -284,11 +286,11 @@ export default function About({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(3rem,10vw,8rem)] leading-[0.95] tracking-tight mb-10 max-w-4xl"
-            style={{ color: BRAND.header }}
+            style={{ color: BRAND.headline }}
           >
             We make brands
             <br />
-            <em className="not-italic" style={{ color: BRAND.text }}>unforgettable.</em>
+            <em className="not-italic" style={{ color: BRAND.accent }}>unforgettable.</em>
           </motion.h1>
 
           <motion.p
@@ -393,7 +395,7 @@ export default function About({
             transition={{ type: "spring", stiffness: 80, delay: 0.1 }}
             className="space-y-6"
           >
-            <h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.header }}>Our Story</h2>
+            <h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.headline }}>Our Story</h2>
             {aboutStory.map((p, i) => (
               <motion.p
                 key={i}
@@ -431,7 +433,7 @@ export default function About({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold mb-16"
-            style={{ color: BRAND.header }}
+            style={{ color: BRAND.headline }}
           >
             What We Do
           </motion.h2>
@@ -450,7 +452,7 @@ export default function About({
               >
                 <span className="text-xs font-bold tracking-widest opacity-40 mb-4 block">{String(i + 1).padStart(2, "0")}</span>
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-2xl font-semibold leading-snug" style={{ color: BRAND.header }}>{s.title}</h3>
+                  <h3 className="text-2xl font-semibold leading-snug" style={{ color: BRAND.headline }}>{s.title}</h3>
                   <motion.div
                     animate={{ rotate: 0 }}
                     whileHover={{ rotate: 45 }}
@@ -475,7 +477,7 @@ export default function About({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold mb-12"
-            style={{ color: BRAND.header }}
+            style={{ color: BRAND.headline }}
           >
             Our Values
           </motion.h2>
@@ -505,7 +507,7 @@ export default function About({
           viewport={{ once: true }}
           className="max-w-4xl mx-auto text-center relative z-10"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: BRAND.header }}>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: BRAND.headline }}>
             Based in Dallas, TX
           </h2>
           <p className="text-xl mb-4 leading-relaxed" style={{ color: BRAND.text + "99" }}>

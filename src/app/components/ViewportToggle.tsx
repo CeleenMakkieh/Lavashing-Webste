@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Monitor, Smartphone, Columns2 } from "lucide-react";
 
-const BRAND = { header: "#6b8d6d", pink: "#f6c0d7", bg: "#ffffe9" };
+const BRAND = { header: "#6b8d6d", headline: "#670626", accent: "#bad797", pink: "#f6c0d7", bg: "#f8eeea" };
 
 type ViewMode = "desktop" | "mobile" | "both";
 

@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 
 const BRAND = {
-  bg: "#ffffe9",
+  bg: "#f8eeea",
   header: "#6b8d6d",
+  headline: "#670626",
+  accent: "#bad797",
   pink: "#f6c0d7",
-  text: "#111111",
+  text: "#1a0509",
 };
 
 /* ─── City positions as % of image dimensions ─── */

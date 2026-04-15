@@ -1,12 +1,7 @@
 "use client";
 import { motion } from "motion/react";
-import { Mail, Phone, MapPin, Send, Calendar, Video } from "lucide-react";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
-import { Label } from "../components/ui/label";
-import { toast } from "sonner";
-import { useState } from "react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import Script from "next/script";
 
 export default function Contact({
   email = "hello@lavashing.com",
@@ -17,51 +12,6 @@ export default function Contact({
   phone?: string;
   address?: string;
 }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    message: "",
-  });
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: "f5eff44c-9895-4368-a0e4-4a5c1896ed46",
-          name: formData.name,
-          email: formData.email,
-          company: formData.company,
-          message: formData.message,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        toast.success("Thank you! We'll be in touch soon.");
-        setFormData({ name: "", email: "", company: "", message: "" });
-      } else {
-        toast.error("Something went wrong. Please try again.");
-      }
-    } catch {
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleSchedule = () => {
-    toast.success("Opening HoneyBook scheduler...");
-  };
-
-  const handleZoom = () => {
-    toast.success("Opening Zoom meeting request...");
-  };
-
   return (
     <div className="pt-20">
       <section className="py-32">
@@ -85,55 +35,22 @@ export default function Contact({
             >
               <h2 className="text-3xl mb-8">Send us a message</h2>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <Label>Name</Label>
-                  <Input
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div>
-                  <Label>Email</Label>
-                  <Input
-                    required
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <Label>Company (Optional)</Label>
-                  <Input
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    placeholder="Your company name"
-                  />
-                </div>
-
-                <div>
-                  <Label>Message</Label>
-                  <Textarea
-                    required
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us about your project..."
-                    rows={6}
-                  />
-                </div>
-
-                <Button type="submit" size="lg" className="w-full" disabled={submitting}>
-                  {submitting ? "Sending..." : "Send Message"}
-                  <Send size={18} className="ml-2" />
-                </Button>
-              </form>
-
-          
+              {/* HoneyBook widget */}
+              <div className="hb-p-699125b1fab39a0007237d9b-1" />
+              <img height="1" width="1" style={{ display: "none" }} src="https://www.honeybook.com/p.png?pid=699125b1fab39a0007237d9b" alt="" />
+              <Script
+                id="honeybook-widget"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    (function(h,b,s,n,i,p,e,t) {
+                      h._HB_ = h._HB_ || {}; h._HB_.pid = i;
+                      t=b.createElement(s); t.type="text/javascript"; t.async=!0; t.src=n;
+                      e=b.getElementsByTagName(s)[0]; e.parentNode.insertBefore(t,e);
+                    })(window,document,"script","https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js","699125b1fab39a0007237d9b");
+                  `,
+                }}
+              />
             </motion.div>
 
             <motion.div
@@ -202,7 +119,7 @@ export default function Contact({
                   We typically respond to all inquiries within 24 hours during business days.
                 </p>
                 <p className="text-sm text-foreground/60">
-                  Office Hours: Monday - Friday, 9am - 6pm CST
+                  Office Hours: Monday - Friday, 9am - 5pm CST
                 </p>
               </div>
             </motion.div>
@@ -210,16 +127,6 @@ export default function Contact({
         </div>
       </section>
 
-      <section className="py-16 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl mb-4">Prefer to chat first?</h2>
-            <p className="text-lg text-foreground/70">
-              Use our AI chat assistant in the bottom right corner to get instant answers to your questions.
-            </p>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
