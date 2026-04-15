@@ -74,16 +74,67 @@ function SpeechBubble({ text, onDismiss }: { text: string; onDismiss: () => void
 /* ─── AI response ───────────────────────── */
 function getReply(msg: string): string {
   const m = msg.toLowerCase();
-  if (m.includes("service") || m.includes("what do you do")) return "We offer web design, development, branding, marketing & strategy — all under one roof! 🚀";
-  if (m.includes("price") || m.includes("cost")) return "Pricing varies by project. Book a free consultation on our Contact page to get a custom quote!";
-  if (m.includes("location") || m.includes("where")) return "We're based in Dallas, TX — but we work with brands nationwide! 🌎";
-  if (m.includes("contact") || m.includes("schedule") || m.includes("call")) return "Head to the Contact page to book a Zoom call. We'd love to meet you! 📅";
-  if (m.includes("portfolio") || m.includes("work") || m.includes("client")) return "Check out our Work page to see projects across different industries!";
-  if (m.match(/^hi|^hello|^hey/)) return "Hey there! 👋 What can I help you with today?";
-  return "Great question! Feel free to explore our site, or book a call — we'd love to help! 😊";
+
+  // Greetings
+  if (m.match(/^(hi|hello|hey|sup|yo|howdy|good morning|good afternoon|good evening)/)) return "Hey there! 👋 I'm Leo. Ask me anything about Lavashing — services, pricing, process, you name it!";
+  if (m.includes("how are you") || m.includes("how's it going") || m.includes("how r u")) return "Doing great, thanks for asking! 😊 Ready to help you build something amazing. What's on your mind?";
+  if (m.includes("who are you") || m.includes("what are you") || m.includes("your name")) return "I'm Leo, Lavashing's AI assistant! 🤖 I'm here to answer your questions and point you in the right direction.";
+  if (m.includes("thank") || m.includes("thanks") || m.includes("appreciate")) return "Of course! Happy to help. 😊 Anything else you'd like to know?";
+  if (m.includes("bye") || m.includes("goodbye") || m.includes("see you") || m.includes("cya")) return "Talk soon! 👋 Don't hesitate to reach out — we're always here when you're ready.";
+
+  // Services
+  if (m.includes("service") || m.includes("what do you do") || m.includes("what do you offer") || m.includes("what do you specialize")) return "We offer web design, development, branding, marketing & strategy — all under one roof! Head to our Work page to see it all. 🚀";
+  if (m.includes("web design") || m.includes("design")) return "Our design team creates stunning, conversion-focused websites tailored to your brand. Beautiful AND functional! 🎨";
+  if (m.includes("web dev") || m.includes("development") || m.includes("build a website") || m.includes("build a site")) return "We build custom websites and web apps using modern tech — fast, accessible, and built to scale. 💻";
+  if (m.includes("brand") || m.includes("logo") || m.includes("identity")) return "We craft full brand identities — logo, colors, messaging, and guidelines — that make your business unforgettable. ✨";
+  if (m.includes("market") || m.includes("seo") || m.includes("ads") || m.includes("social media") || m.includes("campaign")) return "Our marketing team runs data-driven campaigns — SEO, social, paid ads, content — to grow your audience and ROI. 📈";
+  if (m.includes("strategy") || m.includes("consulting") || m.includes("growth plan")) return "We offer strategic consulting: market research, competitor analysis, digital roadmaps, and growth planning. 🗺️";
+  if (m.includes("ecommerce") || m.includes("e-commerce") || m.includes("online store") || m.includes("shopify")) return "Yes, we build ecommerce experiences! From custom stores to Shopify to full headless setups — whatever fits your brand. 🛒";
+  if (m.includes("wordpress") || m.includes("cms") || m.includes("content management")) return "We love headless WordPress! It gives you a powerful CMS to manage content while your site stays blazing fast. 🔥";
+  if (m.includes("mobile") || m.includes("responsive") || m.includes("phone")) return "Every site we build is fully responsive — pixel-perfect on mobile, tablet, and desktop. 📱";
+  if (m.includes("app") || m.includes("web app") || m.includes("saas")) return "We build web apps too! From SaaS dashboards to custom tools — if you can imagine it, we can build it. 🛠️";
+
+  // Pricing
+  if (m.includes("price") || m.includes("cost") || m.includes("how much") || m.includes("budget") || m.includes("rate") || m.includes("quote") || m.includes("fee")) return "Pricing depends on the scope — every project is unique. Book a free call on our Contact page and we'll put together a custom proposal! 💬";
+  if (m.includes("free") || m.includes("consultation")) return "Yes! We offer free initial consultations. Head to the Contact page to book a Zoom call — no commitment needed. 😊";
+  if (m.includes("payment") || m.includes("invoice") || m.includes("deposit")) return "We typically work with milestone-based payments. We'll walk you through everything during your free consultation. 📋";
+
+  // Timeline & Process
+  if (m.includes("how long") || m.includes("timeline") || m.includes("turnaround") || m.includes("deadline") || m.includes("time")) return "Timelines vary — a branding project may take 2–3 weeks, a full website 4–8 weeks. We set clear milestones upfront. ⏱️";
+  if (m.includes("process") || m.includes("how do you work") || m.includes("steps") || m.includes("workflow")) return "Our process: Discovery → Strategy → Design → Build → Launch. We keep you in the loop every step of the way! 🔄";
+  if (m.includes("revision") || m.includes("changes") || m.includes("edit") || m.includes("feedback")) return "We include revision rounds in every project so you get exactly what you envisioned. Collaboration is key for us! ✏️";
+  if (m.includes("support") || m.includes("maintenance") || m.includes("after launch") || m.includes("ongoing")) return "We offer post-launch support and maintenance plans. We don't just build and disappear! 🛡️";
+  if (m.includes("hosting") || m.includes("domain") || m.includes("server")) return "We can help with hosting recommendations and setup. We work with top-tier providers for speed and reliability. ⚡";
+
+  // Location & About
+  if (m.includes("location") || m.includes("where are you") || m.includes("based") || m.includes("dallas") || m.includes("texas") || m.includes("office")) return "We're based in Dallas, TX — but we work with brands nationwide and internationally! 🌎";
+  if (m.includes("about") || m.includes("who is lavashing") || m.includes("tell me about") || m.includes("company")) return "Lavashing is a Dallas-based agency specializing in premium digital experiences — design, dev, branding & marketing, all in one place. 🏢";
+  if (m.includes("team") || m.includes("founder") || m.includes("who works") || m.includes("staff") || m.includes("people")) return "We have a small but mighty team of designers, developers, strategists, and marketers. Visit our About page to meet us! 👥";
+  if (m.includes("industry") || m.includes("industries") || m.includes("sector") || m.includes("niche")) return "We've worked with clients in ecommerce, healthcare, real estate, food & beverage, education, and professional services. 🏭";
+  if (m.includes("experience") || m.includes("how long have you") || m.includes("years")) return "We've been creating premium digital experiences for ambitious brands — check out our About page for the full story! 📖";
+
+  // Contact & Next Steps
+  if (m.includes("contact") || m.includes("schedule") || m.includes("call") || m.includes("meeting") || m.includes("talk") || m.includes("reach")) return "Head to our Contact page to book a free Zoom call. We'd love to hear about your project! 📅";
+  if (m.includes("email") || m.includes("phone") || m.includes("number")) return "You can reach us at hello@lavashing.com or via our Contact page. We respond quickly! ✉️";
+  if (m.includes("get started") || m.includes("start") || m.includes("begin") || m.includes("ready") || m.includes("hire")) return "Amazing — let's do it! 🎉 The best first step is booking a free call on our Contact page so we can learn about your goals.";
+  if (m.includes("portfolio") || m.includes("example") || m.includes("sample") || m.includes("work") || m.includes("showcase")) return "Check out our Work page — we've got projects across branding, web design, development, and marketing. 🖼️";
+  if (m.includes("blog") || m.includes("article") || m.includes("read") || m.includes("resource")) return "Our Blog is full of insights on web design, marketing, branding, and strategy. Worth a read! 📰";
+  if (m.includes("result") || m.includes("roi") || m.includes("success") || m.includes("outcome")) return "We're obsessed with results — our work is designed to increase conversions, brand recognition, and revenue. 📊";
+  if (m.includes("testimonial") || m.includes("review") || m.includes("feedback") || m.includes("client say")) return "Our clients love the results! We'd be happy to share more details on a call — head to the Contact page to book. 🌟";
+
+  // Fallback
+  return "Great question! Feel free to explore our site, or book a free call — we'd love to learn about your project and see how we can help! 😊";
 }
 
-const GREETINGS = ["Hi there! 👋 Need help?", "Hey! Got questions? 😊", "Hello! I'm Leo, your guide!", "Psst… ask me anything! 🤖"];
+const GREETINGS = [
+  "Hi there! 👋 Need help?",
+  "Hey! Got questions? 😊",
+  "Hello! I'm Leo, your guide!",
+  "Psst… ask me anything! 🤖",
+  "Looking for something? I can help! 🔍",
+  "Hi! Curious about our services? 🚀",
+  "Hey! Ready to start a project? Let's chat! 💬",
+];
 
 /* ─── Roam waypoints — stay on RIGHT side ── */
 function randomWaypoint(): { x: number; y: number } {

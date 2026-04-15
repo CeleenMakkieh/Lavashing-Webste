@@ -60,7 +60,7 @@ export default function Footer({ settings }: { settings: WPSiteSettings }) {
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={18} className="flex-shrink-0" />
-                <a href={`tel:${settings.contactPhone.replace(/\D/g, "")}`} className="hover:text-primary-foreground transition-colors">
+                <a href={`tel:${(settings.contactPhone ?? "").replace(/\D/g, "")}`} className="hover:text-primary-foreground transition-colors">
                   {settings.contactPhone}
                 </a>
               </li>
