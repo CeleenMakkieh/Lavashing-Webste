@@ -206,7 +206,8 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
 }
 
 /* ─── Main component ─────────────────────────── */
-import type { WPTeamMember } from "@/lib/wordpress";
+import type { WPTeamMember, WPService, WPValue } from "@/lib/wordpress";
+import Image from "next/image";
 
 const DEFAULT_STORY = [
   "Founded in Dallas, Texas, Lavashing was born from a simple belief: that great digital experiences can transform businesses and inspire people.",
@@ -214,24 +215,45 @@ const DEFAULT_STORY = [
   "We're not just another agency. We're your strategic partner, invested in your success and committed to delivering results that actually move the needle.",
 ];
 
+const DEFAULT_SERVICES = [
+  { title: "Web Design & Development", description: "From sleek corporate sites to complex web apps — fast, beautiful, user-friendly.", features: [] },
+  { title: "Branding & Identity", description: "Distinctive brand identities that capture your essence and resonate with your audience.", features: [] },
+  { title: "Marketing & Strategy", description: "Data-backed campaigns with creative edge to grow your audience and revenue.", features: [] },
+  { title: "Consulting & Support", description: "Ongoing partnership to ensure your digital presence evolves and keeps performing.", features: [] },
+];
+
+const DEFAULT_VALUES: WPValue[] = [
+  { title: "Purpose-Driven", description: "We believe in creating work that matters and makes a real impact. Every pixel, every line of copy, every campaign — intentional and meaningful." },
+  { title: "Collaborative", description: "Your success is our success. We work as partners, not just vendors. That means transparency, honest feedback, and shared wins." },
+  { title: "Excellence", description: "We hold ourselves to the highest standards in everything we do — from strategic thinking to micro-interactions." },
+  { title: "Growth-Focused", description: "We're committed to continuous improvement. We study trends, test ideas, and iterate — so your brand stays ahead." },
+];
+
+const VALUE_ICONS = [<Target size={18} />, <Users size={18} />, <Award size={18} />, <TrendingUp size={18} />];
+
 export default function About({
   team = [],
   aboutStory = DEFAULT_STORY,
+  aboutImageUrl = "",
+  services = DEFAULT_SERVICES,
+  values = DEFAULT_VALUES,
 }: {
   team?: WPTeamMember[];
   aboutStory?: string[];
+  aboutImageUrl?: string;
+  services?: WPService[];
+  values?: WPValue[];
 }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
-  const values = [
-    { icon: <Target size={18} />, title: "Purpose-Driven", description: "We believe in creating work that matters and makes a real impact. Every pixel, every line of copy, every campaign — intentional and meaningful." },
-    { icon: <Users size={18} />, title: "Collaborative", description: "Your success is our success. We work as partners, not just vendors. That means transparency, honest feedback, and shared wins." },
-    { icon: <Award size={18} />, title: "Excellence", description: "We hold ourselves to the highest standards in everything we do — from strategic thinking to micro-interactions." },
-    { icon: <TrendingUp size={18} />, title: "Growth-Focused", description: "We're committed to continuous improvement. We study trends, test ideas, and iterate — so your brand stays ahead." },
-  ];
+  const valuePills = values.map((v, i) => ({
+    icon: VALUE_ICONS[i % VALUE_ICONS.length],
+    title: v.title,
+    description: v.description,
+  }));
 
   return (
     <div className="pt-20" style={{ background: BRAND.bg, color: BRAND.text }}>
@@ -316,22 +338,32 @@ export default function About({
               className="aspect-[4/3] rounded-3xl overflow-hidden relative"
               style={{ background: `linear-gradient(135deg, ${BRAND.header}30, ${BRAND.btnHover}40)` }}
             >
-              {/* Animated shapes inside image placeholder */}
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute rounded-full"
-                  style={{
-                    width: 40 + i * 30,
-                    height: 40 + i * 30,
-                    background: i % 2 === 0 ? BRAND.header + "40" : BRAND.btnHover + "60",
-                    top: `${10 + i * 15}%`,
-                    left: `${5 + i * 18}%`,
-                  }}
-                  animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-                  transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+              {aboutImageUrl ? (
+                <Image
+                  src={aboutImageUrl}
+                  alt="About Lavashing"
+                  fill
+                  className="object-cover"
                 />
-              ))}
+              ) : (
+                <>
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute rounded-full"
+                      style={{
+                        width: 40 + i * 30,
+                        height: 40 + i * 30,
+                        background: i % 2 === 0 ? BRAND.header + "40" : BRAND.btnHover + "60",
+                        top: `${10 + i * 15}%`,
+                        left: `${5 + i * 18}%`,
+                      }}
+                      animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
+                      transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+                    />
+                  ))}
+                </>
+              )}
               <div className="absolute inset-0 flex items-end p-8">
                 <div
                   className="px-5 py-3 rounded-2xl text-sm font-medium"
@@ -405,12 +437,7 @@ export default function About({
           </motion.h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-px border" style={{ borderColor: BRAND.header + "22" }}>
-            {[
-              { num: "01", title: "Web Design & Development", desc: "From sleek corporate sites to complex web apps — fast, beautiful, user-friendly." },
-              { num: "02", title: "Branding & Identity", desc: "Distinctive brand identities that capture your essence and resonate with your audience." },
-              { num: "03", title: "Marketing & Strategy", desc: "Data-backed campaigns with creative edge to grow your audience and revenue." },
-              { num: "04", title: "Consulting & Support", desc: "Ongoing partnership to ensure your digital presence evolves and keeps performing." },
-            ].map((s, i) => (
+            {services.map((s, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0 }}
@@ -421,7 +448,7 @@ export default function About({
                 className="p-10 group cursor-default transition-colors duration-300"
                 style={{ background: BRAND.bg }}
               >
-                <span className="text-xs font-bold tracking-widest opacity-40 mb-4 block">{s.num}</span>
+                <span className="text-xs font-bold tracking-widest opacity-40 mb-4 block">{String(i + 1).padStart(2, "0")}</span>
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="text-2xl font-semibold leading-snug" style={{ color: BRAND.header }}>{s.title}</h3>
                   <motion.div
@@ -433,7 +460,7 @@ export default function About({
                     <ArrowUpRight size={20} />
                   </motion.div>
                 </div>
-                <p className="mt-3 text-base leading-relaxed" style={{ color: BRAND.text + "80" }}>{s.desc}</p>
+                <p className="mt-3 text-base leading-relaxed" style={{ color: BRAND.text + "80" }}>{s.description}</p>
               </motion.div>
             ))}
           </div>
@@ -453,7 +480,7 @@ export default function About({
             Our Values
           </motion.h2>
           <div className="border-t" style={{ borderColor: BRAND.header + "33" }}>
-            {values.map((v, i) => (
+            {valuePills.map((v, i) => (
               <ValuePill key={i} {...v} index={i} />
             ))}
           </div>

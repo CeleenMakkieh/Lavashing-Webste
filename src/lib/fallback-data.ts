@@ -6,7 +6,7 @@
 
 import type {
   WPPost, WPService, WPTeamMember, WPClient,
-  WPIndustry, WPProcessStep, WPSiteSettings,
+  WPIndustry, WPProcessStep, WPSiteSettings, WPValue,
 } from "./wordpress";
 
 /* ─── Site-wide settings ─────────────────── */
@@ -16,6 +16,7 @@ export const FALLBACK_SETTINGS: WPSiteSettings = {
   heroVideoUrl: "https://cdn.coverr.co/videos/coverr-gradient-wave-3d-animation-9948/1080p.mp4",
   manifestoText: "From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform.",
   availableBadgeText: "Available for new projects",
+  aboutImageUrl: "",
   aboutStory: [
     "Founded in Dallas, Texas, Lavashing was born from a simple belief: that great digital experiences can transform businesses and inspire people.",
     "Over the past decade, we've grown from a small team of passionate creators into a full-service agency serving clients across the United States. But our core mission remains the same — to create work that's both beautiful and effective.",
@@ -126,6 +127,14 @@ export const FALLBACK_TEAM: WPTeamMember[] = [
   { name: "Michael Chen", role: "Creative Director", funFact: "Has redesigned his home office 4 times this year 🎨", color: "from-purple-500 to-pink-500" },
   { name: "Emily Rodriguez", role: "Head of Strategy", funFact: "Reads one marketing book every two weeks 📚", color: "from-pink-500 to-orange-500" },
   { name: "David Park", role: "Lead Developer", funFact: "Built his first website at age 11 for his hamster 🐹", color: "from-orange-500 to-yellow-500" },
+];
+
+/* ─── Values ─────────────────────────────── */
+export const FALLBACK_VALUES: WPValue[] = [
+  { title: "Purpose-Driven", description: "We believe in creating work that matters and makes a real impact. Every pixel, every line of copy, every campaign — intentional and meaningful." },
+  { title: "Collaborative", description: "Your success is our success. We work as partners, not just vendors. That means transparency, honest feedback, and shared wins." },
+  { title: "Excellence", description: "We hold ourselves to the highest standards in everything we do — from strategic thinking to micro-interactions." },
+  { title: "Growth-Focused", description: "We're committed to continuous improvement. We study trends, test ideas, and iterate — so your brand stays ahead." },
 ];
 
 /* ─── Clients ────────────────────────────── */

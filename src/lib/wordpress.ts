@@ -67,6 +67,7 @@ export type WPTeamMember = {
 export type WPClient = {
   name: string;
   color: string;
+  logoUrl?: string;
 };
 
 export type WPIndustry = {
@@ -90,6 +91,7 @@ export type WPSiteSettings = {
 
   // About story (About page)
   aboutStory: string[];
+  aboutImageUrl: string;
 
   // Footer
   footerTagline: string;
@@ -103,6 +105,11 @@ export type WPSiteSettings = {
   socialLinkedin: string;
   socialTiktok: string;
   socialInstagram: string;
+};
+
+export type WPValue = {
+  title: string;
+  description: string;
 };
 
 /* ─────────────────────────────────────────────
@@ -122,6 +129,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
           manifestoText: string;
           availableBadgeText: string;
           aboutStory: string;
+          aboutImageUrl: string;
           footerTagline: string;
           contactEmail: string;
           contactPhone: string;
@@ -144,6 +152,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
             manifestoText
             availableBadgeText
             aboutStory
+            aboutImageUrl
             footerTagline
             contactEmail
             contactPhone
@@ -167,6 +176,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
     manifestoText: s.manifestoText ?? "",
     availableBadgeText: s.availableBadgeText ?? "",
     aboutStory: s.aboutStory ? s.aboutStory.split("\n\n").filter(Boolean) : [],
+    aboutImageUrl: s.aboutImageUrl ?? "",
     footerTagline: s.footerTagline ?? "",
     contactEmail: s.contactEmail ?? "",
     contactPhone: s.contactPhone ?? "",
@@ -353,11 +363,11 @@ export async function getTeamMembers(): Promise<WPTeamMember[] | null> {
 ───────────────────────────────────────────── */
 
 export async function getClients(): Promise<WPClient[] | null> {
-  type R = { clients: { nodes: Array<{ title: string; clientFields: { logoColor: string } }> } };
+  type R = { clients: { nodes: Array<{ title: string; clientFields: { logoColor: string; logoImage: string } }> } };
   const data = await fetchWP<R>(`
     query GetClients {
       clients(first: 20) {
-        nodes { title clientFields { logoColor } }
+        nodes { title clientFields { logoColor logoImage } }
       }
     }
   `);
@@ -365,5 +375,28 @@ export async function getClients(): Promise<WPClient[] | null> {
   return data.clients.nodes.map((c) => ({
     name: c.title,
     color: c.clientFields?.logoColor ?? "#6b8d6d",
+    logoUrl: c.clientFields?.logoImage ?? "",
+  }));
+}
+
+/* ─────────────────────────────────────────────
+   VALUES  (CPT: "value")
+   ACF fields: description
+   Order by menu_order in WordPress
+───────────────────────────────────────────── */
+
+export async function getValues(): Promise<WPValue[] | null> {
+  type R = { values: { nodes: Array<{ title: string; valueFields: { description: string } }> } };
+  const data = await fetchWP<R>(`
+    query GetValues {
+      values(first: 10, where: { orderby: { field: MENU_ORDER, order: ASC } }) {
+        nodes { title valueFields { description } }
+      }
+    }
+  `);
+  if (!data) return null;
+  return data.values.nodes.map((v) => ({
+    title: v.title,
+    description: v.valueFields?.description ?? "",
   }));
 }

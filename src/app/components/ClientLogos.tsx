@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "motion/react";
+import Image from "next/image";
 import type { WPClient } from "@/lib/wordpress";
 
 const DEFAULT_CLIENTS: WPClient[] = [
@@ -43,10 +44,21 @@ export default function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: W
                 className="aspect-video bg-card border border-border rounded-xl flex items-center justify-center p-8 group cursor-pointer"
               >
                 <div className="text-center">
-                  <div
-                    className="w-16 h-16 rounded-full mx-auto mb-3 group-hover:scale-110 transition-transform"
-                    style={{ backgroundColor: client.color }}
-                  />
+                  {client.logoUrl ? (
+                    <div className="relative w-32 h-12 mx-auto mb-3 group-hover:scale-110 transition-transform">
+                      <Image
+                        src={client.logoUrl}
+                        alt={client.name}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="w-16 h-16 rounded-full mx-auto mb-3 group-hover:scale-110 transition-transform"
+                      style={{ backgroundColor: client.color }}
+                    />
+                  )}
                   <div className="text-lg opacity-70 group-hover:opacity-100 transition-opacity">
                     {client.name}
                   </div>

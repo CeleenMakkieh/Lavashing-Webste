@@ -1,13 +1,22 @@
-import { getTeamMembers, getSiteSettings } from "@/lib/wordpress";
-import { FALLBACK_TEAM, FALLBACK_SETTINGS } from "@/lib/fallback-data";
+import { getTeamMembers, getSiteSettings, getServices, getValues } from "@/lib/wordpress";
+import { FALLBACK_TEAM, FALLBACK_SETTINGS, FALLBACK_SERVICES, FALLBACK_VALUES } from "@/lib/fallback-data";
 import About from "../pages/About";
 
 export default async function AboutPage() {
-  const [team, settings] = await Promise.all([getTeamMembers(), getSiteSettings()]);
+  const [team, settings, services, values] = await Promise.all([
+    getTeamMembers(),
+    getSiteSettings(),
+    getServices(),
+    getValues(),
+  ]);
+  const s = settings ?? FALLBACK_SETTINGS;
   return (
     <About
       team={team ?? FALLBACK_TEAM}
-      aboutStory={(settings ?? FALLBACK_SETTINGS).aboutStory}
+      aboutStory={s.aboutStory}
+      aboutImageUrl={s.aboutImageUrl}
+      services={services ?? FALLBACK_SERVICES}
+      values={values ?? FALLBACK_VALUES}
     />
   );
 }

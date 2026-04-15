@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Sparkles, Code, Palette, TrendingUp, Target, ArrowUpRight } from "lucide-react";
 import ClientLogos from "../components/ClientLogos";
 import InteractiveMap from "../components/InteractiveMap";
-import type { WPSiteSettings } from "@/lib/wordpress";
+import type { WPSiteSettings, WPClient } from "@/lib/wordpress";
 
 const BRAND = {
   bg: "#ffffe9",
@@ -161,7 +161,7 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
 // Removed - stats section not needed
 
 /* ─── Main ──────────────────────────────── */
-export default function Home({ settings }: { settings: WPSiteSettings }) {
+export default function Home({ settings, clients = [] }: { settings: WPSiteSettings; clients?: WPClient[] }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
@@ -315,7 +315,7 @@ export default function Home({ settings }: { settings: WPSiteSettings }) {
         </motion.div>
       </div>
 
-      <ClientLogos />
+      <ClientLogos clients={clients} />
       <InteractiveMap />
 
       {/* ── CTA ──────────────────────────────────── */}
