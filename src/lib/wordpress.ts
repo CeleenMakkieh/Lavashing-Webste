@@ -129,7 +129,6 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
           manifestoText: string;
           availableBadgeText: string;
           aboutStory: string;
-          aboutImageUrl: string;
           footerTagline: string;
           contactEmail: string;
           contactPhone: string;
@@ -152,7 +151,6 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
             manifestoText
             availableBadgeText
             aboutStory
-            aboutImageUrl
             footerTagline
             contactEmail
             contactPhone
@@ -176,7 +174,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings | null> {
     manifestoText: s.manifestoText ?? "",
     availableBadgeText: s.availableBadgeText ?? "",
     aboutStory: s.aboutStory ? s.aboutStory.split("\n\n").filter(Boolean) : [],
-    aboutImageUrl: s.aboutImageUrl ?? "",
+    aboutImageUrl: "",
     footerTagline: s.footerTagline ?? "",
     contactEmail: s.contactEmail ?? "",
     contactPhone: s.contactPhone ?? "",
@@ -363,19 +361,19 @@ export async function getTeamMembers(): Promise<WPTeamMember[] | null> {
 ───────────────────────────────────────────── */
 
 export async function getClients(): Promise<WPClient[] | null> {
-  type R = { clients: { nodes: Array<{ title: string; clientFields: { logoColor: string; logoImage: string } }> } };
+  type R = { clients: { nodes: Array<{ title: string; clientField: { logoColor: string; logoImage: string } }> } };
   const data = await fetchWP<R>(`
     query GetClients {
       clients(first: 20) {
-        nodes { title clientFields { logoColor logoImage } }
+        nodes { title clientField { logoColor logoImage } }
       }
     }
   `);
   if (!data) return null;
   return data.clients.nodes.map((c) => ({
     name: c.title,
-    color: c.clientFields?.logoColor ?? "#6b8d6d",
-    logoUrl: c.clientFields?.logoImage ?? "",
+    color: c.clientField?.logoColor ?? "#6b8d6d",
+    logoUrl: c.clientField?.logoImage ?? "",
   }));
 }
 
