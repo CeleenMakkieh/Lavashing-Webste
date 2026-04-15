@@ -278,7 +278,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
       <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: "#670626" + "0e" }}>
         <div className="max-w-5xl mx-auto">
           <RevealText
-            text={settings.manifestoText}
+            text={settings.manifestoText || "From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform."}
             className="text-3xl md:text-4xl font-bold leading-[1.3]"
             highlightWords={["tailored", "precisely"]}
           />

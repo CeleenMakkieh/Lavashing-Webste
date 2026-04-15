@@ -169,17 +169,17 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
       transition={{ delay: index * 0.1 }}
       onClick={() => setOpen((o) => !o)}
       className="border-b cursor-pointer group"
-      style={{ borderColor: BRAND.header + "33" }}
+      style={{ borderColor: BRAND.headline + "33" }}
     >
       <div className="flex items-center justify-between py-5 px-2">
         <div className="flex items-center gap-4">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors duration-300"
-            style={{ background: open ? BRAND.btnHover : BRAND.header + "22", color: BRAND.header }}
+            style={{ background: open ? BRAND.accent : BRAND.accent + "33", color: BRAND.headline }}
           >
             {icon}
           </div>
-          <span className="text-xl font-medium">{title}</span>
+          <span className="text-xl font-medium" style={{ color: BRAND.accent }}>{title}</span>
         </div>
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}
@@ -199,7 +199,7 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="px-14 pb-5 text-base opacity-60 leading-relaxed">{description}</p>
+            <p className="px-14 pb-5 text-base leading-relaxed" style={{ color: BRAND.accent + "cc" }}>{description}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -414,9 +414,9 @@ export default function About({
             <MagneticBtn
               className="mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-300 border-2"
               style={{
-                background: BRAND.btnIdle,
-                borderColor: BRAND.btnIdle,
-                color: "#fff",
+                background: BRAND.headline,
+                borderColor: BRAND.headline,
+                color: BRAND.accent,
               } as React.CSSProperties}
             >
               Start a project <ArrowUpRight size={14} />
@@ -481,7 +481,7 @@ export default function About({
           >
             Our Values
           </motion.h2>
-          <div className="border-t" style={{ borderColor: BRAND.header + "33" }}>
+          <div className="border-t" style={{ borderColor: BRAND.headline + "33" }}>
             {valuePills.map((v, i) => (
               <ValuePill key={i} {...v} index={i} />
             ))}

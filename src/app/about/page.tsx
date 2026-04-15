@@ -15,8 +15,8 @@ export default async function AboutPage() {
       team={team ?? FALLBACK_TEAM}
       aboutStory={s.aboutStory}
       aboutImageUrl={s.aboutImageUrl}
-      services={services ?? FALLBACK_SERVICES}
-      values={values ?? FALLBACK_VALUES}
+      services={services?.length ? services : FALLBACK_SERVICES}
+      values={values?.length ? values : FALLBACK_VALUES}
     />
   );
 }
