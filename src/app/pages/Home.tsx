@@ -77,7 +77,7 @@ function RevealText({ text, className = "", highlightWords = [] }: { text: strin
             key={i}
             style={{
               opacity: useTransform(scrollYProgress, [pct, Math.min(pct + 0.15, 1)], [0.1, 1]),
-              color: isHighlight ? "#f6c0d7" : "#670626",
+              color: isHighlight ? "#bad797" : "#670626",
               fontSize: isHighlight ? "1.15em" : undefined,
               fontStyle: isHighlight ? "italic" : undefined
             }}

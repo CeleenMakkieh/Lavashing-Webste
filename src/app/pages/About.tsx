@@ -179,7 +179,7 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
           >
             {icon}
           </div>
-          <span className="text-xl font-medium" style={{ color: BRAND.accent }}>{title}</span>
+          <span className="text-xl font-medium" style={{ color: BRAND.headline }}>{title}</span>
         </div>
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}

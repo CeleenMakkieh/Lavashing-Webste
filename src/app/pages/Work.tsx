@@ -76,17 +76,25 @@ function Shape({ top, bottom, left, right, w, h, bg, border, br, blur, delay, du
 }
 
 /* ─── Word scroll reveal ─────────────────── */
-function RevealText({ text, className = "" }: { text: string; className?: string }) {
+function RevealText({ text, className = "", highlightWords = [] }: { text: string; className?: string; highlightWords?: string[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.3"] });
   const words = text.split(" ");
   return (
     <div ref={ref} className={`flex flex-wrap gap-x-3 gap-y-1 ${className}`}>
-      {words.map((word, i) => (
-        <motion.span key={i} style={{ opacity: useTransform(scrollYProgress, [i / words.length, Math.min((i + 1) / words.length + 0.1, 1)], [0.1, 1]) }}>
-          {word}
-        </motion.span>
-      ))}
+      {words.map((word, i) => {
+        const isHighlight = highlightWords.includes(word.toLowerCase().replace(/[.,!?;]/g, ""));
+        return (
+          <motion.span key={i} style={{
+            opacity: useTransform(scrollYProgress, [i / words.length, Math.min((i + 1) / words.length + 0.1, 1)], [0.1, 1]),
+            color: isHighlight ? BRAND.accent : BRAND.headline,
+            fontSize: isHighlight ? "1.1em" : undefined,
+            fontStyle: isHighlight ? "italic" : undefined,
+          }}>
+            {word}
+          </motion.span>
+        );
+      })}
     </div>
   );
 }
@@ -297,7 +305,8 @@ export default function Work({ services, industries, processSteps }: { services:
       <section className="py-20 px-4 sm:px-8 lg:px-16" style={{ background: BRAND.header + "0b" }}>
         <div className="max-w-5xl mx-auto">
           <RevealText text="From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform."
-            className="text-3xl md:text-4xl font-bold leading-[1.3]" />
+            className="text-3xl md:text-4xl font-bold leading-[1.3]"
+            highlightWords={["tailored", "precisely"]} />
         </div>
       </section>
 

@@ -10,9 +10,9 @@ export default async function WorkPage() {
   ]);
   return (
     <Work
-      services={services ?? FALLBACK_SERVICES}
-      industries={industries ?? FALLBACK_INDUSTRIES}
-      processSteps={processSteps ?? FALLBACK_PROCESS}
+      services={services?.length ? services : FALLBACK_SERVICES}
+      industries={industries?.length ? industries : FALLBACK_INDUSTRIES}
+      processSteps={processSteps?.length ? processSteps : FALLBACK_PROCESS}
     />
   );
 }
