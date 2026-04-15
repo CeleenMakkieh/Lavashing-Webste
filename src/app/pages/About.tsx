@@ -448,7 +448,7 @@ export default function About({
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ backgroundColor: BRAND.btnHover + "50" }}
                 className="p-10 group cursor-default transition-colors duration-300"
-                style={{ background: BRAND.bg }}
+                style={{ background: "#ffffff" }}
               >
                 <span className="text-xs font-bold tracking-widest opacity-40 mb-4 block">{String(i + 1).padStart(2, "0")}</span>
                 <div className="flex items-start justify-between gap-4">

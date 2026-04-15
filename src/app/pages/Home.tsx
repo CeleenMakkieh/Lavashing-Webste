@@ -146,14 +146,14 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
         viewport={{ once: true }} transition={{ delay: i * 0.1, type: "spring", stiffness: 80 }}
         onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
         data-hover
-        style={{ background: hov ? BRAND.header : BRAND.bg, borderColor: hov ? BRAND.header : BRAND.header + "28", transition: "background 0.3s, border-color 0.3s", transformStyle: "preserve-3d" }}
+        style={{ background: hov ? BRAND.accent : "#ffffff", borderColor: hov ? BRAND.accent : BRAND.headline + "28", transition: "background 0.3s, border-color 0.3s", transformStyle: "preserve-3d" }}
         className="p-8 rounded-3xl border-2 relative overflow-hidden flex flex-col h-full cursor-default"
       >
-        <span style={{ position: "absolute", top: 14, right: 18, fontSize: 64, fontWeight: 900, color: hov ? "#fff" : BRAND.header, opacity: 0.06, lineHeight: 1, userSelect: "none" }}>{s.num}</span>
-        <div style={{ width: 52, height: 52, borderRadius: 14, background: hov ? "#ffffff22" : BRAND.header + "18", color: hov ? "#fff" : BRAND.header, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, transition: "background 0.3s, color 0.3s" }}>{s.icon}</div>
-        <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 10, color: hov ? "#fff" : BRAND.header, transition: "color 0.3s" }}>{s.title}</h3>
-        <p style={{ fontSize: 14, lineHeight: 1.65, color: hov ? "#ffffffbb" : BRAND.text + "80", flex: 1, transition: "color 0.3s" }}>{s.desc}</p>
-        <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: hov ? BRAND.pink : BRAND.header, transition: "color 0.3s" }}>
+        <span style={{ position: "absolute", top: 14, right: 18, fontSize: 64, fontWeight: 900, color: hov ? BRAND.headline : BRAND.headline, opacity: 0.06, lineHeight: 1, userSelect: "none" }}>{s.num}</span>
+        <div style={{ width: 52, height: 52, borderRadius: 14, background: hov ? BRAND.headline + "22" : BRAND.headline + "12", color: hov ? BRAND.headline : BRAND.headline, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, transition: "background 0.3s, color 0.3s" }}>{s.icon}</div>
+        <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 10, color: BRAND.headline, transition: "color 0.3s" }}>{s.title}</h3>
+        <p style={{ fontSize: 14, lineHeight: 1.65, color: hov ? BRAND.text : BRAND.text + "80", flex: 1, transition: "color 0.3s" }}>{s.desc}</p>
+        <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: BRAND.headline, transition: "color 0.3s" }}>
           Learn more <ArrowUpRight size={13} />
         </div>
       </motion.div>
@@ -187,7 +187,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
     { num: "05", icon: <Target size={22} />, title: "Strategy", desc: "Data-driven insights and planning to guide your business confidently forward." },
   ];
 
-  
+
 
   return (
     <div className="pt-20 overflow-x-hidden" style={{ background: BRAND.bg, color: BRAND.text }}>
@@ -292,7 +292,6 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             <div>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 className="text-4xl md:text-5xl font-bold" style={{ color: "#670626" }}>What we do</motion.h2>
-              <p className="mt-2 text-base" style={{ color: "#f6c0d7" }}>Hover for a 3D effect</p>
             </div>
             <Link href="/work">
               <motion.button data-hover whileHover={{ background: "#bad797", color: "#670626" }}

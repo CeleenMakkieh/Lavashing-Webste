@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   title: "Lavashing — Dallas Marketing & Web Agency",
   description:
     "A modern marketing and web agency crafting premium digital solutions for ambitious brands. Based in Dallas, TX.",
+  icons: {
+    icon: "/LM.png",
+    shortcut: "/LM.png",
+    apple: "/LM.png",
+  },
 };
 
 export default async function RootLayout({

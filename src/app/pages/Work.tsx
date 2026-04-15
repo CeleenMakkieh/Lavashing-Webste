@@ -102,7 +102,7 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
         onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
         data-hover
         style={{
-          background: hov ? BRAND.header : BRAND.bg,
+          background: hov ? BRAND.header : "#ffffff",
           borderColor: hov ? BRAND.header : BRAND.header + "28",
           transition: "background 0.32s, border-color 0.32s",
           transformStyle: "preserve-3d", minHeight: 300,
@@ -196,7 +196,7 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
         onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
         data-hover
         style={{
-          background: hov ? BRAND.header : BRAND.bg,
+          background: hov ? BRAND.header : "#ffffff",
           borderColor: hov ? BRAND.header : BRAND.header + "28",
           transition: "background 0.3s, border-color 0.3s",
           padding: "28px 24px", borderRadius: 24, border: "2px solid", cursor: "default", position: "relative",
