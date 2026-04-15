@@ -110,8 +110,8 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
         onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
         data-hover
         style={{
-          background: hov ? BRAND.header : "#ffffff",
-          borderColor: hov ? BRAND.header : BRAND.header + "28",
+          background: hov ? BRAND.accent : "#ffffff",
+          borderColor: hov ? BRAND.accent : BRAND.headline + "28",
           transition: "background 0.32s, border-color 0.32s",
           transformStyle: "preserve-3d", minHeight: 300,
         }}
@@ -120,18 +120,18 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
         {/* Ghost number floats in Z */}
         <span style={{
           position: "absolute", top: 12, right: 16, fontSize: 72, fontWeight: 900,
-          color: hov ? "#fff" : BRAND.header, opacity: 0.06, lineHeight: 1, userSelect: "none",
+          color: BRAND.headline, opacity: 0.06, lineHeight: 1, userSelect: "none",
           transform: "translateZ(20px)", transition: "color 0.32s",
         }}>{s.num}</span>
 
         {/* Icon */}
         <motion.div
           animate={{ rotateY: hov ? 360 : 0 }} transition={{ duration: 0.6 }}
-          style={{ width: 56, height: 56, borderRadius: 14, background: hov ? "#ffffff22" : BRAND.header + "18", color: hov ? "#fff" : BRAND.header, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, transition: "background 0.32s, color 0.32s" }}
+          style={{ width: 56, height: 56, borderRadius: 14, background: BRAND.headline + "18", color: BRAND.headline, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, transition: "background 0.32s, color 0.32s" }}
         >{s.icon}</motion.div>
 
-        <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 10, color: hov ? "#fff" : BRAND.headline, transition: "color 0.32s" }}>{s.title}</h3>
-        <p style={{ fontSize: 13.5, lineHeight: 1.65, color: hov ? "#ffffffbb" : BRAND.text + "80", flex: 1, transition: "color 0.32s", marginBottom: 16 }}>{s.description}</p>
+        <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 10, color: BRAND.headline, transition: "color 0.32s" }}>{s.title}</h3>
+        <p style={{ fontSize: 13.5, lineHeight: 1.65, color: hov ? BRAND.text : BRAND.text + "80", flex: 1, transition: "color 0.32s", marginBottom: 16 }}>{s.description}</p>
 
         {/* Features slide up */}
         <AnimatePresence>
@@ -140,15 +140,15 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
               style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
               {s.features.slice(0, 3).map((f, fi) => (
                 <motion.li key={fi} initial={{ x: -12, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: fi * 0.06 }}
-                  style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "#ffffffcc" }}>
-                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: BRAND.accent, flexShrink: 0 }} />{f}
+                  style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: BRAND.headline }}>
+                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: BRAND.headline, flexShrink: 0 }} />{f}
                 </motion.li>
               ))}
             </motion.ul>
           )}
         </AnimatePresence>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 700, color: hov ? BRAND.accent : BRAND.header, transition: "color 0.32s" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 700, color: BRAND.headline, transition: "color 0.32s" }}>
           See details <ArrowUpRight size={13} />
         </div>
       </motion.div>
@@ -204,8 +204,8 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
         onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
         data-hover
         style={{
-          background: hov ? BRAND.header : "#ffffff",
-          borderColor: hov ? BRAND.header : BRAND.header + "28",
+          background: hov ? BRAND.accent : "#ffffff",
+          borderColor: hov ? BRAND.accent : BRAND.headline + "28",
           transition: "background 0.3s, border-color 0.3s",
           padding: "28px 24px", borderRadius: 24, border: "2px solid", cursor: "default", position: "relative",
         }}
@@ -215,19 +215,19 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
           <div style={{ display: "none" }} className="lg:block" />
         )}
         <motion.div
-          animate={{ background: hov ? BRAND.accent : BRAND.header + "18" }}
+          animate={{ background: hov ? BRAND.headline + "18" : BRAND.headline + "12" }}
           style={{ width: 48, height: 48, borderRadius: 13, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 18, transition: "background 0.3s" }}
         >
-          <span style={{ fontSize: 16, fontWeight: 900, color: hov ? BRAND.header : BRAND.header }}>{step}</span>
+          <span style={{ fontSize: 16, fontWeight: 900, color: BRAND.headline }}>{step}</span>
         </motion.div>
 
-        {/* Icon spin on hover */}
-        <motion.div style={{ position: "absolute", top: 24, right: 20, opacity: 0.08, fontSize: 56, fontWeight: 900, color: hov ? "#fff" : BRAND.header, lineHeight: 1 }}>
+        {/* Ghost number */}
+        <motion.div style={{ position: "absolute", top: 24, right: 20, opacity: 0.06, fontSize: 56, fontWeight: 900, color: BRAND.headline, lineHeight: 1 }}>
           {step}
         </motion.div>
 
-        <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: hov ? "#fff" : BRAND.headline, transition: "color 0.3s" }}>{title}</h3>
-        <p style={{ fontSize: 13.5, lineHeight: 1.65, color: hov ? "#ffffffbb" : BRAND.text + "70", transition: "color 0.3s" }}>{desc}</p>
+        <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: BRAND.headline, transition: "color 0.3s" }}>{title}</h3>
+        <p style={{ fontSize: 13.5, lineHeight: 1.65, color: hov ? BRAND.text : BRAND.text + "70", transition: "color 0.3s" }}>{desc}</p>
       </motion.div>
     </Tilt>
   );
