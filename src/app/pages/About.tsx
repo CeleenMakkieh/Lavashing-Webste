@@ -50,7 +50,7 @@ function MarqueeStrip() {
       <motion.div
         className="flex gap-12 whitespace-nowrap"
         animate={{ x: ["0%", "-33.33%"] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: typeof window !== "undefined" && window.innerWidth < 768 ? 7 : 18, repeat: Infinity, ease: "linear" }}
       >
         {repeated.map((w, i) => (
           <span key={i} className="text-2xl font-bold tracking-widest uppercase" style={{ color: BRAND.headline }}>

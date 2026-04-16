@@ -273,7 +273,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
 
       {/* ── HERO ─────────────────────────────────── */}
       <section ref={heroRef} className="relative min-h-[100vh] flex items-center overflow-hidden">
-        {shapes.map((s, i) => <Shape key={i} s={s} />)}
+        <div className="hidden md:block">{shapes.map((s, i) => <Shape key={i} s={s} />)}</div>
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
@@ -368,7 +368,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
 
       {/* ── MARQUEE ──────────────────────────────── */}
       <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: "#670626" + "33" }}>
-        <motion.div className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>
+        <motion.div className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: typeof window !== "undefined" && window.innerWidth < 768 ? 8 : 22, repeat: Infinity, ease: "linear" }}>
           {[...Array(4)].flatMap(() => ["Strategy", "Branding", "Design", "Development", "Marketing", "Growth"]).map((w, i) => (
             <span key={i} style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#670626" }}>
               {w} <span style={{ opacity: 0.3, margin: "0 8px" }}>·</span>
@@ -382,9 +382,11 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
 
       {/* ── CTA ──────────────────────────────────── */}
       <section className="py-32 px-4 sm:px-8 lg:px-16 relative overflow-hidden" style={{ background: "#670626" }}>
-        <div className="absolute inset-0 flex items-center justify-center font-black select-none pointer-events-none" style={{ fontSize: "18vw", color: "#f6c0d714" }}>LAVASHING</div>
-        <Shape s={{ top: "-5%", left: "-3%", w: 280, h: 280, bg: "#ffffff07", br: "50%", delay: 0, dur: 8, dy: 35, dr: 25 }} />
-        <Shape s={{ bottom: "-5%", right: "-3%", w: 230, h: 230, bg: "#ffffff07", br: "3rem", delay: 1.5, dur: 10, dy: 28, dr: 18 }} />
+        <div className="hidden md:flex absolute inset-0 items-center justify-center font-black select-none pointer-events-none" style={{ fontSize: "18vw", color: "#f6c0d714" }}>LAVASHING</div>
+        <div className="hidden md:block">
+          <Shape s={{ top: "-5%", left: "-3%", w: 280, h: 280, bg: "#ffffff07", br: "50%", delay: 0, dur: 8, dy: 35, dr: 25 }} />
+          <Shape s={{ bottom: "-5%", right: "-3%", w: 230, h: 230, bg: "#ffffff07", br: "3rem", delay: 1.5, dur: 10, dy: 28, dr: 18 }} />
+        </div>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: "#f6c0d7" }}>Ready to get started?</h2>
@@ -395,6 +397,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
               Book a Call <ArrowUpRight size={15} />
             </motion.button>
           </Link>
+          <div className="md:hidden mt-6 font-black select-none pointer-events-none" style={{ fontSize: "15vw", color: "#f6c0d730" }}>LAVASHING</div>
         </motion.div>
       </section>
     </div>

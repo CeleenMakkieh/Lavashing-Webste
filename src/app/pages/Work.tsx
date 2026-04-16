@@ -312,7 +312,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
 
       {/* ── MARQUEE ──────────────────────────────── */}
       <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.headline + "33" }}>
-        <motion.div className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
+        <motion.div className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: typeof window !== "undefined" && window.innerWidth < 768 ? 8 : 20, repeat: Infinity, ease: "linear" }}>
           {[...Array(4)].flatMap(() => ["Web Dev", "UI Design", "Branding", "SEO", "Strategy", "Marketing", "Growth", "E-commerce"]).map((w, i) => (
             <span key={i} style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: BRAND.headline }}>
               {w} <span style={{ opacity: 0.3, margin: "0 8px" }}>·</span>

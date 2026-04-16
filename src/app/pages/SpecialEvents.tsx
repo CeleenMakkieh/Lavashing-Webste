@@ -1,9 +1,10 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
+
+const HB_PID = "699125b1fab39a0007237d9b";
 
 const BRAND = {
   bg: "#faffe0",
@@ -19,7 +20,7 @@ const BRAND = {
 /* ── Subtle sparkles for light background ── */
 function Sparkles({ count = 20 }: { count?: number }) {
   return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+    <div className="hidden md:block" style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
       {[...Array(count)].map((_, i) => (
         <motion.span
           key={i}
@@ -161,6 +162,21 @@ function EventRow({ title, desc, index }: { title: string; desc: string; index: 
 export default function SpecialEvents() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    w._HB_ = w._HB_ || {};
+    w._HB_.pid = HB_PID;
+    if (!document.querySelector(`script[data-hb="${HB_PID}"]`)) {
+      const s = document.createElement("script");
+      s.type = "text/javascript";
+      s.async = true;
+      s.setAttribute("data-hb", HB_PID);
+      s.src = "https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js";
+      document.body.appendChild(s);
+    }
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -174,8 +190,8 @@ export default function SpecialEvents() {
   return (
     <div style={{ background: BRAND.bg, color: BRAND.black }}>
 
-      {/* ── STICKY CAMERA SCROLL ─────────────────────────────── */}
-      <div ref={containerRef} style={{ height: "600vh", position: "relative" }}>
+      {/* ── STICKY CAMERA SCROLL — desktop only ─────────────── */}
+      <div className="hidden md:block" ref={containerRef} style={{ height: "600vh", position: "relative" }}>
         <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
           <div style={{ position: "absolute", inset: 0, background: BRAND.bg, zIndex: 0 }} />
           <motion.div
@@ -604,23 +620,10 @@ export default function SpecialEvents() {
             Dates book up quickly. Reach out today and let&apos;s make sure your day is saved.
           </motion.p>
 
-          {/* HoneyBook widget — outside animation wrapper so it loads immediately */}
+          {/* HoneyBook widget */}
           <div style={{ position: "relative", zIndex: 1, marginTop: "1rem" }}>
-            <div className="hb-p-699125b1fab39a0007237d9b-2" />
-            <img
-              height={1}
-              width={1}
-              style={{ display: "none" }}
-              src="https://www.honeybook.com/p.png?pid=699125b1fab39a0007237d9b"
-              alt=""
-            />
-            <Script
-              id="honeybook-special-events"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `(function(h,b,s,n,i,p,e,t){h._HB_=h._HB_||{};h._HB_.pid=i;t=b.createElement(s);t.type="text/javascript";t.async=!0;t.src=n;e=b.getElementsByTagName(s)[0];e.parentNode.insertBefore(t,e);})(window,document,"script","https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js","699125b1fab39a0007237d9b");`,
-              }}
-            />
+            <div className={`hb-p-${HB_PID}-2`} />
+            <img height={1} width={1} style={{ display: "none" }} src={`https://www.honeybook.com/p.png?pid=${HB_PID}`} alt="" />
           </div>
         </section>
 
@@ -628,21 +631,8 @@ export default function SpecialEvents() {
 
       {/* ── HONEYBOOK FORM ───────────────────────────────────── */}
       <div style={{ padding: "6vh 5vw", background: BRAND.bg }}>
-        <div className="hb-p-699125b1fab39a0007237d9b-2" />
-        <img
-          height={1}
-          width={1}
-          style={{ display: "none" }}
-          src="https://www.honeybook.com/p.png?pid=699125b1fab39a0007237d9b"
-          alt=""
-        />
-        <Script
-          id="honeybook-bottom"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(h,b,s,n,i,p,e,t){h._HB_=h._HB_||{};h._HB_.pid=i;;;;t=b.createElement(s);t.type="text/javascript";t.async=!0;t.src=n;e=b.getElementsByTagName(s)[0];e.parentNode.insertBefore(t,e);})(window,document,"script","https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js","699125b1fab39a0007237d9b");`,
-          }}
-        />
+        <div className={`hb-p-${HB_PID}-2`} />
+        <img height={1} width={1} style={{ display: "none" }} src={`https://www.honeybook.com/p.png?pid=${HB_PID}`} alt="" />
       </div>
 
       {/* ── BACK TO MARKETING — fixed top-left ───────────────── */}
