@@ -199,7 +199,7 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="px-14 pb-5 text-base leading-relaxed" style={{ color: BRAND.accent + "cc" }}>{description}</p>
+            <p className="px-14 pb-5 text-base leading-relaxed" style={{ color: BRAND.header }}>{description}</p>
           </motion.div>
         )}
       </AnimatePresence>

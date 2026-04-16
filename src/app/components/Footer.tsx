@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Linkedin, Music2, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import type { WPSiteSettings } from "@/lib/wordpress";
 
 export default function Footer({ settings }: { settings: WPSiteSettings }) {
+  const pathname = usePathname();
+  if (pathname === "/special-events") return null;
   return (
     <footer className="bg-[#670626]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

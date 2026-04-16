@@ -185,7 +185,7 @@ function IndustryRow({ ind, i }: { ind: { icon: React.ReactNode; title: string; 
       <AnimatePresence>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.28 }} className="overflow-hidden">
-            <p style={{ padding: "0 16px 20px 68px", fontSize: 14.5, lineHeight: 1.7, color: BRAND.text + "80" }}>{ind.description}</p>
+            <p style={{ padding: "0 16px 20px 68px", fontSize: 14.5, lineHeight: 1.7, color: BRAND.header }}>{ind.description}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -234,12 +234,12 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
 }
 
 /* ─── Main ──────────────────────────────── */
-import type { WPService, WPIndustry, WPProcessStep } from "@/lib/wordpress";
+import type { WPService, WPIndustry, WPProcessStep, WPClient } from "@/lib/wordpress";
 
 const ICONS = [<Code size={22} />, <Palette size={22} />, <Sparkles size={22} />, <TrendingUp size={22} />, <Lightbulb size={22} />];
 const INDUSTRY_ICONS = [<ShoppingBag size={20} />, <Heart size={20} />, <GraduationCap size={20} />, <Building2 size={20} />, <Utensils size={20} />, <Briefcase size={20} />];
 
-export default function Work({ services, industries, processSteps }: { services: WPService[]; industries: WPIndustry[]; processSteps: WPProcessStep[] }) {
+export default function Work({ services, industries, processSteps, clients = [] }: { services: WPService[]; industries: WPIndustry[]; processSteps: WPProcessStep[]; clients?: WPClient[] }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 180]);
@@ -383,7 +383,7 @@ export default function Work({ services, industries, processSteps }: { services:
         </div>
       </section>
 
-      <ClientLogos />
+      <ClientLogos clients={clients} />
     </div>
   );
 }

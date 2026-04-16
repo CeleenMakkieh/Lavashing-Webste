@@ -13,7 +13,7 @@ import type {
 export const FALLBACK_SETTINGS: WPSiteSettings = {
   heroTypewriterWords: ["inspire", "convert", "captivate", "grow you"],
   heroSubtitle: "A modern marketing and web agency crafting premium digital solutions for ambitious brands.",
-  heroVideoUrl: "https://cdn.coverr.co/videos/coverr-gradient-wave-3d-animation-9948/1080p.mp4",
+  heroVideoUrl: "/video1277478768.mp4",
   manifestoText: "From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform.",
   availableBadgeText: "Available for new projects",
   aboutImageUrl: "",

@@ -7,7 +7,7 @@ export default async function HomePage() {
   return (
     <Home
       settings={settings ?? FALLBACK_SETTINGS}
-      clients={clients ?? FALLBACK_CLIENTS}
+      clients={clients?.length ? clients : FALLBACK_CLIENTS}
     />
   );
 }

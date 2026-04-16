@@ -12,7 +12,7 @@ export default async function AboutPage() {
   const s = settings ?? FALLBACK_SETTINGS;
   return (
     <About
-      team={team ?? FALLBACK_TEAM}
+      team={team?.length ? team : FALLBACK_TEAM}
       aboutStory={s.aboutStory}
       aboutImageUrl={s.aboutImageUrl}
       services={services?.length ? services : FALLBACK_SERVICES}

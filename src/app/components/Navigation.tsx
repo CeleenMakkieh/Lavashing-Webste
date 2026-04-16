@@ -10,10 +10,13 @@ export default function Navigation() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  if (pathname === "/special-events") return null;
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
     { path: "/work", label: "Work" },
+    { path: "/special-events", label: "Special Events" },
     { path: "/blog", label: "Blog" },
     { path: "/contact", label: "Contact" },
   ];

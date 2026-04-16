@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "motion/react";
 import { X, Send, Minimize2 } from "lucide-react";
 
-const BRAND = { header: "#6b8d6d", pink: "#f6c0d7", bg: "#f8eeea", text: "#1a0509" };
+const BRAND = { header: "#6b8d6d", pink: "#670626", body: "#f6c0d7", bg: "#f8eeea", text: "#1a0509" };
 
 /* ─── Robot SVG face ────────────────────── */
 function RobotFace({ thinking = false, talking = false, size = 56 }: { thinking?: boolean; talking?: boolean; size?: number }) {
@@ -14,7 +14,7 @@ function RobotFace({ thinking = false, talking = false, size = 56 }: { thinking?
       {/* Antenna pole */}
       <rect x="27" y="3" width="6" height="12" rx="3" fill={BRAND.header} />
       {/* Antenna tip */}
-      <motion.circle cx="30" cy="3" r="5" fill={BRAND.pink}
+      <motion.circle cx="30" cy="3" r="5" fill="#f6c0d7"
         animate={thinking ? { scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] } : { scale: 1, opacity: 1 }}
         transition={{ duration: 0.7, repeat: Infinity }} />
       {/* Eye left white */}
@@ -46,7 +46,7 @@ function RobotFace({ thinking = false, talking = false, size = 56 }: { thinking?
       <circle cx="8" cy="33" r="3.5" fill="#ffffff" stroke={BRAND.header} strokeWidth="1.5" />
       <circle cx="52" cy="33" r="3.5" fill="#ffffff" stroke={BRAND.header} strokeWidth="1.5" />
       {/* Chest indicator */}
-      <motion.circle cx="30" cy="44" r="3" fill={BRAND.pink}
+      <motion.circle cx="30" cy="44" r="3" fill="#f6c0d7"
         animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.8, repeat: Infinity }} />
     </svg>
   );

@@ -164,6 +164,84 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
 /* ─── Stat card ─────────────────────────── */
 // Removed - stats section not needed
 
+/* ─── Video zoom (Clay-style) ───────────── */
+function VideoZoom({ videoUrl, badgeText }: { videoUrl: string; badgeText: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Padding shrinks → card expands to fill viewport
+  const padX = useTransform(scrollYProgress, [0, 1], ["5vw", "0vw"]);
+  const padY = useTransform(scrollYProgress, [0, 1], ["4vh", "0vh"]);
+  const borderRadius = useTransform(scrollYProgress, [0, 1], [20, 0]);
+
+  return (
+    <div ref={containerRef} style={{ height: "180vh" }}>
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          background: BRAND.bg,
+          display: "flex",
+          alignItems: "stretch",
+        }}
+      >
+        {/* Padding wrapper — shrinks away as you scroll */}
+        <motion.div
+          style={{
+            flex: 1,
+            paddingLeft: padX,
+            paddingRight: padX,
+            paddingTop: padY,
+            paddingBottom: padY,
+          }}
+        >
+          {/* Video card */}
+          <motion.div
+            style={{
+              width: "100%",
+              height: "100%",
+              borderRadius,
+              overflow: "hidden",
+              position: "relative",
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            >
+              <source src={videoUrl} type="video/mp4" />
+            </video>
+            {/* Bottom gradient */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: `linear-gradient(to top, ${BRAND.header}55, transparent 55%)`,
+                pointerEvents: "none",
+              }}
+            />
+            {/* Badge */}
+            <div
+              className="absolute bottom-5 left-5 rounded-2xl px-4 py-3 flex items-center gap-3 backdrop-blur-md"
+              style={{ background: "rgba(248,238,234,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}
+            >
+              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              <span className="text-white text-sm font-medium">{badgeText}</span>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Main ──────────────────────────────── */
 export default function Home({ settings, clients = [] }: { settings: WPSiteSettings; clients?: WPClient[] }) {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -242,26 +320,6 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             </Link>
           </motion.div>
 
-          {/* Video */}
-          <motion.div
-            initial={{ opacity: 0, y: 60, rotateX: 10 }} animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative max-w-5xl mx-auto" style={{ perspective: 1200 }}
-          >
-            <div className="relative aspect-video rounded-3xl overflow-hidden border-2" style={{ borderColor: BRAND.header + "30" }}>
-              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                <source src={settings.heroVideoUrl} type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(to top, ${BRAND.header}33, transparent)` }} />
-              <div className="absolute bottom-5 left-5 rounded-2xl px-4 py-3 flex items-center gap-3 backdrop-blur-md"
-                style={{ background: "rgba(248,238,234,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}>
-                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                <span className="text-white text-sm font-medium">{settings.availableBadgeText}</span>
-              </div>
-            </div>
-            <Shape s={{ top: "-20px", right: "-20px", w: 54, h: 54, bg: BRAND.header, br: "14px", delay: 0.5, dur: 5, dy: 13, dr: 18 }} />
-            <Shape s={{ bottom: "-18px", left: "-18px", w: 68, h: 68, bg: BRAND.accent, br: "50%", blur: true, delay: 1, dur: 7, dy: 17, dr: 12 }} />
-          </motion.div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}
@@ -273,6 +331,9 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             style={{ width: 1, height: 32, background: `linear-gradient(to bottom, ${BRAND.header}, transparent)` }} />
         </motion.div>
       </section>
+
+      {/* ── VIDEO ZOOM (Clay-style) ──────────────── */}
+      <VideoZoom videoUrl={settings.heroVideoUrl} badgeText={settings.availableBadgeText} />
 
       {/* ── MANIFESTO REVEAL ─────────────────────── */}
       <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: "#670626" + "0e" }}>
