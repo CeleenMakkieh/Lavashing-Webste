@@ -4,20 +4,22 @@ import Image from "next/image";
 import type { WPClient } from "@/lib/wordpress";
 
 const DEFAULT_CLIENTS: WPClient[] = [
-  { name: "TechCorp", color: "#3B82F6" },
-  { name: "DesignHub", color: "#8B5CF6" },
-  { name: "StartupX", color: "#EC4899" },
-  { name: "GlobalCo", color: "#F59E0B" },
-  { name: "Innovate", color: "#10B981" },
-  { name: "FutureLabs", color: "#6366F1" },
-  { name: "CreativeWorks", color: "#EF4444" },
-  { name: "BuildRight", color: "#14B8A6" },
+  { name: "One Bite" },
+  { name: "SS Towing" },
+  { name: "Super Towing" },
+  { name: "One Coffee" },
+  { name: "Shimaa Beauty Center" },
+  { name: "Shimaa Academy" },
+  { name: "WJ Place" },
+  { name: "Lune Cafe" },
+  { name: "ZExpress" },
+  { name: "Flora and Noor" },
+  { name: "State Protection Service" },
 ];
 
 export default function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: WPClient[] }) {
-
   return (
-    <section className="py-24 bg-muted/30 overflow-hidden">
+    <section className="py-24 overflow-hidden" style={{ background: "#f8eeea" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -25,47 +27,42 @@ export default function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: W
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl mb-4">Trusted by leading brands</h2>
-          <p className="text-xl text-foreground/70">
-            We've partnered with innovative companies across industries
-          </p>
+          <h2 className="text-4xl md:text-5xl mb-4 font-bold" style={{ color: "#670626" }}>
+            Trusted by Businesses Nationwide
+          </h2>
         </motion.div>
 
-        <div className="relative">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {clients.map((client, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="aspect-video bg-card border border-border rounded-xl flex items-center justify-center p-8 group cursor-pointer"
-              >
-                <div className="text-center">
-                  {client.logoUrl ? (
-                    <div className="relative w-32 h-12 mx-auto mb-3 group-hover:scale-110 transition-transform">
-                      <Image
-                        src={client.logoUrl}
-                        alt={client.name}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      className="w-16 h-16 rounded-full mx-auto mb-3 group-hover:scale-110 transition-transform"
-                      style={{ backgroundColor: client.color }}
-                    />
-                  )}
-                  <div className="text-lg opacity-70 group-hover:opacity-100 transition-opacity">
-                    {client.name}
-                  </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          {clients.map((client, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              whileHover={{ scale: 1.05, y: -4 }}
+              className="aspect-video rounded-2xl flex items-center justify-center p-6"
+              style={{ background: "#fff", border: "1.5px solid #67062218" }}
+            >
+              {client.logoUrl ? (
+                <div className="relative w-full h-full">
+                  <Image
+                    src={client.logoUrl}
+                    alt={client.name}
+                    fill
+                    className="object-contain"
+                  />
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              ) : (
+                <div
+                  className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold select-none"
+                  style={{ background: "#67062210", color: "#670626" }}
+                >
+                  {client.name.charAt(0)}
+                </div>
+              )}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

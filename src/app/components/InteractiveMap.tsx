@@ -12,17 +12,17 @@ const BRAND = {
 };
 
 /* ── Pin data — positions calibrated to lavashing map.png ── */
-const HQ = { id: "dallas", name: "Dallas, TX", label: "HQ", left: "calc(44% + 0.5cm)", top: "70%" };
+const HQ = { id: "dallas", name: "Dallas, TX", label: "HQ", left: "45.5%", top: "70%" };
 
 const DFW_CITIES = [
-  { id: "irving", name: "Irving, TX", left: "calc(43% + 0.5cm)", top: "71%" },
-  { id: "plano",  name: "Plano, TX",  left: "calc(45% + 0.5cm)", top: "68%" },
+  { id: "irving", name: "Irving, TX", left: "44.5%", top: "71%" },
+  { id: "plano",  name: "Plano, TX",  left: "46.5%", top: "68%" },
 ];
 
 const STATE_PINS = [
-  { id: "seattle",      name: "Seattle, WA",  left: "calc(9% + 0.5cm)",  top: "17%" },
-  { id: "houston",      name: "Houston, TX",  left: "calc(44% + 0.5cm)", top: "80%" },
-  { id: "pennsylvania", name: "Pennsylvania", left: "calc(76% + 0.5cm)", top: "36%" },
+  { id: "seattle",      name: "Seattle, WA",  left: "10.5%", top: "17%" },
+  { id: "houston",      name: "Houston, TX",  left: "45.5%", top: "80%" },
+  { id: "pennsylvania", name: "Pennsylvania", left: "77.5%", top: "36%" },
 ];
 
 /* ── Tooltip ── */

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { Target, Users, Award, TrendingUp, ArrowUpRight, MapPin } from "lucide-react";
 
@@ -45,12 +45,15 @@ function MagneticBtn({ children, className = "", style }: { children: React.Reac
 function MarqueeStrip() {
   const words = ["Strategy", "Branding", "Design", "Development", "Marketing", "Growth"];
   const repeated = [...words, ...words, ...words];
+  const [duration, setDuration] = useState(18);
+  useEffect(() => { if (window.innerWidth < 768) setDuration(7); }, []);
   return (
     <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.headline + "33" }}>
       <motion.div
+        key={duration}
         className="flex gap-12 whitespace-nowrap"
         animate={{ x: ["0%", "-33.33%"] }}
-        transition={{ duration: typeof window !== "undefined" && window.innerWidth < 768 ? 7 : 18, repeat: Infinity, ease: "linear" }}
+        transition={{ duration, repeat: Infinity, ease: "linear" }}
       >
         {repeated.map((w, i) => (
           <span key={i} className="text-2xl font-bold tracking-widest uppercase" style={{ color: BRAND.headline }}>

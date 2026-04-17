@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "motion/react";
 import Link from "next/link";
-import { Sparkles, Code, Palette, TrendingUp, Target, ArrowUpRight } from "lucide-react";
+import { Sparkles, Code, Palette, TrendingUp, Target, ArrowUpRight, Smartphone, Share2, FileText, Paintbrush, Search, Zap, Lightbulb } from "lucide-react";
 import ClientLogos from "../components/ClientLogos";
 import InteractiveMap from "../components/InteractiveMap";
 import type { WPSiteSettings, WPClient } from "@/lib/wordpress";
@@ -16,14 +16,18 @@ const BRAND = {
   text: "#1a0509",
 };
 
-/* ─── Custom cursor ──────────────────────── */
+/* ─── Custom cursor (desktop only) ──────────── */
 function MagneticCursor() {
   const cx = useMotionValue(-100);
   const cy = useMotionValue(-100);
   const tx = useSpring(cx, { stiffness: 55, damping: 16 });
   const ty = useSpring(cy, { stiffness: 55, damping: 16 });
   const [big, setBig] = useState(false);
+  const [show, setShow] = useState(false);
   useEffect(() => {
+    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (isTouch || !window.matchMedia("(pointer: fine)").matches) return;
+    setShow(true);
     const mv = (e: MouseEvent) => { cx.set(e.clientX); cy.set(e.clientY); };
     const ov = (e: MouseEvent) => { if ((e.target as Element).closest("a,button,[data-hover]")) setBig(true); };
     const ol = () => setBig(false);
@@ -32,6 +36,7 @@ function MagneticCursor() {
     window.addEventListener("mouseout", ol);
     return () => { window.removeEventListener("mousemove", mv); window.removeEventListener("mouseover", ov); window.removeEventListener("mouseout", ol); };
   }, []);
+  if (!show) return null;
   return (
     <>
       <motion.div style={{ x: cx, y: cy, translateX: "-50%", translateY: "-50%", width: 10, height: 10, borderRadius: "50%", background: BRAND.header, position: "fixed", top: 0, left: 0, zIndex: 9999, pointerEvents: "none" }} />
@@ -152,7 +157,18 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
         <span style={{ position: "absolute", top: 14, right: 18, fontSize: 64, fontWeight: 900, color: hov ? BRAND.headline : BRAND.headline, opacity: 0.06, lineHeight: 1, userSelect: "none" }}>{s.num}</span>
         <div style={{ width: 52, height: 52, borderRadius: 14, background: hov ? BRAND.headline + "22" : BRAND.headline + "12", color: hov ? BRAND.headline : BRAND.headline, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, transition: "background 0.3s, color 0.3s" }}>{s.icon}</div>
         <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 10, color: BRAND.headline, transition: "color 0.3s" }}>{s.title}</h3>
-        <p style={{ fontSize: 14, lineHeight: 1.65, color: hov ? BRAND.text : BRAND.text + "80", flex: 1, transition: "color 0.3s" }}>{s.desc}</p>
+        <p style={{
+          fontSize: 14,
+          lineHeight: 1.65,
+          color: hov ? BRAND.text : BRAND.text + "80",
+          flex: 1,
+          transition: "color 0.3s, max-height 0.4s ease",
+          overflow: "hidden",
+          maxHeight: hov ? "600px" : "4.95em",
+          display: "-webkit-box",
+          WebkitLineClamp: hov ? "unset" : 3,
+          WebkitBoxOrient: "vertical",
+        }}>{s.desc}</p>
         <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: BRAND.headline, transition: "color 0.3s" }}>
           Learn more <ArrowUpRight size={13} />
         </div>
@@ -165,77 +181,60 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
 // Removed - stats section not needed
 
 /* ─── Video zoom (Clay-style) ───────────── */
-function VideoZoom({ videoUrl, badgeText }: { videoUrl: string; badgeText: string }) {
+function VideoZoom({ videoUrl }: { videoUrl: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  // Padding shrinks → card expands to fill viewport
-  const padX = useTransform(scrollYProgress, [0, 1], ["5vw", "0vw"]);
-  const padY = useTransform(scrollYProgress, [0, 1], ["4vh", "0vh"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.88, 1]);
   const borderRadius = useTransform(scrollYProgress, [0, 1], [20, 0]);
 
   return (
-    <div ref={containerRef} style={{ height: "180vh" }}>
+    <div ref={containerRef} style={{ height: "135vh" }}>
       <div
         style={{
           position: "sticky",
           top: 0,
           height: "100vh",
           background: BRAND.bg,
+          overflow: "hidden",
           display: "flex",
-          alignItems: "stretch",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        {/* Padding wrapper — shrinks away as you scroll */}
+        {/* Video scales from center outward */}
         <motion.div
           style={{
-            flex: 1,
-            paddingLeft: padX,
-            paddingRight: padX,
-            paddingTop: padY,
-            paddingBottom: padY,
+            width: "100%",
+            height: "100%",
+            scale,
+            borderRadius,
+            overflow: "hidden",
+            originX: 0.5,
+            originY: 0.5,
           }}
         >
-          {/* Video card */}
-          <motion.div
-            style={{
-              width: "100%",
-              height: "100%",
-              borderRadius,
-              overflow: "hidden",
-              position: "relative",
-            }}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-            >
-              <source src={videoUrl} type="video/mp4" />
-            </video>
-            {/* Bottom gradient */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: `linear-gradient(to top, ${BRAND.header}55, transparent 55%)`,
-                pointerEvents: "none",
-              }}
-            />
-            {/* Badge */}
-            <div
-              className="absolute bottom-5 left-5 rounded-2xl px-4 py-3 flex items-center gap-3 backdrop-blur-md"
-              style={{ background: "rgba(248,238,234,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}
-            >
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              <span className="text-white text-sm font-medium">{badgeText}</span>
-            </div>
-          </motion.div>
+            <source src={videoUrl} type="video/mp4" />
+          </video>
+          {/* Bottom gradient */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: `linear-gradient(to top, ${BRAND.header}55, transparent 55%)`,
+              pointerEvents: "none",
+            }}
+          />
         </motion.div>
       </div>
     </div>
@@ -245,6 +244,8 @@ function VideoZoom({ videoUrl, badgeText }: { videoUrl: string; badgeText: strin
 /* ─── Main ──────────────────────────────── */
 export default function Home({ settings, clients = [] }: { settings: WPSiteSettings; clients?: WPClient[] }) {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [marqueeDuration, setMarqueeDuration] = useState(22);
+  useEffect(() => { if (window.innerWidth < 768) setMarqueeDuration(8); }, []);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
@@ -258,11 +259,18 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
   ];
 
   const svcs = [
-    { num: "01", icon: <Code size={22} />, title: "Web Development", desc: "Custom sites and apps built with modern tech — fast, accessible, built to scale." },
-    { num: "02", icon: <Palette size={22} />, title: "Web Design", desc: "Beautiful interfaces that captivate your audience and drive real conversions." },
-    { num: "03", icon: <Sparkles size={22} />, title: "Branding", desc: "Distinctive brand identities that make your business impossible to forget." },
-    { num: "04", icon: <TrendingUp size={22} />, title: "Marketing", desc: "Strategic campaigns backed by data to grow your audience and boost ROI." },
-    { num: "05", icon: <Target size={22} />, title: "Strategy", desc: "Data-driven insights and planning to guide your business confidently forward." },
+    { num: "01", icon: <Code size={22} />, title: "Web Development", desc: "Fast, responsive, and scalable websites engineered for performance and search visibility. From custom-coded solutions to CMS-powered platforms, every build prioritizes clean architecture, mobile-first design, and structured data  ensuring your site ranks well on traditional search engines and gets surfaced by AI-powered tools like Google AI Overviews, ChatGPT, and Perplexity." },
+    { num: "02", icon: <Smartphone size={22} />, title: "App Development", desc: "Custom mobile and web applications built to solve real business challenges. Every project moves from concept and UX research through to launch and ongoing iteration  using scalable frameworks, intuitive interfaces, and a technical foundation designed to perform seamlessly across devices and platforms." },
+    { num: "03", icon: <Palette size={22} />, title: "Web Design", desc: "Visually striking, user-friendly websites that bring your brand to life and deliver a seamless experience on every screen. The focus is on layout, typography, responsiveness, and usability  making sure your site looks polished, loads fast, and moves visitors toward action. Every design choice is shaped by how real users and search engines interact with your content." },
+    { num: "04", icon: <Sparkles size={22} />, title: "Branding", desc: "A strong brand is more than a logo it's how your audience recognizes, trusts, and remembers you. Branding services cover visual identity, strategy, voice, messaging, and consistency across every touchpoint. Whether it's a fresh launch or a full rebrand, the result is an identity built to stand out in both human-facing and AI-driven discovery channels." },
+    { num: "05", icon: <TrendingUp size={22} />, title: "Marketing", desc: "Strategic marketing solutions built to drive growth, reach the right audience, and create lasting visibility. The approach blends creative campaigns, data-driven targeting, and results-focused strategy  all tailored to your goals and designed to perform across search, social, and emerging AI platforms." },
+    { num: "06", icon: <Share2 size={22} />, title: "Social Media Management", desc: "Strategy-first social media management that keeps your brand active, relevant, and visible where your audience actually spends time. From content calendars and community engagement to analytics and platform-specific optimization every effort builds the kind of consistent, authoritative presence that both followers and AI tools increasingly recognize and recommend." },
+    { num: "07", icon: <FileText size={22} />, title: "Content Creation", desc: "High-quality, original content built to rank, resonate, and get cited. From blog posts and landing pages to video scripts and email sequences, every piece is crafted using SEO best practices and AISO principles  with clear structure, entity-rich language, and authoritative sourcing that performs in traditional search results and AI-generated answers alike." },
+    { num: "08", icon: <Paintbrush size={22} />, title: "Graphic Design", desc: "Scroll-stopping visuals that communicate your message clearly and elevate your brand across every platform. From social media graphics and infographics to pitch decks and ad creatives, every asset is on-brand, on-message, and optimized for the formats that drive real engagement." },
+    { num: "09", icon: <Search size={22} />, title: "Search Engine Optimization (SEO)", desc: "Data-driven SEO services covering technical audits, on-page optimization, keyword strategy, link building, site architecture, page speed, schema markup, and content alignment. The objective is straightforward: rank higher, attract qualified organic traffic, and turn visitors into customers." },
+    { num: "10", icon: <Zap size={22} />, title: "AI SEO (AISO) / Generative Engine Optimization (GEO)", desc: "Your brand's visibility now extends beyond Google into AI-powered platforms like ChatGPT, Perplexity, Google AI Overviews, and Copilot. AI SEO focuses on making your brand discoverable, citable, and recommended by these tools. The strategy includes entity optimization, structured data, authoritative content development, and digital footprint positioning so when users ask questions in your space, AI models point them to you." },
+    { num: "11", icon: <Target size={22} />, title: "Digital Campaign Planning", desc: "Multi-channel digital campaigns built around your business objectives. From audience research and platform selection to creative direction and performance tracking, every campaign is structured to maximize impact  with messaging optimized for human engagement and AI-driven discovery alike." },
+    { num: "12", icon: <Lightbulb size={22} />, title: "Creative Consulting", desc: "Strategic creative direction for brands ready to level up. From positioning and campaign ideation to content strategy and visual direction  the focus is on solving real business problems with bold, informed creative thinking and a deep understanding of how audiences discover and connect with brands today." },
   ];
 
 
@@ -291,9 +299,8 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             className="font-bold mb-8"
             style={{ fontSize: "clamp(3rem,9vw,7.5rem)", lineHeight: 0.97, letterSpacing: "-0.02em" }}
           >
-            <span style={{ color: "#670626" }}>We create</span>
-            <br /><span style={{ color: "#670626" }}>experiences that</span>
-            <br /><TypewriterWord words={settings.heroTypewriterWords} />
+            <span style={{ color: "#670626" }}>We build brands that</span>
+            <br /><TypewriterWord words={["resonate", "grow", "connect", "last", "lead"]} />
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
@@ -333,15 +340,15 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
       </section>
 
       {/* ── VIDEO ZOOM (Clay-style) ──────────────── */}
-      <VideoZoom videoUrl={settings.heroVideoUrl} badgeText={settings.availableBadgeText} />
+      <VideoZoom videoUrl={settings.heroVideoUrl} />
 
       {/* ── MANIFESTO REVEAL ─────────────────────── */}
       <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: "#670626" + "0e" }}>
         <div className="max-w-5xl mx-auto">
           <RevealText
-            text={settings.manifestoText || "From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform."}
+            text="We turn ideas into high-performing digital experiences tailored to your brand and built to stand out"
             className="text-3xl md:text-4xl font-bold leading-[1.3]"
-            highlightWords={["tailored", "precisely"]}
+            highlightWords={["tailored", "stand", "out"]}
           />
         </div>
       </section>
@@ -368,7 +375,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
 
       {/* ── MARQUEE ──────────────────────────────── */}
       <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: "#670626" + "33" }}>
-        <motion.div className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: typeof window !== "undefined" && window.innerWidth < 768 ? 8 : 22, repeat: Infinity, ease: "linear" }}>
+        <motion.div key={marqueeDuration} className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: marqueeDuration, repeat: Infinity, ease: "linear" }}>
           {[...Array(4)].flatMap(() => ["Strategy", "Branding", "Design", "Development", "Marketing", "Growth"]).map((w, i) => (
             <span key={i} style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#670626" }}>
               {w} <span style={{ opacity: 0.3, margin: "0 8px" }}>·</span>
@@ -382,7 +389,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
 
       {/* ── CTA ──────────────────────────────────── */}
       <section className="py-32 px-4 sm:px-8 lg:px-16 relative overflow-hidden" style={{ background: "#670626" }}>
-        <div className="hidden md:flex absolute inset-0 items-center justify-center font-black select-none pointer-events-none" style={{ fontSize: "18vw", color: "#f6c0d714" }}>LAVASHING</div>
+        <div className="absolute inset-0 flex items-center justify-center font-black select-none pointer-events-none" style={{ fontSize: "18vw", color: "#f6c0d714" }}>LAVASHING</div>
         <div className="hidden md:block">
           <Shape s={{ top: "-5%", left: "-3%", w: 280, h: 280, bg: "#ffffff07", br: "50%", delay: 0, dur: 8, dy: 35, dr: 25 }} />
           <Shape s={{ bottom: "-5%", right: "-3%", w: 230, h: 230, bg: "#ffffff07", br: "3rem", delay: 1.5, dur: 10, dy: 28, dr: 18 }} />
@@ -397,7 +404,6 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
               Book a Call <ArrowUpRight size={15} />
             </motion.button>
           </Link>
-          <div className="md:hidden mt-6 font-black select-none pointer-events-none" style={{ fontSize: "15vw", color: "#f6c0d730" }}>LAVASHING</div>
         </motion.div>
       </section>
     </div>

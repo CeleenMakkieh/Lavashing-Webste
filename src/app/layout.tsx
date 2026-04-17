@@ -3,6 +3,8 @@ import "../styles/index.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import AIChat from "./components/AIChat";
+import BackToTop from "./components/BackToTop";
+import LanguagePicker from "./components/LanguagePicker";
 import { Toaster } from "./components/ui/sonner";
 import { getSiteSettings } from "@/lib/wordpress";
 import { FALLBACK_SETTINGS } from "@/lib/fallback-data";
@@ -32,6 +34,8 @@ export default async function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer settings={settings} />
           <AIChat />
+          <BackToTop />
+          <LanguagePicker />
           <Toaster />
         </div>
       </body>

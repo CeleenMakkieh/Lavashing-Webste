@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -161,6 +161,11 @@ function EventRow({ title, desc, index }: { title: string; desc: string; index: 
 
 export default function SpecialEvents() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -191,7 +196,7 @@ export default function SpecialEvents() {
     <div style={{ background: BRAND.bg, color: BRAND.black }}>
 
       {/* ── STICKY CAMERA SCROLL — desktop only ─────────────── */}
-      <div className="hidden md:block" ref={containerRef} style={{ height: "600vh", position: "relative" }}>
+      {!isMobile && <div ref={containerRef} style={{ height: "600vh", position: "relative" }}>
         <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
           <div style={{ position: "absolute", inset: 0, background: BRAND.bg, zIndex: 0 }} />
           <motion.div
@@ -220,7 +225,7 @@ export default function SpecialEvents() {
           <CenterTitle scrollYProgress={scrollYProgress} />
           <ScrollDown scrollYProgress={scrollYProgress} />
         </div>
-      </div>
+      </div>}
 
       {/* ── MAIN CONTENT ─────────────────────────────────────── */}
       <div>

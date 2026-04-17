@@ -1,7 +1,9 @@
 "use client";
+import { useEffect } from "react";
 import { motion } from "motion/react";
 import { Mail, Phone, MapPin } from "lucide-react";
-import Script from "next/script";
+
+const HB_PID = "699125b1fab39a0007237d9b";
 
 export default function Contact({
   email = "hello@lavashing.com",
@@ -12,6 +14,21 @@ export default function Contact({
   phone?: string;
   address?: string;
 }) {
+  useEffect(() => {
+    // Always remove + reinject so HoneyBook re-scans the DOM on every visit
+    const existing = document.querySelector(`script[data-hb="${HB_PID}"]`);
+    if (existing) existing.remove();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    w._HB_ = { pid: HB_PID };
+    const s = document.createElement("script");
+    s.type = "text/javascript";
+    s.async = true;
+    s.setAttribute("data-hb", HB_PID);
+    s.src = "https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js";
+    document.body.appendChild(s);
+  }, []);
+
   return (
     <div className="pt-20">
       <section className="py-32">
@@ -36,21 +53,8 @@ export default function Contact({
               <h2 className="text-3xl mb-8">Send us a message</h2>
 
               {/* HoneyBook widget */}
-              <div className="hb-p-699125b1fab39a0007237d9b-1" />
-              <img height="1" width="1" style={{ display: "none" }} src="https://www.honeybook.com/p.png?pid=699125b1fab39a0007237d9b" alt="" />
-              <Script
-                id="honeybook-widget"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    (function(h,b,s,n,i,p,e,t) {
-                      h._HB_ = h._HB_ || {}; h._HB_.pid = i;
-                      t=b.createElement(s); t.type="text/javascript"; t.async=!0; t.src=n;
-                      e=b.getElementsByTagName(s)[0]; e.parentNode.insertBefore(t,e);
-                    })(window,document,"script","https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js","699125b1fab39a0007237d9b");
-                  `,
-                }}
-              />
+              <div className={`hb-p-${HB_PID}-1`} />
+              <img height="1" width="1" style={{ display: "none" }} src={`https://www.honeybook.com/p.png?pid=${HB_PID}`} alt="" />
             </motion.div>
 
             <motion.div
