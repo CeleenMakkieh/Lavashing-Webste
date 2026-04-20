@@ -76,6 +76,24 @@ function Shape({ top, bottom, left, right, w, h, bg, border, br, blur, delay, du
 }
 
 /* ─── Word scroll reveal ─────────────────── */
+function RevealWord({ word, i, total, scrollYProgress, isHighlight }: {
+  word: string; i: number; total: number;
+  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
+  isHighlight: boolean;
+}) {
+  const opacity = useTransform(scrollYProgress, [i / total, Math.min((i + 1) / total + 0.1, 1)], [0.1, 1]);
+  return (
+    <motion.span style={{
+      opacity,
+      color: isHighlight ? BRAND.accent : BRAND.headline,
+      fontSize: isHighlight ? "1.1em" : undefined,
+      fontStyle: isHighlight ? "italic" : undefined,
+    }}>
+      {word}
+    </motion.span>
+  );
+}
+
 function RevealText({ text, className = "", highlightWords = [] }: { text: string; className?: string; highlightWords?: string[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.3"] });
@@ -85,14 +103,7 @@ function RevealText({ text, className = "", highlightWords = [] }: { text: strin
       {words.map((word, i) => {
         const isHighlight = highlightWords.includes(word.toLowerCase().replace(/[.,!?;]/g, ""));
         return (
-          <motion.span key={i} style={{
-            opacity: useTransform(scrollYProgress, [i / words.length, Math.min((i + 1) / words.length + 0.1, 1)], [0.1, 1]),
-            color: isHighlight ? BRAND.accent : BRAND.headline,
-            fontSize: isHighlight ? "1.1em" : undefined,
-            fontStyle: isHighlight ? "italic" : undefined,
-          }}>
-            {word}
-          </motion.span>
+          <RevealWord key={i} word={word} i={i} total={words.length} scrollYProgress={scrollYProgress} isHighlight={isHighlight} />
         );
       })}
     </div>
@@ -272,7 +283,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="text-xl max-w-2xl leading-relaxed" style={{ color: BRAND.text + "80" }}>
-            Full-service digital solutions across every channel and sector — built to grow ambitious brands.
+            Full-service digital solutions across every channel and sector built to grow ambitious brands.
           </motion.p>
         </motion.div>
 
@@ -288,7 +299,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
       {/* ── REVEAL STRIP ─────────────────────────── */}
       <section className="py-20 px-4 sm:px-8 lg:px-16" style={{ background: BRAND.header + "0b" }}>
         <div className="max-w-5xl mx-auto">
-          <RevealText text="From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform."
+          <RevealText text="From concept to launch we deliver comprehensive digital solutions tailored precisely to your needs and built to outperform."
             className="text-3xl md:text-4xl font-bold leading-[1.3]"
             highlightWords={["tailored", "precisely"]} />
         </div>

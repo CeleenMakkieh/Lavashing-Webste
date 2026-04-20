@@ -11,9 +11,9 @@ import { FALLBACK_SETTINGS } from "@/lib/fallback-data";
 import { TranslationProvider } from "@/contexts/TranslationContext";
 
 export const metadata: Metadata = {
-  title: "Lavashing — Dallas Marketing & Web Agency",
+  title: "Lavashing Dallas Marketing Agency",
   description:
-    "A modern marketing and web agency crafting premium digital solutions for ambitious brands. Based in Dallas, TX.",
+    "A modern marketing agency crafting premium digital solutions for ambitious brands. Based in Dallas, TX.",
   icons: {
     icon: "/LM.png",
     shortcut: "/LM.png",

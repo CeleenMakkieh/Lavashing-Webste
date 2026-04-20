@@ -77,7 +77,7 @@ function CenterTitle({ scrollYProgress }: { scrollYProgress: MotionValue<number>
       }}
     >
       <p style={{ color: BRAND.green, letterSpacing: "0.4em", fontSize: "clamp(0.65rem,1.5vw,0.85rem)", textTransform: "uppercase", marginBottom: "1rem", fontWeight: 600 }}>
-        Lavashing — Special Events
+        Lavashing Special Events
       </p>
       <h1 style={{ fontFamily: "serif", fontSize: "clamp(2.5rem,7vw,6rem)", fontWeight: 700, color: BRAND.maroon, lineHeight: 1.1, maxWidth: "14ch" }}>
         Where Every Moment Becomes Forever
@@ -157,7 +157,7 @@ export default function SpecialEventsDesktop() {
           </motion.div>
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
             style={{ color: BRAND.black, lineHeight: 1.9, fontSize: "1.05rem", maxWidth: "640px", margin: "0 auto 2.5rem", position: "relative", zIndex: 1 }}>
-            Professional photography services for weddings, newborns, graduations, families, and brands. Every session is focused on capturing authentic, emotional moments — the quiet glances, the proud smiles, the details that tell a deeper story. Whether it&apos;s a milestone event or an everyday moment worth remembering, the goal is always the same: images that feel real, look timeless, and become the ones you come back to for the rest of your life.
+            Professional photography services for weddings, newborns, graduations, families, and brands. Every session is focused on capturing authentic, emotional moments  the quiet glances, the proud smiles, the details that tell a deeper story. Whether it&apos;s a milestone event or an everyday moment worth remembering, the goal is always the same: images that feel real, look timeless, and become the ones you come back to for the rest of your life.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} style={{ position: "relative", zIndex: 1 }}>
             <Link href="/contact" style={{ display: "inline-block", padding: "0.85rem 2.5rem", background: BRAND.maroon, color: BRAND.bg, borderRadius: "4px", fontWeight: 600, letterSpacing: "0.08em", fontSize: "0.88rem", textDecoration: "none" }}>
@@ -194,7 +194,7 @@ export default function SpecialEventsDesktop() {
           </motion.p>
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
             style={{ color: BRAND.accent, marginTop: "2rem", letterSpacing: "0.2em", fontSize: "0.78rem", textTransform: "uppercase", position: "relative", zIndex: 1 }}>
-            — Lavashing Special Events
+            Lavashing Special Events
           </motion.p>
         </section>
 

@@ -112,7 +112,7 @@ function CenterTitle({ scrollYProgress }: { scrollYProgress: MotionValue<number>
           fontWeight: 600,
         }}
       >
-        Lavashing — Special Events
+        Lavashing Special Events
       </p>
       <h1
         style={{
@@ -321,7 +321,7 @@ export default function SpecialEvents() {
               zIndex: 1,
             }}
           >
-            We photograph the moments that matter most — not just the big ones, but the quiet ones in between.
+            We photograph the moments that matter most not just the big ones, but the quiet ones in between.
             The look between two people. A graduate&apos;s proud smile. A newborn&apos;s first breath of light.
             These are the pictures you&apos;ll reach for again and again, for the rest of your life.
           </motion.p>

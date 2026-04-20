@@ -95,12 +95,12 @@ export const FALLBACK_POSTS: WPPost[] = [
 
 /* ─── Services ───────────────────────────── */
 export const FALLBACK_SERVICES: WPService[] = [
+  { title: "Social Media Management", description: "Strategy-first management keeping your brand active and visible where your audience spends time.", features: ["Content Calendar", "Community Management", "Growth Strategy", "Reporting", "Paid Social", "Influencer"] },
+  { title: "Web Design", description: "Visually striking, user-friendly designs that bring your brand to life on every screen.", features: ["UI/UX Design", "Prototyping", "Design Systems", "Brand Guidelines", "User Research", "Accessibility"] },
   { title: "Web Development", description: "Fast, responsive websites engineered for performance, mobile-first design, and AI search visibility.", features: ["Responsive Design", "Performance Optimization", "CMS Integration", "E-commerce Solutions", "API Integration", "PWA"] },
   { title: "App Development", description: "Custom mobile and web apps from concept to launch — intuitive, scalable, and built to perform.", features: ["iOS & Android", "Web Apps", "UX Design", "API Integration", "Testing", "Launch Support"] },
-  { title: "Web Design", description: "Visually striking, user-friendly designs that bring your brand to life on every screen.", features: ["UI/UX Design", "Prototyping", "Design Systems", "Brand Guidelines", "User Research", "Accessibility"] },
   { title: "Branding", description: "Visual identity, strategy, voice, and messaging — built to stand out in human and AI discovery.", features: ["Logo Design", "Brand Strategy", "Visual Identity", "Brand Messaging", "Packaging", "Positioning"] },
   { title: "Marketing", description: "Creative campaigns and data-driven strategy designed to grow your audience and drive results.", features: ["SEO & SEM", "Social Media", "Content Marketing", "Email Campaigns", "Analytics", "Paid Ads"] },
-  { title: "Social Media Management", description: "Strategy-first management keeping your brand active and visible where your audience spends time.", features: ["Content Calendar", "Community Management", "Growth Strategy", "Reporting", "Paid Social", "Influencer"] },
   { title: "Content Creation", description: "SEO and AISO-optimized content built to rank, resonate, and get cited by AI tools.", features: ["Blog Writing", "Copywriting", "Video Scripts", "Social Copy", "Email Content", "AI-Optimized"] },
   { title: "Graphic Design", description: "Scroll-stopping visuals — from social graphics to pitch decks — on-brand and built for engagement.", features: ["Social Graphics", "Print Design", "Pitch Decks", "Infographics", "Illustrations", "Packaging"] },
   { title: "Search Engine Optimization (SEO)", description: "Technical audits, keyword strategy, and content alignment to rank higher and convert more.", features: ["Technical SEO", "Keyword Research", "On-Page SEO", "Link Building", "Local SEO", "Reporting"] },
@@ -111,18 +111,15 @@ export const FALLBACK_SERVICES: WPService[] = [
 
 /* ─── Industries ─────────────────────────── */
 export const FALLBACK_INDUSTRIES: WPIndustry[] = [
-  { title: "Restaurants & Food Service", description: "", clientCount: 0 },
-  { title: "Construction & Home Services", description: "", clientCount: 0 },
+  { title: "Food Service", description: "", clientCount: 0 },
+  { title: "Construction", description: "", clientCount: 0 },
   { title: "Beauty & Wellness", description: "", clientCount: 0 },
   { title: "Retail & E-commerce", description: "", clientCount: 0 },
   { title: "Professional Services", description: "", clientCount: 0 },
   { title: "Real Estate", description: "", clientCount: 0 },
   { title: "Healthcare & Medical", description: "", clientCount: 0 },
-  { title: "Technology & SaaS", description: "", clientCount: 0 },
   { title: "Events & Entertainment", description: "", clientCount: 0 },
   { title: "Photography & Creative", description: "", clientCount: 0 },
-  { title: "Legal & Consulting", description: "", clientCount: 0 },
-  { title: "Education & Coaching", description: "", clientCount: 0 },
 ];
 
 /* ─── Process steps ──────────────────────── */
