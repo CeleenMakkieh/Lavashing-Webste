@@ -7,6 +7,7 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import ClientLogos from "../components/ClientLogos";
+import { useT } from "@/contexts/TranslationContext";
 
 const BRAND = { bg: "#f8eeea", header: "#6b8d6d", headline: "#670626", accent: "#bad797", pink: "#f6c0d7", text: "#1a0509" };
 
@@ -233,6 +234,7 @@ const ICONS = [<Code size={22} />, <Palette size={22} />, <Sparkles size={22} />
 const INDUSTRY_ICONS = [<ShoppingBag size={20} />, <Heart size={20} />, <GraduationCap size={20} />, <Building2 size={20} />, <Utensils size={20} />, <Briefcase size={20} />];
 
 export default function Work({ services, industries, processSteps, clients = [] }: { services: WPService[]; industries: WPIndustry[]; processSteps: WPProcessStep[]; clients?: WPClient[] }) {
+  const { t } = useT();
   const heroRef = useRef<HTMLDivElement>(null);
   const [marqueeDuration, setMarqueeDuration] = useState(20);
   const [showAllServices, setShowAllServices] = useState(false);
@@ -278,12 +280,12 @@ export default function Work({ services, industries, processSteps, clients = [] 
             className="font-bold mb-8"
             style={{ fontSize: "clamp(3rem,10vw,8rem)", lineHeight: 0.95, letterSpacing: "-0.02em", color: BRAND.headline }}
           >
-            Services &<br /><span style={{ color: BRAND.headline }}>Industries.</span>
+            {t("work.hero.headline1")}<br /><span style={{ color: BRAND.headline }}>{t("work.hero.headline2")}</span>
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="text-xl max-w-2xl leading-relaxed" style={{ color: BRAND.text + "80" }}>
-            Full-service digital solutions across every channel and sector built to grow ambitious brands.
+            {t("work.hero.sub")}
           </motion.p>
         </motion.div>
 
@@ -299,7 +301,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
       {/* ── REVEAL STRIP ─────────────────────────── */}
       <section className="py-20 px-4 sm:px-8 lg:px-16" style={{ background: BRAND.header + "0b" }}>
         <div className="max-w-5xl mx-auto">
-          <RevealText text="From concept to launch we deliver comprehensive digital solutions tailored precisely to your needs and built to outperform."
+          <RevealText text={t("work.reveal")}
             className="text-3xl md:text-4xl font-bold leading-[1.3]"
             highlightWords={["tailored", "precisely"]} />
         </div>
@@ -324,7 +326,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex items-end justify-between mb-14 flex-wrap gap-6">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>Our Services</h2>
+              <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>{t("work.services.title")}</h2>
             </motion.div>
           </div>
 
@@ -345,7 +347,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
                 className="px-8 py-4 rounded-full text-sm font-bold text-white transition-all duration-200"
                 style={{ background: BRAND.headline }}
               >
-                {showAllServices ? "Show Less" : `See More Services (${enrichedServices.length - 4} more)`}
+                {showAllServices ? t("work.services.showLess") : `${t("work.services.seeMore")} (${enrichedServices.length - 4})`}
               </motion.button>
             </motion.div>
           )}
@@ -358,7 +360,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
 
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
-            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>Our Process</h2>
+            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>{t("work.process.title")}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5" style={{ perspective: "1000px" }}>
@@ -373,7 +375,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
 
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>Industries We Serve</h2>
+            <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>{t("work.industries.title")}</h2>
           </motion.div>
 
           <div style={{ borderTop: `2px solid ${BRAND.header}22` }}>
@@ -384,13 +386,13 @@ export default function Work({ services, industries, processSteps, clients = [] 
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="mt-14 p-10 rounded-3xl text-center"
             style={{ border: `2px solid ${BRAND.accent}`, background: BRAND.accent + "28" }}>
-            <h3 style={{ fontSize: 22, fontWeight: 700, color: BRAND.headline, marginBottom: 10 }}>Don't see your industry?</h3>
+            <h3 style={{ fontSize: 22, fontWeight: 700, color: BRAND.headline, marginBottom: 10 }}>{t("work.industries.cta.title")}</h3>
             <p style={{ fontSize: 15, lineHeight: 1.7, color: BRAND.text + "80", marginBottom: 20 }}>
-              We work with businesses of all types. Our adaptable approach creates solutions for any sector.
+              {t("work.industries.cta.sub")}
             </p>
             <motion.button whileHover={{ scale: 1.04, background: BRAND.accent, color: BRAND.headline }} whileTap={{ scale: 0.97 }} data-hover
               className="px-6 py-3 rounded-full text-sm font-bold text-white transition-all duration-200"
-              style={{ background: BRAND.headline }}>Let's talk anyway →</motion.button>
+              style={{ background: BRAND.headline }}>{t("work.industries.cta.btn")}</motion.button>
           </motion.div>
         </div>
       </section>

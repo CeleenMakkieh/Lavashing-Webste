@@ -19,6 +19,20 @@ export const metadata: Metadata = {
     shortcut: "/LM.png",
     apple: "/LM.png",
   },
+  openGraph: {
+    title: "Lavashing Dallas Marketing Agency",
+    description: "A modern marketing agency crafting premium digital solutions for ambitious brands. Based in Dallas, TX.",
+    url: "https://lavashing.com",
+    siteName: "Lavashing",
+    images: [{ url: "/LM.png", width: 512, height: 512, alt: "Lavashing" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Lavashing Dallas Marketing Agency",
+    description: "A modern marketing agency crafting premium digital solutions for ambitious brands. Based in Dallas, TX.",
+    images: ["/LM.png"],
+  },
 };
 
 export default async function RootLayout({

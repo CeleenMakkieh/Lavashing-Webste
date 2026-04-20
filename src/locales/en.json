@@ -94,5 +94,23 @@
 
   "lang.welcome": "Welcome · مرحباً",
   "lang.choose": "Choose your language",
-  "lang.chooseSub": "اختر لغتك"
+  "lang.chooseSub": "اختر لغتك",
+
+  "work.hero.headline1": "Services &",
+  "work.hero.headline2": "Industries.",
+  "work.hero.sub": "Full-service digital solutions across every channel and sector built to grow ambitious brands.",
+  "work.reveal": "From concept to launch we deliver comprehensive digital solutions tailored precisely to your needs and built to outperform.",
+  "work.services.title": "Our Services",
+  "work.services.showLess": "Show Less",
+  "work.services.seeMore": "See More Services",
+  "work.process.title": "Our Process",
+  "work.industries.title": "Industries We Serve",
+  "work.industries.cta.title": "Don't see your industry?",
+  "work.industries.cta.sub": "We work with businesses of all types. Our adaptable approach creates solutions for any sector.",
+  "work.industries.cta.btn": "Let's talk anyway →",
+  "work.seeDetails": "See details",
+
+  "about.work.title": "Our work",
+  "about.work.seeAll": "See all →",
+  "about.work.showLess": "Show Less ↑"
 }

@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { Target, Users, Award, TrendingUp, ArrowUpRight, MapPin, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useT } from "@/contexts/TranslationContext";
 
 /* ─── Brand tokens ───────────────────────────── */
 const BRAND = {
@@ -338,6 +339,7 @@ export default function About({
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
+  const { t } = useT();
   const [showAll, setShowAll] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
@@ -502,7 +504,7 @@ export default function About({
                 transition: "background 0.25s, color 0.25s",
               }}
             >
-              {showAll ? "Show Less ↑" : `See all →`}
+              {showAll ? t("about.work.showLess") : t("about.work.seeAll")}
             </motion.button>
           </div>
         </div>
