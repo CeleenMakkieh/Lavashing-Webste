@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { Target, Users, Award, TrendingUp, ArrowUpRight, MapPin } from "lucide-react";
+import { Target, Users, Award, TrendingUp, ArrowUpRight, MapPin, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 /* ─── Brand tokens ───────────────────────────── */
 const BRAND = {
@@ -222,6 +222,112 @@ const DEFAULT_VALUES: WPValue[] = [
 
 const VALUE_ICONS = [<Target size={18} />, <Users size={18} />, <Award size={18} />, <TrendingUp size={18} />];
 
+/* ── Gallery media list ───────────────────────── */
+const MEDIA: { type: "video" | "image"; src: string; wide: boolean }[] = [
+  { type: "video", src: "/Video_20260420_135730_989.mp4", wide: true },
+  { type: "image", src: "/Image_20260420_140935_075.png", wide: false },
+  { type: "image", src: "/ow1.png", wide: false },
+  { type: "video", src: "/Video_20260420_140933_789.mp4", wide: false },
+  { type: "image", src: "/Image_20260420_141051_929.png", wide: false },
+  { type: "image", src: "/Image_20260420_140935_031.png", wide: false },
+  { type: "image", src: "/Image_20260420_140934_285.png", wide: false },
+  { type: "image", src: "/Image_20260420_140935_135.png", wide: true },
+  { type: "video", src: "/Video_20260420_135736_975.mp4", wide: false },
+  { type: "image", src: "/Image_20260420_140935_397.png", wide: false },
+  { type: "video", src: "/Video_20260420_135739_833.mp4", wide: true },
+  { type: "image", src: "/Image_20260420_140935_791.png", wide: false },
+  { type: "video", src: "/Video_20260420_140933_767.mp4", wide: false },
+  { type: "image", src: "/Image_20260420_141052_746.png", wide: true },
+  { type: "image", src: "/Image_20260420_141053_662.png", wide: false },
+  { type: "video", src: "/Video_20260420_140934_315.mp4", wide: true },
+  { type: "image", src: "/Image_20260420_141217_273.png", wide: false },
+  { type: "video", src: "/Video_20260420_140934_330.mp4", wide: false },
+  { type: "image", src: "/Image_20260420_141217_286.png", wide: false },
+  { type: "video", src: "/Video_20260420_140936_750_1.mp4", wide: true },
+  { type: "video", src: "/Video_20260420_135735_395_1.mp4", wide: false },
+];
+
+/* ── Lightbox ─────────────────────────────────── */
+function Lightbox({ idx, onClose, onNav }: { idx: number; onClose: () => void; onNav: (dir: 1 | -1) => void }) {
+  const item = MEDIA[idx];
+  const touchX = useRef(0);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") onNav(1);
+      if (e.key === "ArrowLeft") onNav(-1);
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose, onNav]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      onClick={onClose}
+      style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.93)", display: "flex", alignItems: "center", justifyContent: "center" }}
+      onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
+      onTouchEnd={e => {
+        const diff = touchX.current - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) onNav(diff > 0 ? 1 : -1);
+      }}
+    >
+      {/* Media */}
+      <motion.div
+        key={idx}
+        initial={{ opacity: 0, scale: 0.94 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2 }}
+        onClick={e => e.stopPropagation()}
+        style={{ maxWidth: "90vw", maxHeight: "88vh", borderRadius: 16, overflow: "hidden" }}
+      >
+        {item.type === "video" ? (
+          <video autoPlay loop muted playsInline controls
+            style={{ maxWidth: "90vw", maxHeight: "88vh", display: "block", borderRadius: 16 }}>
+            <source src={item.src} type="video/mp4" />
+          </video>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={item.src} alt="" style={{ maxWidth: "90vw", maxHeight: "88vh", display: "block", borderRadius: 16, objectFit: "contain" }} />
+        )}
+      </motion.div>
+
+      {/* Close */}
+      <button
+        onClick={onClose}
+        style={{ position: "fixed", top: 20, right: 20, width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.12)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}
+      >
+        <X size={20} />
+      </button>
+
+      {/* Prev */}
+      <button
+        onClick={e => { e.stopPropagation(); onNav(-1); }}
+        style={{ position: "fixed", left: 16, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", background: "rgba(255,255,255,0.12)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}
+      >
+        <ChevronLeft size={22} />
+      </button>
+
+      {/* Next */}
+      <button
+        onClick={e => { e.stopPropagation(); onNav(1); }}
+        style={{ position: "fixed", right: 16, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", background: "rgba(255,255,255,0.12)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}
+      >
+        <ChevronRight size={22} />
+      </button>
+
+      {/* Counter */}
+      <div style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.5)", fontSize: 13 }}>
+        {idx + 1} / {MEDIA.length}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function About({
   values = DEFAULT_VALUES,
 }: {
@@ -231,6 +337,16 @@ export default function About({
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+
+  const [showAll, setShowAll] = useState(false);
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+
+  const openLightbox = (i: number) => setLightboxIdx(i);
+  const closeLightbox = () => setLightboxIdx(null);
+  const navLightbox = (dir: 1 | -1) =>
+    setLightboxIdx(prev => prev === null ? null : (prev + dir + MEDIA.length) % MEDIA.length);
+
+  const PREVIEW_COUNT = 5;
 
   const valuePills = values.map((v, i) => ({
     icon: VALUE_ICONS[i % VALUE_ICONS.length],
@@ -318,48 +434,86 @@ export default function About({
           >
             Our work
           </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { type: "video", src: "/work/work1.mp4", poster: "/work/work1-poster.jpg" },
-              { type: "image", src: "/work/work2.jpg" },
-              { type: "image", src: "/work/work3.jpg" },
-              { type: "video", src: "/work/work4.mp4", poster: "/work/work4-poster.jpg" },
-              { type: "image", src: "/work/work5.jpg" },
-              { type: "image", src: "/work/work6.jpg" },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.96 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                className={`rounded-2xl overflow-hidden ${i === 0 ? "col-span-2 row-span-2 md:col-span-1 md:row-span-2" : ""}`}
-                style={{ aspectRatio: i === 0 ? "auto" : "1", minHeight: i === 0 ? 340 : "auto", background: BRAND.header + "20" }}
-              >
-                {item.type === "video" ? (
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    poster={item.poster}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+
+          {/* Bento grid */}
+          <div className="relative">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {MEDIA.map((item, i) => {
+                if (!showAll && i >= PREVIEW_COUNT) return null;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: (i % 6) * 0.07, type: "spring", stiffness: 80 }}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => openLightbox(i)}
+                    className={`rounded-2xl overflow-hidden relative group cursor-pointer ${item.wide ? "col-span-2" : "col-span-1"}`}
+                    style={{ aspectRatio: item.wide ? "16/9" : "1/1", background: BRAND.header + "20" }}
                   >
-                    <source src={item.src} type="video/mp4" />
-                  </video>
-                ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={item.src}
-                    alt={`Lavashing work ${i + 1}`}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                )}
-              </motion.div>
-            ))}
+                    {item.type === "video" ? (
+                      <video autoPlay loop muted playsInline
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}>
+                        <source src={item.src} type="video/mp4" />
+                      </video>
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.src} alt={`Lavashing work ${i + 1}`}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    )}
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ background: `linear-gradient(to top, ${BRAND.headline}50, transparent)` }} />
+                    {/* Zoom icon on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div style={{ width: 44, height: 44, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <ArrowUpRight size={20} color="#fff" />
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Fade gradient at bottom when collapsed */}
+            {!showAll && (
+              <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
+                style={{ background: `linear-gradient(to top, ${BRAND.bg}, transparent)` }} />
+            )}
+          </div>
+
+          {/* Explore More / Show Less button */}
+          <div className="text-center mt-10">
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setShowAll(v => !v)}
+              style={{
+                padding: "0.85rem 2.4rem",
+                borderRadius: "999px",
+                border: `2px solid ${BRAND.headline}`,
+                background: showAll ? BRAND.headline : "transparent",
+                color: showAll ? "#fff" : BRAND.headline,
+                fontWeight: 700,
+                fontSize: "0.9rem",
+                letterSpacing: "0.06em",
+                cursor: "pointer",
+                transition: "background 0.25s, color 0.25s",
+              }}
+            >
+              {showAll ? "Show Less ↑" : `See all →`}
+            </motion.button>
           </div>
         </div>
       </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxIdx !== null && (
+          <Lightbox idx={lightboxIdx} onClose={closeLightbox} onNav={navLightbox} />
+        )}
+      </AnimatePresence>
 
       {/* ── VALUES accordion ─────────────────────────── */}
       <section className="py-24 px-4 sm:px-8 lg:px-16">
@@ -381,7 +535,7 @@ export default function About({
         </div>
       </section>
 
-      
+
 
       {/* ── LOCATION CTA ─────────────────────────────── */}
       <section className="py-32 px-4 sm:px-8 lg:px-16 relative overflow-hidden">

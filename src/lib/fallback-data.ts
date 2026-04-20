@@ -96,8 +96,9 @@ export const FALLBACK_POSTS: WPPost[] = [
 /* ─── Services ───────────────────────────── */
 export const FALLBACK_SERVICES: WPService[] = [
   { title: "Social Media Management", description: "Strategy-first management keeping your brand active and visible where your audience spends time.", features: ["Content Calendar", "Community Management", "Growth Strategy", "Reporting", "Paid Social", "Influencer"] },
-  { title: "Web Design", description: "Visually striking, user-friendly designs that bring your brand to life on every screen.", features: ["UI/UX Design", "Prototyping", "Design Systems", "Brand Guidelines", "User Research", "Accessibility"] },
   { title: "Web Development", description: "Fast, responsive websites engineered for performance, mobile-first design, and AI search visibility.", features: ["Responsive Design", "Performance Optimization", "CMS Integration", "E-commerce Solutions", "API Integration", "PWA"] },
+  { title: "Email Marketing & SMS", description: "", features: [] },
+  { title: "Web Design", description: "Visually striking, user-friendly designs that bring your brand to life on every screen.", features: ["UI/UX Design", "Prototyping", "Design Systems", "Brand Guidelines", "User Research", "Accessibility"] },
   { title: "App Development", description: "Custom mobile and web apps from concept to launch — intuitive, scalable, and built to perform.", features: ["iOS & Android", "Web Apps", "UX Design", "API Integration", "Testing", "Launch Support"] },
   { title: "Branding", description: "Visual identity, strategy, voice, and messaging — built to stand out in human and AI discovery.", features: ["Logo Design", "Brand Strategy", "Visual Identity", "Brand Messaging", "Packaging", "Positioning"] },
   { title: "Marketing", description: "Creative campaigns and data-driven strategy designed to grow your audience and drive results.", features: ["SEO & SEM", "Social Media", "Content Marketing", "Email Campaigns", "Analytics", "Paid Ads"] },
