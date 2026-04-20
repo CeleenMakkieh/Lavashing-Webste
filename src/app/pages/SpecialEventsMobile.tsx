@@ -109,10 +109,10 @@ export default function SpecialEventsMobile() {
         </motion.h2>
         <p style={{ color: BRAND.green, fontSize: "0.85rem", marginBottom: "2.5rem" }}>Simple, personal, no pressure.</p>
         {[
-          { n: "01", title: "Say hello", desc: "Description" },
-          { n: "02", title: "We connect", desc: "Description" },
-          { n: "03", title: "Your session or day", desc: "Description" },
-          { n: "04", title: "Your gallery", desc: "Description" },
+          { n: "01", title: "Say hello" },
+          { n: "02", title: "We connect" },
+          { n: "03", title: "Your session or day" },
+          { n: "04", title: "Your gallery" },
         ].map((item, i) => (
           <motion.div key={item.n} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}
             style={{ display: "flex", gap: "1.2rem", marginBottom: "2rem", alignItems: "flex-start" }}>
@@ -120,8 +120,7 @@ export default function SpecialEventsMobile() {
               {item.n}
             </div>
             <div>
-              <h3 style={{ fontFamily: "serif", fontSize: "1.1rem", fontWeight: 600, color: BRAND.green, marginBottom: "0.3rem" }}>{item.title}</h3>
-              <p style={{ color: BRAND.black, lineHeight: 1.8, fontSize: "0.88rem" }}>{item.desc}</p>
+              <h3 style={{ fontFamily: "serif", fontSize: "1.1rem", fontWeight: 600, color: BRAND.green }}>{item.title}</h3>
             </div>
           </motion.div>
         ))}

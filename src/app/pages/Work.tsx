@@ -318,10 +318,14 @@ export default function Work({ services, industries, processSteps, clients = [] 
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
-            {enrichedServices.slice(0, showAllServices ? enrichedServices.length : 4).map((s, i) => <ServiceCard key={i} s={s} i={i} />)}
+            {enrichedServices.map((s, i) => (
+              <div key={i} className={i >= 4 && !showAllServices ? "block sm:hidden" : ""}>
+                <ServiceCard s={s} i={i} />
+              </div>
+            ))}
           </div>
           {enrichedServices.length > 4 && (
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-10 text-center">
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-10 text-center hidden sm:block">
               <motion.button
                 whileHover={{ scale: 1.04, background: BRAND.accent, color: BRAND.headline }}
                 whileTap={{ scale: 0.97 }}

@@ -341,8 +341,8 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
         </motion.div>
       </section>
 
-      {/* ── VIDEO ZOOM  ──────────────── */}
-      <VideoZoom videoUrl={settings.heroVideoUrl} />
+      {/* ── VIDEO ZOOM  ── hidden until video is ready ── */}
+      {false && <VideoZoom videoUrl={settings.heroVideoUrl} />}
 
       {/* ── MANIFESTO REVEAL ─────────────────────── */}
       <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: "#670626" + "0e" }}>
@@ -370,7 +370,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
-            {svcs.map((s, i) => <SvcCard key={i} s={s} i={i} />)}
+            {svcs.slice(0, 6).map((s, i) => <SvcCard key={i} s={s} i={i} />)}
           </div>
         </div>
       </section>
