@@ -59,8 +59,13 @@ export default function BlogPost({ post }: { post: WPPost }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className={`aspect-[16/9] bg-gradient-to-br ${post.imageGradient} rounded-3xl mb-12`}
-          />
+            className={`aspect-[16/9] rounded-3xl mb-12 overflow-hidden ${!post.imageUrl ? `bg-gradient-to-br ${post.imageGradient}` : ""}`}
+          >
+            {post.imageUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover" />
+            )}
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

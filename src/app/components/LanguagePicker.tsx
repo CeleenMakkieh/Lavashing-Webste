@@ -1,21 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 
 const STORAGE_KEY = "lv_lang";
 
 export default function LanguagePicker() {
   const [show, setShow] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Always show on every page load / refresh
+    if (pathname !== "/") return;
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === "ar") {
       document.documentElement.setAttribute("dir", "rtl");
       document.documentElement.setAttribute("lang", "ar");
     }
     setShow(true);
-  }, []);
+  }, [pathname]);
 
   function choose(lang: "en" | "ar") {
     localStorage.setItem(STORAGE_KEY, lang);

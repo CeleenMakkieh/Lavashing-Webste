@@ -45,7 +45,8 @@ export type WPPost = {
   date: string;
   readTime: string;
   category: string;
-  imageGradient: string;
+  imageGradient: string;   // fallback gradient (used when no image)
+  imageUrl?: string;       // actual image from WordPress ACF
   author: string;
   authorRole: string;
   content: string[];
@@ -200,7 +201,7 @@ export async function getBlogPosts(): Promise<WPPost[] | null> {
         date: string;
         categories: { nodes: { name: string }[] };
         author: { node: { name: string } };
-        postFields: { readTime: string; imageGradient: string; authorRole: string };
+        postFields: { readTime: string; imageGradient: { sourceUrl: string } | null; authorRole: string };
       }>;
     };
   };
@@ -211,7 +212,7 @@ export async function getBlogPosts(): Promise<WPPost[] | null> {
           slug title excerpt date
           categories { nodes { name } }
           author { node { name } }
-          postFields { readTime imageGradient authorRole }
+          postFields { readTime imageGradient { sourceUrl } authorRole }
         }
       }
     }
@@ -224,7 +225,8 @@ export async function getBlogPosts(): Promise<WPPost[] | null> {
     date: new Date(p.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
     readTime: p.postFields?.readTime ?? "5 min read",
     category: p.categories.nodes[0]?.name ?? "General",
-    imageGradient: p.postFields?.imageGradient ?? "from-blue-500 to-purple-500",
+    imageGradient: "from-[#670626] to-[#6b8d6d]",
+    imageUrl: p.postFields?.imageGradient?.sourceUrl ?? "",
     author: p.author.node.name,
     authorRole: p.postFields?.authorRole ?? "",
     content: [],
@@ -237,7 +239,7 @@ export async function getBlogPost(slug: string): Promise<WPPost | null> {
       slug: string; title: string; excerpt: string; date: string;
       categories: { nodes: { name: string }[] };
       author: { node: { name: string } };
-      postFields: { readTime: string; imageGradient: string; authorRole: string; contentParagraphs: string };
+      postFields: { readTime: string; imageGradient: { sourceUrl: string } | null; authorRole: string; contentParagraphs: string };
     };
   };
   const data = await fetchWP<R>(`
@@ -246,7 +248,7 @@ export async function getBlogPost(slug: string): Promise<WPPost | null> {
         slug title excerpt date
         categories { nodes { name } }
         author { node { name } }
-        postFields { readTime imageGradient authorRole contentParagraphs }
+        postFields { readTime imageGradient { sourceUrl } authorRole contentParagraphs }
       }
     }
   `, { slug });
@@ -259,7 +261,8 @@ export async function getBlogPost(slug: string): Promise<WPPost | null> {
     date: new Date(p.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
     readTime: p.postFields?.readTime ?? "5 min read",
     category: p.categories.nodes[0]?.name ?? "General",
-    imageGradient: p.postFields?.imageGradient ?? "from-blue-500 to-purple-500",
+    imageGradient: "from-[#670626] to-[#6b8d6d]",
+    imageUrl: p.postFields?.imageGradient?.sourceUrl ?? "",
     author: p.author.node.name,
     authorRole: p.postFields?.authorRole ?? "",
     content: (p.postFields?.contentParagraphs ?? "").split("\n\n").filter(Boolean),

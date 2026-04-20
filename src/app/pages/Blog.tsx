@@ -58,9 +58,18 @@ export default function Blog({ posts }: { posts: WPPost[] }) {
               >
                 <Link href={`/blog/${post.slug}`} className="group block">
                   <div className="mb-4 aspect-[16/10] rounded-2xl overflow-hidden">
-                    <div
-                      className={`w-full h-full bg-gradient-to-br ${post.imageGradient} transform group-hover:scale-105 transition-transform duration-300`}
-                    />
+                    {post.imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={post.imageUrl}
+                        alt={post.title}
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div
+                        className={`w-full h-full bg-gradient-to-br ${post.imageGradient} transform group-hover:scale-105 transition-transform duration-300`}
+                      />
+                    )}
                   </div>
 
                   <div className="space-y-3">
