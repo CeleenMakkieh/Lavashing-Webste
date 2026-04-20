@@ -5,17 +5,17 @@ import type { WPClient } from "@/lib/wordpress";
 import { useT } from "@/contexts/TranslationContext";
 
 const DEFAULT_CLIENTS: WPClient[] = [
-  { name: "One Bite" },
-  { name: "SS Towing" },
-  { name: "Super Towing" },
-  { name: "One Coffee" },
-  { name: "Shimaa Beauty Center" },
-  { name: "Shimaa Academy" },
-  { name: "WJ Place" },
-  { name: "Lune Cafe" },
+  { name: "One Bite", logoUrl: "/onebite.png" },
+  { name: "SS Towing", logoUrl: "/ss-towing.png" },
+  { name: "Super Towing", logoUrl: "/super-towing.png" },
+  { name: "One Coffee", logoUrl: "/one-coffee.png" },
+  { name: "Shimaa Beauty Center", logoUrl: "/shimaa.png" },
+  { name: "Shimaa Academy", logoUrl: "/shimaa.png" },
+  { name: "WJ Place", logoUrl: "/wj-tires.png" },
+  { name: "Lune Cafe", logoUrl: "/lune.png" },
   { name: "ZExpress" },
   { name: "Flora and Noor" },
-  { name: "State Protection Service" },
+  { name: "State Protection Service", logoUrl: "/state-protection-service.png" },
 ];
 
 export default function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: WPClient[] }) {

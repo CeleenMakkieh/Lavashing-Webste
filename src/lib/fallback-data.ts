@@ -152,12 +152,15 @@ export const FALLBACK_VALUES: WPValue[] = [
 
 /* ─── Clients ────────────────────────────── */
 export const FALLBACK_CLIENTS: WPClient[] = [
-  { name: "TechCorp", color: "#3B82F6" },
-  { name: "DesignHub", color: "#8B5CF6" },
-  { name: "StartupX", color: "#EC4899" },
-  { name: "GlobalCo", color: "#F59E0B" },
-  { name: "Innovate", color: "#10B981" },
-  { name: "FutureLabs", color: "#6366F1" },
-  { name: "CreativeWorks", color: "#EF4444" },
-  { name: "BuildRight", color: "#14B8A6" },
+  { name: "One Bite", logoUrl: "/onebite.png" },
+  { name: "SS Towing", logoUrl: "/ss-towing.png" },
+  { name: "Super Towing", logoUrl: "/super-towing.png" },
+  { name: "One Coffee", logoUrl: "/one-coffee.png" },
+  { name: "Shimaa Beauty Center", logoUrl: "/shimaa.png" },
+  { name: "Shimaa Academy", logoUrl: "/shimaa.png" },
+  { name: "WJ Place", logoUrl: "/wj-tires.png" },
+  { name: "Lune Cafe", logoUrl: "/lune.png" },
+  { name: "ZExpress" },
+  { name: "Flora and Noor" },
+  { name: "State Protection Service", logoUrl: "/state-protection-service.png" },
 ];
