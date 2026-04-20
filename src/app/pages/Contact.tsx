@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { motion } from "motion/react";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useT } from "@/contexts/TranslationContext";
 
 const HB_PID = "699125b1fab39a0007237d9b";
 
@@ -14,6 +15,7 @@ export default function Contact({
   phone?: string;
   address?: string;
 }) {
+  const { t } = useT();
   useEffect(() => {
     // Always remove + reinject so HoneyBook re-scans the DOM on every visit
     const existing = document.querySelector(`script[data-hb="${HB_PID}"]`);
@@ -38,9 +40,9 @@ export default function Contact({
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto text-center mb-20"
           >
-            <h1 className="text-5xl md:text-7xl mb-8">Let's Work Together</h1>
+            <h1 className="text-5xl md:text-7xl mb-8">{t("contact.headline")}</h1>
             <p className="text-xl md:text-2xl text-foreground/70">
-              Ready to start your project? Get in touch and let's create something amazing.
+              {t("contact.sub")}
             </p>
           </motion.div>
 
@@ -50,7 +52,7 @@ export default function Contact({
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <h2 className="text-3xl mb-8">Send us a message</h2>
+              <h2 className="text-3xl mb-8">{t("contact.sendMessage")}</h2>
 
               {/* HoneyBook widget */}
               <div className={`hb-p-${HB_PID}-1`} />
@@ -64,7 +66,7 @@ export default function Contact({
               className="space-y-8"
             >
               <div>
-                <h2 className="text-3xl mb-8">Other ways to connect</h2>
+                <h2 className="text-3xl mb-8">{t("contact.otherWays")}</h2>
 
                 <div className="space-y-6">
                   <div className="p-6 bg-card border border-border rounded-2xl">
@@ -73,7 +75,7 @@ export default function Contact({
                         <Mail size={24} />
                       </div>
                       <div>
-                        <h3 className="text-lg mb-1">Email</h3>
+                        <h3 className="text-lg mb-1">{t("contact.email")}</h3>
                         <a
                           href={`mailto:${email}`}
                           className="text-foreground/70 hover:text-foreground transition-colors"
@@ -90,7 +92,7 @@ export default function Contact({
                         <Phone size={24} />
                       </div>
                       <div>
-                        <h3 className="text-lg mb-1">Phone</h3>
+                        <h3 className="text-lg mb-1">{t("contact.phone")}</h3>
                         <a
                           href={`tel:${phone.replace(/\D/g, "")}`}
                           className="text-foreground/70 hover:text-foreground transition-colors"
@@ -107,7 +109,7 @@ export default function Contact({
                         <MapPin size={24} />
                       </div>
                       <div>
-                        <h3 className="text-lg mb-1">Location</h3>
+                        <h3 className="text-lg mb-1">{t("contact.location")}</h3>
                         <p className="text-foreground/70">{address}</p>
                       </div>
                     </div>
@@ -118,12 +120,12 @@ export default function Contact({
              
 
               <div className="p-6 bg-muted/50 rounded-2xl">
-                <h3 className="text-lg mb-3">Quick Response</h3>
+                <h3 className="text-lg mb-3">{t("contact.quickResponse")}</h3>
                 <p className="text-foreground/70 mb-4">
-                  We typically respond to all inquiries within 24 hours during business days.
+                  {t("contact.responseText")}
                 </p>
                 <p className="text-sm text-foreground/60">
-                  Office Hours: Monday - Friday, 9am - 5pm CST
+                  {t("contact.hours")}
                 </p>
               </div>
             </motion.div>

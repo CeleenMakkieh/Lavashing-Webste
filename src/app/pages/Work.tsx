@@ -234,7 +234,7 @@ const ICONS = [<Code size={22} />, <Palette size={22} />, <Sparkles size={22} />
 const INDUSTRY_ICONS = [<ShoppingBag size={20} />, <Heart size={20} />, <GraduationCap size={20} />, <Building2 size={20} />, <Utensils size={20} />, <Briefcase size={20} />];
 
 export default function Work({ services, industries, processSteps, clients = [] }: { services: WPService[]; industries: WPIndustry[]; processSteps: WPProcessStep[]; clients?: WPClient[] }) {
-  const { t } = useT();
+  const { t, tArr } = useT();
   const heroRef = useRef<HTMLDivElement>(null);
   const [marqueeDuration, setMarqueeDuration] = useState(20);
   const [showAllServices, setShowAllServices] = useState(false);
@@ -243,23 +243,37 @@ export default function Work({ services, industries, processSteps, clients = [] 
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 180]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
-  // Enrich services from WordPress with sequential numbering and icons
-  const enrichedServices = services.map((s, i) => ({
-    ...s,
-    num: String(i + 1).padStart(2, "0"),
-    icon: ICONS[i % ICONS.length],
-  }));
+  // Map from English service title to svc key number for translation lookup
+  const SVC_KEY_MAP: Record<string, string> = {
+    "Social Media Management": "06", "Web Development": "01", "Email Marketing & SMS": "13",
+    "Web Design": "03", "App Development": "02", "Branding": "04", "Marketing": "05",
+    "Content Creation": "07", "Graphic Design": "08", "Search Engine Optimization (SEO)": "09",
+    "AI SEO (AISO) / GEO": "10", "Digital Campaign Planning": "11", "Creative Consulting": "12",
+  };
 
-  const enrichedIndustries = industries.map((ind, i) => ({
-    title: ind.title,
-    icon: INDUSTRY_ICONS[i % INDUSTRY_ICONS.length],
-  }));
+  // Enrich services — use translated title/desc if a matching key exists
+  const enrichedServices = services.map((s, i) => {
+    const num = SVC_KEY_MAP[s.title] ?? String(i + 1).padStart(2, "0");
+    const titleKey = `svc.${num}.title`;
+    const descKey = `svc.${num}.desc`;
+    const translatedTitle = t(titleKey) !== titleKey ? t(titleKey) : s.title;
+    const translatedDesc = t(descKey) !== descKey ? t(descKey) : s.description;
+    return { ...s, title: translatedTitle, description: translatedDesc, num, icon: ICONS[i % ICONS.length] };
+  });
 
-  const process = processSteps.map((s, i) => ({
-    step: String(i + 1).padStart(2, "0"),
-    title: s.title,
-    desc: s.description,
-  }));
+  const enrichedIndustries = industries.map((ind, i) => {
+    const key = `work.industry.${i + 1}`;
+    const translatedTitle = t(key) !== key ? t(key) : ind.title;
+    return { title: translatedTitle, icon: INDUSTRY_ICONS[i % INDUSTRY_ICONS.length] };
+  });
+
+  const process = processSteps.map((s, i) => {
+    const titleKey = `work.process.step.${i + 1}.title`;
+    const descKey = `work.process.step.${i + 1}.desc`;
+    const translatedTitle = t(titleKey) !== titleKey ? t(titleKey) : s.title;
+    const translatedDesc = t(descKey) !== descKey ? t(descKey) : s.description;
+    return { step: String(i + 1).padStart(2, "0"), title: translatedTitle, desc: translatedDesc };
+  });
 
   return (
     <div className="pt-20 overflow-x-hidden" style={{ background: BRAND.bg, color: BRAND.text }}>
@@ -292,7 +306,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
         {/* Scroll cue */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" style={{ color: BRAND.header + "60" }}>
-          <span style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" }}>Scroll</span>
+          <span style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" }}>{t("work.scroll")}</span>
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.4, repeat: Infinity }}
             style={{ width: 1, height: 32, background: `linear-gradient(to bottom, ${BRAND.header}, transparent)` }} />
         </motion.div>
@@ -310,7 +324,7 @@ export default function Work({ services, industries, processSteps, clients = [] 
       {/* ── MARQUEE ──────────────────────────────── */}
       <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: BRAND.headline + "33" }}>
         <motion.div key={marqueeDuration} className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: marqueeDuration, repeat: Infinity, ease: "linear" }}>
-          {[...Array(4)].flatMap(() => ["Web Dev", "UI Design", "Branding", "SEO", "Strategy", "Marketing", "Growth", "E-commerce"]).map((w, i) => (
+          {[...Array(4)].flatMap(() => tArr("work.marquee")).map((w, i) => (
             <span key={i} style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: BRAND.headline }}>
               {w} <span style={{ opacity: 0.3, margin: "0 8px" }}>·</span>
             </span>

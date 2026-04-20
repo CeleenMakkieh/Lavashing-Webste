@@ -44,7 +44,8 @@ function MagneticBtn({ children, className = "", style }: { children: React.Reac
 
 /* ─── Parallax text strip ─────────────────────── */
 function MarqueeStrip() {
-  const words = ["Strategy", "Branding", "Design", "Development", "Marketing", "Growth"];
+  const { tArr } = useT();
+  const words = tArr("about.marquee");
   const repeated = [...words, ...words, ...words];
   const [duration, setDuration] = useState(18);
   useEffect(() => { if (window.innerWidth < 768) setDuration(7); }, []);
@@ -214,11 +215,11 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
 /* ─── Main component ─────────────────────────── */
 import type { WPValue } from "@/lib/wordpress";
 
-const DEFAULT_VALUES: WPValue[] = [
-  { title: "Purpose-Driven", description: "We believe in creating work that matters and makes a real impact. Every pixel, every line of copy, every campaign — intentional and meaningful." },
-  { title: "Collaborative", description: "Your success is our success. We work as partners, not just vendors. That means transparency, honest feedback, and shared wins." },
-  { title: "Excellence", description: "We hold ourselves to the highest standards in everything we do — from strategic thinking to micro-interactions." },
-  { title: "Growth-Focused", description: "We're committed to continuous improvement. We study trends, test ideas, and iterate — so your brand stays ahead." },
+const DEFAULT_VALUES_KEYS = [
+  { titleKey: "about.value.1.title", descKey: "about.value.1.desc" },
+  { titleKey: "about.value.2.title", descKey: "about.value.2.desc" },
+  { titleKey: "about.value.3.title", descKey: "about.value.3.desc" },
+  { titleKey: "about.value.4.title", descKey: "about.value.4.desc" },
 ];
 
 const VALUE_ICONS = [<Target size={18} />, <Users size={18} />, <Award size={18} />, <TrendingUp size={18} />];
@@ -330,7 +331,7 @@ function Lightbox({ idx, onClose, onNav }: { idx: number; onClose: () => void; o
 }
 
 export default function About({
-  values = DEFAULT_VALUES,
+  values,
 }: {
   values?: WPValue[];
 }) {
@@ -350,7 +351,12 @@ export default function About({
 
   const PREVIEW_COUNT = 5;
 
-  const valuePills = values.map((v, i) => ({
+  // Use WordPress values if provided, otherwise use translated defaults
+  const resolvedValues: WPValue[] = values && values.length > 0
+    ? values
+    : DEFAULT_VALUES_KEYS.map(k => ({ title: t(k.titleKey), description: t(k.descKey) }));
+
+  const valuePills = resolvedValues.map((v, i) => ({
     icon: VALUE_ICONS[i % VALUE_ICONS.length],
     title: v.title,
     description: v.description,
@@ -377,7 +383,7 @@ export default function About({
             className="inline-flex items-center gap-2 text-sm px-4 py-1.5 rounded-full mb-10 border"
             style={{ borderColor: BRAND.header + "50", color: BRAND.header }}
           >
-            <MapPin size={12} /> Dallas, TX · Est. 2022
+            <MapPin size={12} /> {t("about.badge")}
           </motion.div>
 
           <motion.h1
@@ -387,9 +393,9 @@ export default function About({
             className="text-[clamp(2.2rem,7vw,6rem)] leading-[1.05] tracking-tight mb-10 max-w-4xl font-bold"
             style={{ color: BRAND.headline }}
           >
-            <span style={{ color: BRAND.accent }}>Get </span><span style={{ color: BRAND.headline }}>found.</span>
-            <br /><span style={{ color: BRAND.accent }}>Get </span><span style={{ color: BRAND.headline }}>chosen.</span>
-            <br /><span style={{ color: BRAND.accent }}>Get </span><span style={{ color: BRAND.headline }}>remembered.</span>
+            <span style={{ color: BRAND.accent }}>{t("about.hero.getfound")}</span>
+            <br /><span style={{ color: BRAND.accent }}>{t("about.hero.getchosen")}</span>
+            <br /><span style={{ color: BRAND.accent }}>{t("about.hero.getremembered")}</span>
           </motion.h1>
 
           <motion.p
@@ -399,7 +405,7 @@ export default function About({
             className="text-xl md:text-2xl max-w-2xl leading-relaxed"
             style={{ color: BRAND.text + "99" }}
           >
-            A Dallas-based marketing agency helping businesses grow through strategic design, smarter marketing, and AI-powered search visibility.
+            {t("about.hero.sub")}
           </motion.p>
 
           {/* Scroll cue */}
@@ -416,7 +422,7 @@ export default function About({
               className="w-px h-10"
               style={{ background: `linear-gradient(to bottom, ${BRAND.header}, transparent)` }}
             />
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
+            <span className="text-xs uppercase tracking-widest">{t("about.hero.scroll")}</span>
           </motion.div>
         </motion.div>
       </section>
@@ -434,7 +440,7 @@ export default function About({
             className="text-4xl md:text-5xl font-bold mb-12"
             style={{ color: BRAND.headline }}
           >
-            Our work
+            {t("about.work.title")}
           </motion.h2>
 
           {/* Bento grid */}
@@ -527,7 +533,7 @@ export default function About({
             className="text-4xl md:text-5xl font-bold mb-12"
             style={{ color: BRAND.headline }}
           >
-            Our Values
+            {t("about.values.title")}
           </motion.h2>
           <div className="border-t" style={{ borderColor: BRAND.headline + "33" }}>
             {valuePills.map((v, i) => (
@@ -556,19 +562,19 @@ export default function About({
           className="max-w-4xl mx-auto text-center relative z-10"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: BRAND.headline }}>
-            Based in Dallas, TX
+            {t("about.location.title")}
           </h2>
           <p className="text-xl mb-4 leading-relaxed" style={{ color: BRAND.text + "99" }}>
-            Proud to call Dallas home, but our work reaches clients across Texas and throughout the entire United States.
+            {t("about.location.sub")}
           </p>
           <p className="text-lg mb-12" style={{ color: BRAND.text + "70" }}>
-            Local or coast-to-coast — we're here to help your business grow.
+            {t("about.location.sub2")}
           </p>
           <MagneticBtn
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-semibold transition-all duration-300"
             style={{ background: BRAND.btnIdle, color: "#fff" } as React.CSSProperties}
           >
-            <MapPin size={16} /> Let's connect
+            <MapPin size={16} /> {t("about.location.cta")}
           </MagneticBtn>
         </motion.div>
       </section>
