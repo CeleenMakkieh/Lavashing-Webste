@@ -5,20 +5,22 @@ import { motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import { useT } from "@/contexts/TranslationContext";
 
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useT();
 
   if (pathname === "/special-events") return null;
 
   const navLinks = [
-    { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
-    { path: "/work", label: "Work" },
-    { path: "/special-events", label: "Special Events" },
-    { path: "/blog", label: "Blog" },
-    { path: "/contact", label: "Contact" },
+    { path: "/", label: t("nav.home") },
+    { path: "/about", label: t("nav.about") },
+    { path: "/work", label: t("nav.work") },
+    { path: "/special-events", label: t("nav.specialEvents") },
+    { path: "/blog", label: t("nav.blog") },
+    { path: "/contact", label: t("nav.contact") },
   ];
 
   return (
@@ -51,7 +53,7 @@ export default function Navigation() {
               className="px-6 py-2.5 rounded-lg hover:opacity-90 transition-opacity font-semibold"
               style={{ background: "#670626", color: "#bad797" }}
             >
-              Let's Work Together
+              {t("nav.cta")}
             </Link>
           </div>
 
@@ -89,7 +91,7 @@ export default function Navigation() {
               style={{ background: "#670626", color: "#bad797" }}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Let's Work Together
+              {t("nav.cta")}
             </Link>
           </div>
         </motion.div>

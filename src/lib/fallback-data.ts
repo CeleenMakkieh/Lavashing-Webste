@@ -95,30 +95,43 @@ export const FALLBACK_POSTS: WPPost[] = [
 
 /* ─── Services ───────────────────────────── */
 export const FALLBACK_SERVICES: WPService[] = [
-  { title: "Web Development", description: "Custom websites and web applications built with modern technologies.", features: ["Responsive Design", "Performance Optimization", "CMS Integration", "E-commerce Solutions", "API Integration", "PWA"] },
-  { title: "Web Design", description: "Beautiful, user-centered designs that engage and drive conversions.", features: ["UI/UX Design", "Prototyping", "Design Systems", "Brand Guidelines", "User Research", "Accessibility"] },
-  { title: "Branding", description: "Comprehensive brand identity development that makes your business memorable.", features: ["Logo Design", "Brand Strategy", "Visual Identity", "Brand Messaging", "Packaging", "Positioning"] },
-  { title: "Marketing", description: "Data-driven strategies that grow your audience and increase ROI.", features: ["SEO & SEM", "Social Media", "Content Marketing", "Email Campaigns", "Analytics", "Paid Ads"] },
-  { title: "Strategy", description: "Strategic planning and consulting to achieve your business goals.", features: ["Digital Strategy", "Market Research", "Competitor Analysis", "Growth Planning", "Transformation", "Consulting"] },
+  { title: "Web Development", description: "Fast, responsive websites engineered for performance, mobile-first design, and AI search visibility.", features: ["Responsive Design", "Performance Optimization", "CMS Integration", "E-commerce Solutions", "API Integration", "PWA"] },
+  { title: "App Development", description: "Custom mobile and web apps from concept to launch — intuitive, scalable, and built to perform.", features: ["iOS & Android", "Web Apps", "UX Design", "API Integration", "Testing", "Launch Support"] },
+  { title: "Web Design", description: "Visually striking, user-friendly designs that bring your brand to life on every screen.", features: ["UI/UX Design", "Prototyping", "Design Systems", "Brand Guidelines", "User Research", "Accessibility"] },
+  { title: "Branding", description: "Visual identity, strategy, voice, and messaging — built to stand out in human and AI discovery.", features: ["Logo Design", "Brand Strategy", "Visual Identity", "Brand Messaging", "Packaging", "Positioning"] },
+  { title: "Marketing", description: "Creative campaigns and data-driven strategy designed to grow your audience and drive results.", features: ["SEO & SEM", "Social Media", "Content Marketing", "Email Campaigns", "Analytics", "Paid Ads"] },
+  { title: "Social Media Management", description: "Strategy-first management keeping your brand active and visible where your audience spends time.", features: ["Content Calendar", "Community Management", "Growth Strategy", "Reporting", "Paid Social", "Influencer"] },
+  { title: "Content Creation", description: "SEO and AISO-optimized content built to rank, resonate, and get cited by AI tools.", features: ["Blog Writing", "Copywriting", "Video Scripts", "Social Copy", "Email Content", "AI-Optimized"] },
+  { title: "Graphic Design", description: "Scroll-stopping visuals — from social graphics to pitch decks — on-brand and built for engagement.", features: ["Social Graphics", "Print Design", "Pitch Decks", "Infographics", "Illustrations", "Packaging"] },
+  { title: "Search Engine Optimization (SEO)", description: "Technical audits, keyword strategy, and content alignment to rank higher and convert more.", features: ["Technical SEO", "Keyword Research", "On-Page SEO", "Link Building", "Local SEO", "Reporting"] },
+  { title: "AI SEO (AISO) / GEO", description: "Making your brand discoverable and recommended by ChatGPT, Perplexity, and Google AI Overviews.", features: ["AI Content Structuring", "Entity Optimization", "Citation Building", "GEO Strategy", "Schema Markup", "AI Visibility"] },
+  { title: "Digital Campaign Planning", description: "Multi-channel campaigns from audience research to performance tracking — built to maximize impact.", features: ["Campaign Strategy", "Audience Research", "Channel Planning", "Creative Direction", "A/B Testing", "Analytics"] },
+  { title: "Creative Consulting", description: "Strategic creative direction — positioning, ideation, and visual direction for brands ready to grow.", features: ["Brand Positioning", "Creative Strategy", "Visual Direction", "Messaging", "Workshops", "Competitive Analysis"] },
 ];
 
 /* ─── Industries ─────────────────────────── */
 export const FALLBACK_INDUSTRIES: WPIndustry[] = [
-  { title: "E-commerce & Retail", description: "Helping online and brick-and-mortar retailers create seamless shopping experiences that convert and delight.", clientCount: 34 },
-  { title: "Healthcare & Wellness", description: "Supporting healthcare providers with compliant, user-friendly digital solutions that build patient trust.", clientCount: 18 },
-  { title: "Education", description: "Empowering educational institutions and edtech companies to reach learners in engaging, accessible ways.", clientCount: 12 },
-  { title: "Real Estate", description: "Creating powerful digital tools for real estate agencies — from listing platforms to lead generation engines.", clientCount: 22 },
-  { title: "Food & Beverage", description: "Crafting appetizing digital experiences for restaurants, food brands, and hospitality businesses.", clientCount: 15 },
-  { title: "Professional Services", description: "Building credibility and trust for consultants, agencies, and service providers through polished digital presence.", clientCount: 28 },
+  { title: "Restaurants & Food Service", description: "", clientCount: 0 },
+  { title: "Construction & Home Services", description: "", clientCount: 0 },
+  { title: "Beauty & Wellness", description: "", clientCount: 0 },
+  { title: "Retail & E-commerce", description: "", clientCount: 0 },
+  { title: "Professional Services", description: "", clientCount: 0 },
+  { title: "Real Estate", description: "", clientCount: 0 },
+  { title: "Healthcare & Medical", description: "", clientCount: 0 },
+  { title: "Technology & SaaS", description: "", clientCount: 0 },
+  { title: "Events & Entertainment", description: "", clientCount: 0 },
+  { title: "Photography & Creative", description: "", clientCount: 0 },
+  { title: "Legal & Consulting", description: "", clientCount: 0 },
+  { title: "Education & Coaching", description: "", clientCount: 0 },
 ];
 
 /* ─── Process steps ──────────────────────── */
 export const FALLBACK_PROCESS: WPProcessStep[] = [
-  { title: "Discovery", description: "We dig deep into your business, goals, audience, and competitive landscape." },
-  { title: "Strategy", description: "We develop a comprehensive plan with clear milestones and measurable outcomes." },
-  { title: "Design", description: "Our creatives craft experiences that feel uniquely yours — functional and beautiful." },
-  { title: "Build", description: "We build with precision — performant, accessible, and built to scale." },
-  { title: "Launch", description: "Smooth deployment, then ongoing support so you never feel abandoned." },
+  { title: "Discovery", description: "Your business. Your goals. Your audience. Your competition. Everything gets studied before anything gets built." },
+  { title: "Strategy", description: "A clear, data-driven roadmap with real milestones and measurable outcomes. No guesswork. No filler tactics." },
+  { title: "Design", description: "Experiences that look and feel like your brand — not a template. Functional. Beautiful. Impossible to ignore." },
+  { title: "Build", description: "Clean, fast, scalable. Every detail built in-house with the precision and care of a team that treats your business like its own." },
+  { title: "Launch", description: "Going live is just step one. Ongoing support, optimization, and performance tracking keep the momentum going — because growth doesn't stop at launch." },
 ];
 
 /* ─── Team members ───────────────────────── */

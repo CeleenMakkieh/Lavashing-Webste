@@ -26,6 +26,7 @@ export default function LanguagePicker() {
       document.documentElement.removeAttribute("dir");
       document.documentElement.setAttribute("lang", "en");
     }
+    window.dispatchEvent(new Event("lv_lang_change"));
     setShow(false);
   }
 
@@ -62,8 +63,34 @@ export default function LanguagePicker() {
               textAlign: "center",
               boxShadow: "0 24px 64px rgba(103,6,38,0.25)",
               border: "1.5px solid #bad79760",
+              position: "relative",
             }}
           >
+            {/* Close button */}
+            <button
+              onClick={() => setShow(false)}
+              style={{
+                position: "absolute",
+                top: "0.9rem",
+                right: "0.9rem",
+                width: "28px",
+                height: "28px",
+                borderRadius: "50%",
+                background: "#67062612",
+                border: "1px solid #67062630",
+                color: "#670626",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "0.9rem",
+                fontWeight: 700,
+                lineHeight: 1,
+              }}
+              aria-label="Close"
+            >
+              ×
+            </button>
             <p style={{ color: "#6b8d6d", letterSpacing: "0.3em", fontSize: "0.72rem", textTransform: "uppercase", marginBottom: "0.75rem", fontWeight: 600 }}>
               Welcome · مرحباً
             </p>

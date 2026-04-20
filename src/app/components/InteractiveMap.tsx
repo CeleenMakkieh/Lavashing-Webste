@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
+import { useT } from "@/contexts/TranslationContext";
 
 const BRAND = {
   bg: "#f8eeea",
@@ -209,6 +210,7 @@ function StatePin({ city, hovered, onEnter, onLeave }: {
 /* ── Main ── */
 export default function InteractiveMap() {
   const [hovered, setHovered] = useState<string | null>(null);
+  const { t } = useT();
 
   return (
     <section className="py-28" style={{ background: BRAND.header + "0a" }}>
@@ -221,10 +223,10 @@ export default function InteractiveMap() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: BRAND.headline }}>
-            Based in Dallas. Serving clients nationwide.
+            {t("map.headline")}
           </h2>
           <p className="text-lg" style={{ color: BRAND.text + "80" }}>
-            Headquartered in Dallas–Fort Worth, with clients across the country
+            {t("map.sub")}
           </p>
         </motion.div>
 

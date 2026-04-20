@@ -64,8 +64,7 @@ export default function SpecialEventsMobile() {
         </motion.div>
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
           style={{ color: BRAND.black, lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "2rem" }}>
-          We photograph the moments that matter most — not just the big ones, but the quiet ones in between.
-          The look between two people. A graduate&apos;s proud smile. A newborn&apos;s first breath of light.
+          Professional photography services for weddings, newborns, graduations, families, and brands. Every session is focused on capturing authentic, emotional moments — the quiet glances, the proud smiles, the details that tell a deeper story. Whether it&apos;s a milestone event or an everyday moment worth remembering, the goal is always the same: images that feel real, look timeless, and become the ones you come back to for the rest of your life.
         </motion.p>
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
           <Link href="/contact" style={{ display: "inline-block", padding: "0.85rem 2.2rem", background: BRAND.maroon, color: BRAND.bg, borderRadius: "4px", fontWeight: 600, letterSpacing: "0.08em", fontSize: "0.85rem", textDecoration: "none" }}>
@@ -83,10 +82,10 @@ export default function SpecialEventsMobile() {
         <p style={{ color: BRAND.green, fontSize: "0.85rem", marginBottom: "0.5rem" }}>Every kind of milestone. Every kind of love.</p>
         <div style={{ borderTop: `1px solid ${BRAND.green}30` }}>
           {[
-            { title: "Weddings & Engagements", desc: "Description" },
-            { title: "Graduations", desc: "Description" },
-            { title: "Newborns & Infants", desc: "Description" },
-            { title: "All the In-Betweens", desc: "Description" },
+            { title: "Weddings & Engagements", desc: "Every emotion and unscripted moment captured exactly as it happened. From the first look to the last dance." },
+            { title: "Graduations", desc: "The pride, the joy, the real celebrations. Cap and gown portraits to candid moments with the people who got you there." },
+            { title: "Newborns & Infants", desc: "Tiny yawns. Curled fingers. Gentle sessions that preserve the details that change faster than you can memorize them." },
+            { title: "All the In-Betweens", desc: "Family portraits, couple sessions, birthdays, or just because. For the moments that don't need a reason." },
           ].map((e, i) => <EventRow key={e.title} title={e.title} desc={e.desc} index={i} />)}
         </div>
       </section>

@@ -66,7 +66,7 @@ export type WPTeamMember = {
 
 export type WPClient = {
   name: string;
-  color: string;
+  color?: string;
   logoUrl?: string;
 };
 

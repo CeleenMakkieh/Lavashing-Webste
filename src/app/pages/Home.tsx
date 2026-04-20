@@ -6,6 +6,7 @@ import { Sparkles, Code, Palette, TrendingUp, Target, ArrowUpRight, Smartphone, 
 import ClientLogos from "../components/ClientLogos";
 import InteractiveMap from "../components/InteractiveMap";
 import type { WPSiteSettings, WPClient } from "@/lib/wordpress";
+import { useT } from "@/contexts/TranslationContext";
 
 const BRAND = {
   bg: "#f8eeea",
@@ -243,6 +244,7 @@ function VideoZoom({ videoUrl }: { videoUrl: string }) {
 
 /* ─── Main ──────────────────────────────── */
 export default function Home({ settings, clients = [] }: { settings: WPSiteSettings; clients?: WPClient[] }) {
+  const { t, tArr } = useT();
   const heroRef = useRef<HTMLDivElement>(null);
   const [marqueeDuration, setMarqueeDuration] = useState(22);
   useEffect(() => { if (window.innerWidth < 768) setMarqueeDuration(8); }, []);
@@ -339,7 +341,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
         </motion.div>
       </section>
 
-      {/* ── VIDEO ZOOM (Clay-style) ──────────────── */}
+      {/* ── VIDEO ZOOM  ──────────────── */}
       <VideoZoom videoUrl={settings.heroVideoUrl} />
 
       {/* ── MANIFESTO REVEAL ─────────────────────── */}
@@ -348,7 +350,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
           <RevealText
             text="We turn ideas into high-performing digital experiences tailored to your brand and built to stand out"
             className="text-3xl md:text-4xl font-bold leading-[1.3]"
-            highlightWords={["tailored", "stand", "out"]}
+            highlightWords={["tailored", "to", "your", "brand", "and", "built", "to", "stand", "out"]}
           />
         </div>
       </section>

@@ -8,6 +8,7 @@ import LanguagePicker from "./components/LanguagePicker";
 import { Toaster } from "./components/ui/sonner";
 import { getSiteSettings } from "@/lib/wordpress";
 import { FALLBACK_SETTINGS } from "@/lib/fallback-data";
+import { TranslationProvider } from "@/contexts/TranslationContext";
 
 export const metadata: Metadata = {
   title: "Lavashing — Dallas Marketing & Web Agency",
@@ -29,15 +30,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen flex flex-col bg-background">
-          <Navigation />
-          <main className="flex-1">{children}</main>
-          <Footer settings={settings} />
-          <AIChat />
-          <BackToTop />
-          <LanguagePicker />
-          <Toaster />
-        </div>
+        <TranslationProvider>
+          <div className="min-h-screen flex flex-col bg-background">
+            <Navigation />
+            <main className="flex-1">{children}</main>
+            <Footer settings={settings} />
+            <AIChat />
+            <BackToTop />
+            <LanguagePicker />
+            <Toaster />
+          </div>
+        </TranslationProvider>
       </body>
     </html>
   );

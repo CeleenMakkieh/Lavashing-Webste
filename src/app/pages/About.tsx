@@ -211,21 +211,7 @@ function ValuePill({ icon, title, description, index }: { icon: React.ReactNode;
 }
 
 /* ─── Main component ─────────────────────────── */
-import type { WPTeamMember, WPService, WPValue } from "@/lib/wordpress";
-import Image from "next/image";
-
-const DEFAULT_STORY = [
-  "Founded in Dallas, Texas, Lavashing was born from a simple belief: that great digital experiences can transform businesses and inspire people.",
-  "Over the past decade, we've grown from a small team of passionate creators into a full-service agency serving clients across the United States. But our core mission remains the same — to create work that's both beautiful and effective.",
-  "We're not just another agency. We're your strategic partner, invested in your success and committed to delivering results that actually move the needle.",
-];
-
-const DEFAULT_SERVICES = [
-  { title: "Web Design & Development", description: "From sleek corporate sites to complex web apps — fast, beautiful, user-friendly.", features: [] },
-  { title: "Branding & Identity", description: "Distinctive brand identities that capture your essence and resonate with your audience.", features: [] },
-  { title: "Marketing & Strategy", description: "Data-backed campaigns with creative edge to grow your audience and revenue.", features: [] },
-  { title: "Consulting & Support", description: "Ongoing partnership to ensure your digital presence evolves and keeps performing.", features: [] },
-];
+import type { WPValue } from "@/lib/wordpress";
 
 const DEFAULT_VALUES: WPValue[] = [
   { title: "Purpose-Driven", description: "We believe in creating work that matters and makes a real impact. Every pixel, every line of copy, every campaign — intentional and meaningful." },
@@ -237,16 +223,8 @@ const DEFAULT_VALUES: WPValue[] = [
 const VALUE_ICONS = [<Target size={18} />, <Users size={18} />, <Award size={18} />, <TrendingUp size={18} />];
 
 export default function About({
-  team = [],
-  aboutStory = DEFAULT_STORY,
-  aboutImageUrl = "",
-  services = DEFAULT_SERVICES,
   values = DEFAULT_VALUES,
 }: {
-  team?: WPTeamMember[];
-  aboutStory?: string[];
-  aboutImageUrl?: string;
-  services?: WPService[];
   values?: WPValue[];
 }) {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -288,12 +266,12 @@ export default function About({
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(3rem,10vw,8rem)] leading-[0.95] tracking-tight mb-10 max-w-4xl"
+            className="text-[clamp(2.2rem,7vw,6rem)] leading-[1.05] tracking-tight mb-10 max-w-4xl font-bold"
             style={{ color: BRAND.headline }}
           >
-            We make brands
-            <br />
-            <em className="not-italic" style={{ color: BRAND.accent }}>unforgettable.</em>
+            <span style={{ color: BRAND.accent }}>Get </span><span style={{ color: BRAND.headline }}>found.</span>
+            <br /><span style={{ color: BRAND.accent }}>Get </span><span style={{ color: BRAND.headline }}>chosen.</span>
+            <br /><span style={{ color: BRAND.accent }}>Get </span><span style={{ color: BRAND.headline }}>remembered.</span>
           </motion.h1>
 
           <motion.p
@@ -303,7 +281,7 @@ export default function About({
             className="text-xl md:text-2xl max-w-2xl leading-relaxed"
             style={{ color: BRAND.text + "99" }}
           >
-            A Dallas-based creative agency on a mission to help ambitious brands thrive — through design, strategy, and technology that actually works.
+            A Dallas-based marketing agency helping businesses grow through strategic design, smarter marketing, and AI-powered search visibility.
           </motion.p>
 
           {/* Scroll cue */}
@@ -328,144 +306,55 @@ export default function About({
       {/* ── MARQUEE ──────────────────────────────────── */}
       <MarqueeStrip />
 
-      {/* ── OUR STORY ────────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-8 lg:px-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          {/* Left: image placeholder with interactive overlay */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 80 }}
-            className="relative"
-          >
-            <div
-              className="aspect-[4/3] rounded-3xl overflow-hidden relative"
-              style={{ background: `linear-gradient(135deg, ${BRAND.header}30, ${BRAND.btnHover}40)` }}
-            >
-              {aboutImageUrl ? (
-                <Image
-                  src={aboutImageUrl}
-                  alt="About Lavashing"
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <>
-                  {[...Array(5)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute rounded-full"
-                      style={{
-                        width: 40 + i * 30,
-                        height: 40 + i * 30,
-                        background: i % 2 === 0 ? BRAND.header + "40" : BRAND.btnHover + "60",
-                        top: `${10 + i * 15}%`,
-                        left: `${5 + i * 18}%`,
-                      }}
-                      animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-                      transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-                    />
-                  ))}
-                </>
-              )}
-              <div className="absolute inset-0 flex items-end p-8">
-                <div
-                  className="px-5 py-3 rounded-2xl text-sm font-medium"
-                  style={{ background: BRAND.bg + "cc", backdropFilter: "blur(8px)", color: BRAND.header }}
-                >
-                  📍 Born in Dallas · Growing everywhere
-                </div>
-              </div>
-            </div>
-
-            {/* Floating badge */}
-            <motion.div
-              animate={{ y: [0, -8, 0], rotate: [-2, 2, -2] }}
-              transition={{ duration: 5, repeat: Infinity }}
-              className="absolute -top-5 -right-5 px-4 py-3 rounded-2xl shadow-lg text-sm font-semibold border-2"
-              style={{ background: BRAND.btnHover, borderColor: BRAND.header + "30", color: BRAND.header }}
-            >
-              Est. 2022 ✨
-            </motion.div>
-          </motion.div>
-
-          {/* Right: story text */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 80, delay: 0.1 }}
-            className="space-y-6"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.headline }}>Our Story</h2>
-            {aboutStory.map((p, i) => (
-              <motion.p
-                key={i}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.12 }}
-                className="text-lg leading-relaxed"
-                style={{ color: BRAND.text + "aa" }}
-              >
-                {p}
-              </motion.p>
-            ))}
-
-            {/* CTA inline */}
-            <MagneticBtn
-              className="mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-300 border-2"
-              style={{
-                background: BRAND.headline,
-                borderColor: BRAND.headline,
-                color: BRAND.accent,
-              } as React.CSSProperties}
-            >
-              Start a project <ArrowUpRight size={14} />
-            </MagneticBtn>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── SERVICES GRID ────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: BRAND.header + "0d" }}>
+      {/* ── WORK MEDIA GRID ──────────────────────────── */}
+      <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: BRAND.header + "0a" }}>
         <div className="max-w-7xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-16"
+            className="text-4xl md:text-5xl font-bold mb-12"
             style={{ color: BRAND.headline }}
           >
-            What We Do
+            Our work
           </motion.h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px border" style={{ borderColor: BRAND.header + "22" }}>
-            {services.map((s, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { type: "video", src: "/work/work1.mp4", poster: "/work/work1-poster.jpg" },
+              { type: "image", src: "/work/work2.jpg" },
+              { type: "image", src: "/work/work3.jpg" },
+              { type: "video", src: "/work/work4.mp4", poster: "/work/work4-poster.jpg" },
+              { type: "image", src: "/work/work5.jpg" },
+              { type: "image", src: "/work/work6.jpg" },
+            ].map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, scale: 0.96 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ backgroundColor: BRAND.btnHover + "50" }}
-                className="p-10 group cursor-default transition-colors duration-300"
-                style={{ background: "#ffffff" }}
+                transition={{ delay: i * 0.06 }}
+                className={`rounded-2xl overflow-hidden ${i === 0 ? "col-span-2 row-span-2 md:col-span-1 md:row-span-2" : ""}`}
+                style={{ aspectRatio: i === 0 ? "auto" : "1", minHeight: i === 0 ? 340 : "auto", background: BRAND.header + "20" }}
               >
-                <span className="text-xs font-bold tracking-widest opacity-40 mb-4 block">{String(i + 1).padStart(2, "0")}</span>
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-2xl font-semibold leading-snug" style={{ color: BRAND.headline }}>{s.title}</h3>
-                  <motion.div
-                    animate={{ rotate: 0 }}
-                    whileHover={{ rotate: 45 }}
-                    className="shrink-0 mt-1"
-                    style={{ color: BRAND.header }}
+                {item.type === "video" ? (
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster={item.poster}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   >
-                    <ArrowUpRight size={20} />
-                  </motion.div>
-                </div>
-                <p className="mt-3 text-base leading-relaxed" style={{ color: BRAND.text + "80" }}>{s.description}</p>
+                    <source src={item.src} type="video/mp4" />
+                  </video>
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={item.src}
+                    alt={`Lavashing work ${i + 1}`}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                )}
               </motion.div>
             ))}
           </div>

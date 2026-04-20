@@ -3,9 +3,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Linkedin, Music2, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import type { WPSiteSettings } from "@/lib/wordpress";
+import { useT } from "@/contexts/TranslationContext";
 
 export default function Footer({ settings }: { settings: WPSiteSettings }) {
   const pathname = usePathname();
+  const { t } = useT();
   if (pathname === "/special-events") return null;
   return (
     <footer className="bg-[#670626]">
@@ -28,28 +30,28 @@ export default function Footer({ settings }: { settings: WPSiteSettings }) {
           </div>
 
           <div>
-            <h4 className="mb-4 font-semibold text-[#bad797]">Services</h4>
+            <h4 className="mb-4 font-semibold text-[#bad797]">{t("footer.services")}</h4>
             <ul className="space-y-2 text-[#f6c0d7]/80">
-              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">Web Design</Link></li>
-              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">Web Development</Link></li>
-              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">Branding</Link></li>
-              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">Marketing</Link></li>
-              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">Strategy</Link></li>
+              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">{t("footer.webDesign")}</Link></li>
+              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">{t("footer.webDev")}</Link></li>
+              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">{t("footer.branding")}</Link></li>
+              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">{t("footer.marketing")}</Link></li>
+              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">{t("footer.strategy")}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4 font-semibold text-[#bad797]">Company</h4>
+            <h4 className="mb-4 font-semibold text-[#bad797]">{t("footer.company")}</h4>
             <ul className="space-y-2 text-[#f6c0d7]/80">
-              <li><Link href="/about" className="hover:text-[#bad797] transition-colors">About</Link></li>
-              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">Industries</Link></li>
-              <li><Link href="/blog" className="hover:text-[#bad797] transition-colors">Blog</Link></li>
-              <li><Link href="/contact" className="hover:text-[#bad797] transition-colors">Contact</Link></li>
+              <li><Link href="/about" className="hover:text-[#bad797] transition-colors">{t("footer.about")}</Link></li>
+              <li><Link href="/work" className="hover:text-[#bad797] transition-colors">{t("footer.industries")}</Link></li>
+              <li><Link href="/blog" className="hover:text-[#bad797] transition-colors">{t("footer.blog")}</Link></li>
+              <li><Link href="/contact" className="hover:text-[#bad797] transition-colors">{t("nav.contact")}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4 font-semibold text-[#bad797]">Contact</h4>
+            <h4 className="mb-4 font-semibold text-[#bad797]">{t("footer.contact")}</h4>
             <ul className="space-y-3 text-[#f6c0d7]/80">
               <li className="flex items-start gap-2">
                 <MapPin size={18} className="mt-0.5 flex-shrink-0" />
@@ -72,7 +74,7 @@ export default function Footer({ settings }: { settings: WPSiteSettings }) {
         </div>
 
         <div className="mt-12 pt-8 border-t border-[#bad797]/20 text-center text-[#f6c0d7]/70">
-          <p>&copy; {new Date().getFullYear()} Lavashing. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Lavashing. {t("footer.copyright")}</p>
         </div>
       </div>
     </footer>

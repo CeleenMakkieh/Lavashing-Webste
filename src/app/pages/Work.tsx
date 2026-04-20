@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePres
 import {
   Code, Palette, Sparkles, TrendingUp, Lightbulb,
   ShoppingBag, Heart, GraduationCap, Building2, Utensils, Briefcase,
-  ArrowUpRight, Plus
+  ArrowUpRight,
 } from "lucide-react";
 import ClientLogos from "../components/ClientLogos";
 
@@ -156,39 +156,21 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
   );
 }
 
-/* ─── Industry accordion ─────────────────── */
-function IndustryRow({ ind, i }: { ind: { icon: React.ReactNode; title: string; description: string; clients: number }; i: number }) {
-  const [open, setOpen] = useState(false);
+/* ─── Industry row ───────────────────────── */
+function IndustryRow({ ind, i }: { ind: { icon: React.ReactNode; title: string }; i: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-      onClick={() => setOpen(o => !o)} data-hover
-      className="border-b cursor-pointer" style={{ borderColor: BRAND.header + "22" }}
+      className="border-b" style={{ borderColor: BRAND.header + "22" }}
     >
-      <div className="flex items-center justify-between py-5 px-2 gap-4">
-        <div className="flex items-center gap-5">
-          <motion.div
-            animate={{ background: open ? BRAND.accent : BRAND.header + "18", rotate: open ? 8 : 0 }}
-            className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
-            style={{ color: BRAND.header, transition: "background 0.25s" }}
-          >{ind.icon}</motion.div>
-          <div>
-            <span style={{ fontSize: 19, fontWeight: 700, color: BRAND.headline }}>{ind.title}</span>
-            <span style={{ marginLeft: 12, fontSize: 11, opacity: 0.4, textTransform: "uppercase", letterSpacing: "0.1em" }}>{ind.clients} clients</span>
-          </div>
-        </div>
-        <motion.div animate={{ rotate: open ? 45 : 0 }} transition={{ type: "spring", stiffness: 300 }} style={{ color: BRAND.header }}>
-          <Plus size={22} />
-        </motion.div>
+      <div className="flex items-center py-5 px-2 gap-5">
+        <div
+          className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+          style={{ background: BRAND.header + "18", color: BRAND.header }}
+        >{ind.icon}</div>
+        <span style={{ fontSize: 19, fontWeight: 700, color: BRAND.headline }}>{ind.title}</span>
       </div>
-      <AnimatePresence>
-        {open && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.28 }} className="overflow-hidden">
-            <p style={{ padding: "0 16px 20px 68px", fontSize: 14.5, lineHeight: 1.7, color: BRAND.header }}>{ind.description}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }
@@ -242,6 +224,7 @@ const INDUSTRY_ICONS = [<ShoppingBag size={20} />, <Heart size={20} />, <Graduat
 export default function Work({ services, industries, processSteps, clients = [] }: { services: WPService[]; industries: WPIndustry[]; processSteps: WPProcessStep[]; clients?: WPClient[] }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const [marqueeDuration, setMarqueeDuration] = useState(20);
+  const [showAllServices, setShowAllServices] = useState(false);
   useEffect(() => { if (window.innerWidth < 768) setMarqueeDuration(8); }, []);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 180]);
@@ -255,9 +238,8 @@ export default function Work({ services, industries, processSteps, clients = [] 
   }));
 
   const enrichedIndustries = industries.map((ind, i) => ({
-    ...ind,
+    title: ind.title,
     icon: INDUSTRY_ICONS[i % INDUSTRY_ICONS.length],
-    clients: ind.clientCount,
   }));
 
   const process = processSteps.map((s, i) => ({
@@ -336,8 +318,22 @@ export default function Work({ services, industries, processSteps, clients = [] 
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
-            {enrichedServices.map((s, i) => <ServiceCard key={i} s={s} i={i} />)}
+            {enrichedServices.slice(0, showAllServices ? enrichedServices.length : 4).map((s, i) => <ServiceCard key={i} s={s} i={i} />)}
           </div>
+          {enrichedServices.length > 4 && (
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-10 text-center">
+              <motion.button
+                whileHover={{ scale: 1.04, background: BRAND.accent, color: BRAND.headline }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setShowAllServices(v => !v)}
+                data-hover
+                className="px-8 py-4 rounded-full text-sm font-bold text-white transition-all duration-200"
+                style={{ background: BRAND.headline }}
+              >
+                {showAllServices ? "Show Less" : `See More Services (${enrichedServices.length - 4} more)`}
+              </motion.button>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -363,7 +359,6 @@ export default function Work({ services, industries, processSteps, clients = [] 
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
             <h2 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: BRAND.headline }}>Industries We Serve</h2>
-            <p style={{ marginTop: 8, fontSize: 15, color: BRAND.accent }}>Click any industry to learn more</p>
           </motion.div>
 
           <div style={{ borderTop: `2px solid ${BRAND.header}22` }}>

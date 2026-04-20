@@ -2,6 +2,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import type { WPClient } from "@/lib/wordpress";
+import { useT } from "@/contexts/TranslationContext";
 
 const DEFAULT_CLIENTS: WPClient[] = [
   { name: "One Bite" },
@@ -18,6 +19,7 @@ const DEFAULT_CLIENTS: WPClient[] = [
 ];
 
 export default function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: WPClient[] }) {
+  const { t } = useT();
   return (
     <section className="py-24 overflow-hidden" style={{ background: "#f8eeea" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,7 +30,7 @@ export default function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: W
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl mb-4 font-bold" style={{ color: "#670626" }}>
-            Trusted by Businesses Nationwide
+            {t("clients.title")}
           </h2>
         </motion.div>
 
