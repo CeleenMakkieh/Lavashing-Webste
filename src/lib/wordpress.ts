@@ -364,18 +364,18 @@ export async function getTeamMembers(): Promise<WPTeamMember[] | null> {
 ───────────────────────────────────────────── */
 
 export async function getClients(): Promise<WPClient[] | null> {
-  type R = { clients: { nodes: Array<{ title: string; clientField: { logoColor: string; logoImage: string } }> } };
+  type R = { clients: { nodes: Array<{ title: string; clientField: { logoImage: string } }> } };
   const data = await fetchWP<R>(`
     query GetClients {
       clients(first: 20) {
-        nodes { title clientField { logoColor logoImage } }
+        nodes { title clientField { logoImage } }
       }
     }
   `);
   if (!data) return null;
   return data.clients.nodes.map((c) => ({
     name: c.title,
-    color: c.clientField?.logoColor ?? "#6b8d6d",
+    color: "#6b8d6d",
     logoUrl: c.clientField?.logoImage ?? "",
   }));
 }

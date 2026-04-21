@@ -69,6 +69,18 @@ function TypewriterWord({ words }: { words: string[] }) {
 }
 
 /* ─── Word-by-word scroll reveal ─────────── */
+function RevealWord({ word, i, total, scrollYProgress, isHighlight }: {
+  word: string; i: number; total: number; scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"]; isHighlight: boolean;
+}) {
+  const pct = i / total;
+  const opacity = useTransform(scrollYProgress, [pct, Math.min(pct + 0.15, 1)], [0.1, 1]);
+  return (
+    <motion.span style={{ opacity, color: isHighlight ? "#bad797" : "#670626", fontSize: isHighlight ? "1.15em" : undefined, fontStyle: isHighlight ? "italic" : undefined }}>
+      {word}
+    </motion.span>
+  );
+}
+
 function RevealText({ text, className = "", highlightWords = [] }: { text: string; className?: string; highlightWords?: string[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.3"] });
@@ -76,21 +88,8 @@ function RevealText({ text, className = "", highlightWords = [] }: { text: strin
   return (
     <div ref={ref} className={`flex flex-wrap gap-x-3 gap-y-1 ${className}`}>
       {words.map((word, i) => {
-        const pct = i / words.length;
         const isHighlight = highlightWords.includes(word.toLowerCase().replace(/[.,!?;]/g, ""));
-        return (
-          <motion.span
-            key={i}
-            style={{
-              opacity: useTransform(scrollYProgress, [pct, Math.min(pct + 0.15, 1)], [0.1, 1]),
-              color: isHighlight ? "#bad797" : "#670626",
-              fontSize: isHighlight ? "1.15em" : undefined,
-              fontStyle: isHighlight ? "italic" : undefined
-            }}
-          >
-            {word}
-          </motion.span>
-        );
+        return <RevealWord key={i} word={word} i={i} total={words.length} scrollYProgress={scrollYProgress} isHighlight={isHighlight} />;
       })}
     </div>
   );
@@ -145,6 +144,7 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
 /* ─── Service card ──────────────────────── */
 function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: string; desc: string }; i: number }) {
   const [hov, setHov] = useState(false);
+  const { t } = useT();
   return (
     <TiltCard>
       <motion.div
@@ -171,7 +171,7 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
           WebkitBoxOrient: "vertical",
         }}>{s.desc}</p>
         <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: BRAND.headline, transition: "color 0.3s" }}>
-          Learn more <ArrowUpRight size={13} />
+          {t("services.learnMore")} <ArrowUpRight size={13} />
         </div>
       </motion.div>
     </TiltCard>
@@ -261,20 +261,20 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
   ];
 
   const svcs = [
-    { num: "01", icon: <Share2 size={22} />, title: "Social Media Management", desc: "Strategy-first social media management that keeps your brand active, relevant, and visible where your audience actually spends time. From content calendars and community engagement to analytics and platform-specific optimization every effort builds the kind of consistent, authoritative presence that both followers and AI tools increasingly recognize and recommend." },
-    { num: "02", icon: <Code size={22} />, title: "Web Development", desc: "Fast, responsive, and scalable websites engineered for performance and search visibility. From custom-coded solutions to CMS-powered platforms, every build prioritizes clean architecture, mobile-first design, and structured data  ensuring your site ranks well on traditional search engines and gets surfaced by AI-powered tools like Google AI Overviews, ChatGPT, and Perplexity." },
-    { num: "03", icon: <Mail size={22} />, title: "Email Marketing & SMS", desc: "" },
-    { num: "04", icon: <Palette size={22} />, title: "Web Design", desc: "Visually striking, user-friendly websites that bring your brand to life and deliver a seamless experience on every screen. The focus is on layout, typography, responsiveness, and usability  making sure your site looks polished, loads fast, and moves visitors toward action. Every design choice is shaped by how real users and search engines interact with your content." },
-    { num: "05", icon: <Smartphone size={22} />, title: "App Development", desc: "Custom mobile and web applications built to solve real business challenges. Every project moves from concept and UX research through to launch and ongoing iteration  using scalable frameworks, intuitive interfaces, and a technical foundation designed to perform seamlessly across devices and platforms." },
-    { num: "06", icon: <Sparkles size={22} />, title: "Branding", desc: "A strong brand is more than a logo it's how your audience recognizes, trusts, and remembers you. Branding services cover visual identity, strategy, voice, messaging, and consistency across every touchpoint. Whether it's a fresh launch or a full rebrand, the result is an identity built to stand out in both human-facing and AI-driven discovery channels." },
-    { num: "06", icon: <TrendingUp size={22} />, title: "Marketing", desc: "Strategic marketing solutions built to drive growth, reach the right audience, and create lasting visibility. The approach blends creative campaigns, data-driven targeting, and results-focused strategy  all tailored to your goals and designed to perform across search, social, and emerging AI platforms." },
-    { num: "07", icon: <FileText size={22} />, title: "Content Creation", desc: "High-quality, original content built to rank, resonate, and get cited. From blog posts and landing pages to video scripts and email sequences, every piece is crafted using SEO best practices and AISO principles  with clear structure, entity-rich language, and authoritative sourcing that performs in traditional search results and AI-generated answers alike." },
-    { num: "08", icon: <Paintbrush size={22} />, title: "Graphic Design", desc: "Scroll-stopping visuals that communicate your message clearly and elevate your brand across every platform. From social media graphics and infographics to pitch decks and ad creatives, every asset is on-brand, on-message, and optimized for the formats that drive real engagement." },
-    { num: "09", icon: <Search size={22} />, title: "Search Engine Optimization (SEO)", desc: "Data-driven SEO services covering technical audits, on-page optimization, keyword strategy, link building, site architecture, page speed, schema markup, and content alignment. The objective is straightforward: rank higher, attract qualified organic traffic, and turn visitors into customers." },
-    { num: "10", icon: <Zap size={22} />, title: "AI SEO (AISO) / Generative Engine Optimization (GEO)", desc: "Your brand's visibility now extends beyond Google into AI-powered platforms like ChatGPT, Perplexity, Google AI Overviews, and Copilot. AI SEO focuses on making your brand discoverable, citable, and recommended by these tools. The strategy includes entity optimization, structured data, authoritative content development, and digital footprint positioning so when users ask questions in your space, AI models point them to you." },
-    { num: "11", icon: <Target size={22} />, title: "Digital Campaign Planning", desc: "Multi-channel digital campaigns built around your business objectives. From audience research and platform selection to creative direction and performance tracking, every campaign is structured to maximize impact  with messaging optimized for human engagement and AI-driven discovery alike." },
-    { num: "12", icon: <Lightbulb size={22} />, title: "Creative Consulting", desc: "Strategic creative direction for brands ready to level up. From positioning and campaign ideation to content strategy and visual direction  the focus is on solving real business problems with bold, informed creative thinking and a deep understanding of how audiences discover and connect with brands today." },
-  ];
+    { num: "01", icon: <Share2 size={22} />, key: "06" },
+    { num: "02", icon: <Code size={22} />, key: "01" },
+    { num: "03", icon: <Mail size={22} />, key: "13" },
+    { num: "04", icon: <Palette size={22} />, key: "03" },
+    { num: "05", icon: <Smartphone size={22} />, key: "02" },
+    { num: "06", icon: <Sparkles size={22} />, key: "04" },
+    { num: "07", icon: <TrendingUp size={22} />, key: "05" },
+    { num: "08", icon: <FileText size={22} />, key: "07" },
+    { num: "09", icon: <Paintbrush size={22} />, key: "08" },
+    { num: "10", icon: <Search size={22} />, key: "09" },
+    { num: "11", icon: <Zap size={22} />, key: "10" },
+    { num: "12", icon: <Target size={22} />, key: "11" },
+    { num: "13", icon: <Lightbulb size={22} />, key: "12" },
+  ].map(s => ({ ...s, title: t(`svc.${s.key}.title`), desc: t(`svc.${s.key}.desc`) }));
 
 
 
@@ -302,8 +302,8 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
             className="font-bold mb-8"
             style={{ fontSize: "clamp(3rem,9vw,7.5rem)", lineHeight: 0.97, letterSpacing: "-0.02em" }}
           >
-            <span style={{ color: "#670626" }}>We build brands that</span>
-            <br /><TypewriterWord words={["resonate", "grow", "connect", "last", "lead"]} />
+            <span style={{ color: "#670626" }}>{t("hero.headline")}</span>
+            <br /><TypewriterWord words={tArr("hero.typewriter")} />
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
@@ -320,13 +320,13 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
               <motion.button data-hover whileHover={{ scale: 1.04, background: "#bad797", color: "#670626" }} whileTap={{ scale: 0.97 }}
                 className="px-8 py-4 rounded-full text-base font-bold text-white inline-flex items-center gap-2 transition-all duration-200"
                 style={{ background: "#670626" }}
-              >Book a Call <ArrowUpRight size={15} /></motion.button>
+              >{t("hero.bookCall")} <ArrowUpRight size={15} /></motion.button>
             </Link>
             <Link href="/work">
               <motion.button data-hover whileHover={{ background: "#670626", color: "#fff", scale: 1.04 }} whileTap={{ scale: 0.97 }}
                 className="px-8 py-4 rounded-full text-base font-bold border-2 transition-all duration-200"
                 style={{ borderColor: "#670626", color: "#670626", background: "transparent" }}
-              >Explore Our Work</motion.button>
+              >{t("hero.exploreWork")}</motion.button>
             </Link>
           </motion.div>
 
@@ -336,7 +336,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           style={{ color: BRAND.header + "70" }}
         >
-          <span style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" }}>Scroll</span>
+          <span style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" }}>{t("hero.scroll")}</span>
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.4, repeat: Infinity }}
             style={{ width: 1, height: 32, background: `linear-gradient(to bottom, ${BRAND.header}, transparent)` }} />
         </motion.div>
@@ -349,7 +349,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
       <section className="py-24 px-4 sm:px-8 lg:px-16" style={{ background: "#670626" + "0e" }}>
         <div className="max-w-5xl mx-auto">
           <RevealText
-            text="We turn ideas into high-performing digital experiences tailored to your brand and built to stand out"
+            text={t("manifesto")}
             className="text-3xl md:text-4xl font-bold leading-[1.3]"
             highlightWords={["tailored", "to", "your", "brand", "and", "built", "to", "stand", "out"]}
           />
@@ -362,12 +362,12 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
           <div className="flex items-end justify-between mb-14 flex-wrap gap-6">
             <div>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                className="text-4xl md:text-5xl font-bold" style={{ color: "#670626" }}>What we do</motion.h2>
+                className="text-4xl md:text-5xl font-bold" style={{ color: "#670626" }}>{t("services.title")}</motion.h2>
             </div>
             <Link href="/work">
               <motion.button data-hover whileHover={{ background: "#bad797", color: "#670626" }}
                 className="px-5 py-2.5 rounded-full text-sm font-semibold border-2 transition-all duration-200"
-                style={{ borderColor: "#670626", color: "#670626" }}>All services →</motion.button>
+                style={{ borderColor: "#670626", color: "#670626" }}>{t("services.allServices")}</motion.button>
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
@@ -379,7 +379,7 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
       {/* ── MARQUEE ──────────────────────────────── */}
       <div className="overflow-hidden py-5 border-y-2" style={{ borderColor: "#670626" + "33" }}>
         <motion.div key={marqueeDuration} className="flex gap-12 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ duration: marqueeDuration, repeat: Infinity, ease: "linear" }}>
-          {[...Array(4)].flatMap(() => ["Strategy", "Branding", "Design", "Development", "Marketing", "Growth"]).map((w, i) => (
+          {[...Array(4)].flatMap(() => tArr("about.marquee")).map((w, i) => (
             <span key={i} style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#670626" }}>
               {w} <span style={{ opacity: 0.3, margin: "0 8px" }}>·</span>
             </span>
@@ -399,12 +399,12 @@ export default function Home({ settings, clients = [] }: { settings: WPSiteSetti
         </div>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: "#f6c0d7" }}>Ready to get started?</h2>
-          <p className="text-xl mb-12" style={{ color: "#f6c0d7bb" }}>Let's create something extraordinary together.</p>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: "#f6c0d7" }}>{t("cta.headline")}</h2>
+          <p className="text-xl mb-12" style={{ color: "#f6c0d7bb" }}>{t("cta.sub")}</p>
           <Link href="/contact">
             <motion.button data-hover whileHover={{ background: BRAND.pink, color: BRAND.header, scale: 1.05 }} whileTap={{ scale: 0.97 }}
               className="px-8 py-4 rounded-full text-base font-bold text-white border-2 border-white/30 inline-flex items-center gap-2 transition-all duration-200">
-              Book a Call <ArrowUpRight size={15} />
+              {t("cta.bookCall")} <ArrowUpRight size={15} />
             </motion.button>
           </Link>
         </motion.div>
