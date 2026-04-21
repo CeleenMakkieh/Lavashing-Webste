@@ -14,12 +14,12 @@ export const FALLBACK_SETTINGS: WPSiteSettings = {
   heroTypewriterWords: ["inspire", "convert", "captivate", "grow you"],
   heroSubtitle: "A modern marketing and web agency crafting premium digital solutions for ambitious brands.",
   heroVideoUrl: "/video1277478768.mp4",
-  manifestoText: "From concept to launch we deliver comprehensive digital solutions — tailored precisely to your needs and built to outperform.",
+  manifestoText: "From concept to launch we deliver comprehensive digital solutions tailored precisely to your needs and built to outperform.",
   availableBadgeText: "Available for new projects",
   aboutImageUrl: "",
   aboutStory: [
     "Founded in Dallas, Texas, Lavashing was born from a simple belief: that great digital experiences can transform businesses and inspire people.",
-    "Over the past decade, we've grown from a small team of passionate creators into a full-service agency serving clients across the United States. But our core mission remains the same — to create work that's both beautiful and effective.",
+    "Over the past decade, we've grown from a small team of passionate creators into a full-service agency serving clients across the United States. But our core mission remains the same to create work that's both beautiful and effective.",
     "We're not just another agency. We're your strategic partner, invested in your success and committed to delivering results that actually move the needle.",
   ],
   footerTagline: "Dallas-based marketing and web agency serving clients nationwide.",
@@ -45,7 +45,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     authorRole: "Creative Director",
     content: [
       "The digital landscape is constantly evolving, and staying ahead of design trends is crucial for creating websites that resonate with modern audiences. As we navigate through 2026, several key trends are shaping the future of web design.",
-      "Minimalism continues to dominate, but with a twist. We're seeing designers embrace 'warm minimalism' — clean layouts enhanced with subtle textures, organic shapes, and warmer color palettes that create more inviting digital experiences.",
+      "Minimalism continues to dominate, but with a twist. We're seeing designers embrace 'warm minimalism' clean layouts enhanced with subtle textures, organic shapes, and warmer color palettes that create more inviting digital experiences.",
       "Interactive 3D elements are becoming more accessible and performant. With improved browser capabilities and tools, designers can now incorporate immersive 3D graphics without sacrificing load times or user experience.",
       "Accessibility is no longer optional. Modern web design prioritizes inclusive experiences, ensuring websites work seamlessly for users of all abilities.",
       "The rise of AI-powered personalization is transforming how users interact with websites. Dynamic content that adapts to user preferences and behavior creates more engaging, relevant experiences.",
@@ -57,7 +57,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     excerpt: "A deep dive into our most successful branding projects and the strategies that made them work.",
     date: "March 15, 2026", readTime: "8 min read", category: "Branding",
     imageGradient: "from-[#6b8d6d] to-[#bad797]", author: "Sarah Johnson", authorRole: "Founder & CEO",
-    content: ["Branding is more than a logo. It's the entire perception your audience holds of your business — and we've seen first-hand how a strategic rebrand can completely transform a company's trajectory."],
+    content: ["Branding is more than a logo. It's the entire perception your audience holds of your business and we've seen first-hand how a strategic rebrand can completely transform a company's trajectory."],
   },
   {
     slug: "web-performance-optimization",
@@ -65,7 +65,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     excerpt: "Learn how to make your website faster and more efficient with our comprehensive optimization guide.",
     date: "March 10, 2026", readTime: "10 min read", category: "Development",
     imageGradient: "from-[#670626] to-[#bad797]", author: "David Park", authorRole: "Lead Developer",
-    content: ["Page speed is not just a nice-to-have — it directly impacts your search ranking, bounce rate, and conversion rate."],
+    content: ["Page speed is not just a nice-to-have it directly impacts your search ranking, bounce rate, and conversion rate."],
   },
   {
     slug: "marketing-strategies-2026",
@@ -81,7 +81,7 @@ export const FALLBACK_POSTS: WPPost[] = [
     excerpt: "Essential UX principles every website should follow to create exceptional user experiences.",
     date: "February 28, 2026", readTime: "7 min read", category: "Design",
     imageGradient: "from-[#bad797] to-[#670626]", author: "Michael Chen", authorRole: "Creative Director",
-    content: ["Great UX is invisible. When done right, users never notice the design — they just effortlessly accomplish what they came to do."],
+    content: ["Great UX is invisible. When done right, users never notice the design they just effortlessly accomplish what they came to do."],
   },
   {
     slug: "choosing-tech-stack",
