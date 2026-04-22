@@ -55,7 +55,7 @@ function Tilt({ children, className = "", intensity = 14 }: { children: React.Re
   };
   return (
     <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={() => { rx.set(0); ry.set(0); }}
-      style={{ rotateX: isMobile ? 0 : sx, rotateY: isMobile ? 0 : sy, transformStyle: isMobile ? "flat" : "preserve-3d" }} className={className}>
+      style={{ rotateX: isMobile ? 0 : sx, rotateY: isMobile ? 0 : sy, transformStyle: "flat" }} className={className}>
       {children}
     </motion.div>
   );
@@ -114,6 +114,7 @@ function RevealText({ text, className = "", highlightWords = [] }: { text: strin
 /* ─── Service flip card ──────────────────── */
 function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; description: string; features: string[]; num: string }; i: number }) {
   const [hov, setHov] = useState(false);
+  const { t } = useT();
   return (
     <Tilt intensity={16}>
       <motion.div
@@ -125,7 +126,7 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
           background: hov ? BRAND.accent : "#ffffff",
           borderColor: hov ? BRAND.accent : BRAND.headline + "28",
           transition: "background 0.32s, border-color 0.32s",
-          transformStyle: "preserve-3d", minHeight: 300,
+          transformStyle: "flat", minHeight: 300, direction: "ltr",
         }}
         className="p-8 rounded-3xl border-2 relative overflow-hidden flex flex-col cursor-default"
       >
@@ -161,7 +162,7 @@ function ServiceCard({ s, i }: { s: { icon: React.ReactNode; title: string; desc
         </AnimatePresence>
 
         <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 700, color: BRAND.headline, transition: "color 0.32s" }}>
-          See details <ArrowUpRight size={13} />
+          {t("work.seeDetails")} <ArrowUpRight size={13} />
         </div>
       </motion.div>
     </Tilt>
@@ -201,7 +202,7 @@ function ProcessStep({ step, title, desc, i, total }: { step: string; title: str
           background: hov ? BRAND.accent : "#ffffff",
           borderColor: hov ? BRAND.accent : BRAND.headline + "28",
           transition: "background 0.3s, border-color 0.3s",
-          padding: "28px 24px", borderRadius: 24, border: "2px solid", cursor: "default", position: "relative",
+          padding: "28px 24px", borderRadius: 24, border: "2px solid", cursor: "default", position: "relative", direction: "ltr",
         }}
       >
         {/* Connector */}

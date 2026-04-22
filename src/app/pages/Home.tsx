@@ -135,7 +135,7 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
   };
   return (
     <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={() => { rx.set(0); ry.set(0); }}
-      style={{ rotateX: isMobile ? 0 : sx, rotateY: isMobile ? 0 : sy, transformStyle: isMobile ? "flat" : "preserve-3d" }} className={className}>
+      style={{ rotateX: isMobile ? 0 : sx, rotateY: isMobile ? 0 : sy, transformStyle: "flat" }} className={className}>
       {children}
     </motion.div>
   );
@@ -152,7 +152,7 @@ function SvcCard({ s, i }: { s: { num: string; icon: React.ReactNode; title: str
         viewport={{ once: true }} transition={{ delay: i * 0.1, type: "spring", stiffness: 80 }}
         onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
         data-hover
-        style={{ background: hov ? BRAND.accent : "#ffffff", borderColor: hov ? BRAND.accent : BRAND.headline + "28", transition: "background 0.3s, border-color 0.3s", transformStyle: "preserve-3d" }}
+        style={{ background: hov ? BRAND.accent : "#ffffff", borderColor: hov ? BRAND.accent : BRAND.headline + "28", transition: "background 0.3s, border-color 0.3s", direction: "ltr" }}
         className="p-8 rounded-3xl border-2 relative overflow-hidden flex flex-col h-full cursor-default"
       >
         <span style={{ position: "absolute", top: 14, right: 18, fontSize: 64, fontWeight: 900, color: hov ? BRAND.headline : BRAND.headline, opacity: 0.06, lineHeight: 1, userSelect: "none" }}>{s.num}</span>
