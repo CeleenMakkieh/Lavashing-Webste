@@ -92,7 +92,7 @@ function EventRow({ title, desc, index }: { title: string; desc: string; index: 
     <motion.div
       initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       transition={{ duration: 0.7, delay: index * 0.12 }}
-      style={{ padding: "2rem 0", borderBottom: `1px solid ${BRAND.green}30` }}
+      style={{ padding: "2rem 0", marginBottom: "0.5rem" }}
     >
       <h3 style={{ fontFamily: "serif", fontSize: "1.4rem", fontWeight: 600, color: BRAND.green, marginBottom: "0.5rem" }}>{title}</h3>
       <p style={{ color: BRAND.black, lineHeight: 1.85, fontSize: "0.95rem" }}>{desc}</p>
@@ -162,9 +162,9 @@ export default function SpecialEventsDesktop() {
             {t("events.hero.desc")}
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} style={{ position: "relative", zIndex: 1 }}>
-            <Link href="/contact" style={{ display: "inline-block", padding: "0.85rem 2.5rem", background: BRAND.maroon, color: BRAND.bg, borderRadius: "4px", fontWeight: 600, letterSpacing: "0.08em", fontSize: "0.88rem", textDecoration: "none" }}>
+            <a href="#book" style={{ display: "inline-block", padding: "0.85rem 2.5rem", background: BRAND.maroon, color: BRAND.bg, borderRadius: "4px", fontWeight: 600, letterSpacing: "0.08em", fontSize: "0.88rem", textDecoration: "none" }}>
               {t("events.hero.cta")}
-            </Link>
+            </a>
           </motion.div>
         </section>
 
@@ -178,7 +178,7 @@ export default function SpecialEventsDesktop() {
             style={{ color: BRAND.green, fontSize: "0.9rem", marginBottom: "1rem", position: "relative", zIndex: 1 }}>
             {t("events.what.sub")}
           </motion.p>
-          <div style={{ borderTop: `1px solid ${BRAND.green}30`, position: "relative", zIndex: 1 }}>
+          <div style={{ position: "relative", zIndex: 1 }}>
             {[
               { title: t("events.wedding.title"), desc: t("events.wedding.desc") },
               { title: t("events.graduation.title"), desc: t("events.graduation.desc") },
@@ -228,7 +228,7 @@ export default function SpecialEventsDesktop() {
           ))}
         </section>
 
-        <section style={{ padding: "10vh 5vw", textAlign: "center", background: `${BRAND.accent}50`, position: "relative" }}>
+        <section id="book" style={{ padding: "10vh 5vw", textAlign: "center", background: `${BRAND.accent}50`, position: "relative" }}>
           <Sparkles count={20} />
           <motion.h2 initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             style={{ fontFamily: "serif", fontSize: "clamp(2rem,5vw,3.8rem)", fontWeight: 700, color: BRAND.maroon, marginBottom: "1.25rem", lineHeight: 1.2, position: "relative", zIndex: 1 }}>

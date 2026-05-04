@@ -19,7 +19,7 @@ function EventRow({ title, desc, index }: { title: string; desc: string; index: 
     <motion.div
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      style={{ padding: "1.5rem 0", borderBottom: `1px solid ${BRAND.green}30` }}
+      style={{ padding: "1.25rem 0", marginBottom: "0.5rem" }}
     >
       <h3 style={{ fontFamily: "serif", fontSize: "1.2rem", fontWeight: 600, color: BRAND.green, marginBottom: "0.4rem" }}>{title}</h3>
       <p style={{ color: BRAND.black, lineHeight: 1.8, fontSize: "0.9rem" }}>{desc}</p>
@@ -69,9 +69,9 @@ export default function SpecialEventsMobile() {
           {t("events.hero.desc")}
         </motion.p>
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-          <Link href="/contact" style={{ display: "inline-block", padding: "0.85rem 2.2rem", background: BRAND.maroon, color: BRAND.bg, borderRadius: "4px", fontWeight: 600, letterSpacing: "0.08em", fontSize: "0.85rem", textDecoration: "none" }}>
+          <a href="#book" style={{ display: "inline-block", padding: "0.85rem 2.2rem", background: BRAND.maroon, color: BRAND.bg, borderRadius: "4px", fontWeight: 600, letterSpacing: "0.08em", fontSize: "0.85rem", textDecoration: "none" }}>
             {t("events.hero.cta")}
-          </Link>
+          </a>
         </motion.div>
       </section>
 
@@ -81,8 +81,8 @@ export default function SpecialEventsMobile() {
           style={{ fontFamily: "serif", fontSize: "clamp(1.4rem,6vw,2rem)", fontWeight: 700, color: BRAND.maroon, marginBottom: "0.3rem" }}>
           {t("events.what.title")}
         </motion.h2>
-        <p style={{ color: BRAND.green, fontSize: "0.85rem", marginBottom: "0.5rem" }}>{t("events.what.sub")}</p>
-        <div style={{ borderTop: `1px solid ${BRAND.green}30` }}>
+        <p style={{ color: BRAND.green, fontSize: "0.85rem", marginBottom: "1rem" }}>{t("events.what.sub")}</p>
+        <div>
           {[
             { title: t("events.wedding.title"), desc: t("events.wedding.desc") },
             { title: t("events.graduation.title"), desc: t("events.graduation.desc") },
@@ -129,7 +129,7 @@ export default function SpecialEventsMobile() {
       </section>
 
       {/* ── CTA + HONEYBOOK ── */}
-      <section style={{ padding: "8vh 6vw", textAlign: "center", background: `${BRAND.accent}50` }}>
+      <section id="book" style={{ padding: "8vh 6vw", textAlign: "center", background: `${BRAND.accent}50` }}>
         <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           style={{ fontFamily: "serif", fontSize: "clamp(1.6rem,7vw,2.4rem)", fontWeight: 700, color: BRAND.maroon, marginBottom: "1rem", lineHeight: 1.2 }}>
           {t("events.cta.title")}
